@@ -9,9 +9,9 @@ export type RootStackParamList = {
 };
 
 export type BottomTabParamList = {
-  ChatTab: undefined;
-  ExploreTab: undefined;
-  MembersTab: undefined;
+  Chat: undefined;
+  Explore: undefined;
+  Members: undefined;
 };
 
 export type ChatTabParamList = {

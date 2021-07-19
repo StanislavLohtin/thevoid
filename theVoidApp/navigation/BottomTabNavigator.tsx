@@ -22,24 +22,25 @@ export default function BottomTabNavigator() {
 
   return (
     <BottomTab.Navigator
-      initialRouteName="ChatTab"
+      initialRouteName="Chat"
       tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}>
       <BottomTab.Screen
-        name="ChatTab"
+        name="Chat"
+        key="asdasd"
         component={ChatTabNavigator}
         options={{
           tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
         }}
       />
       <BottomTab.Screen
-        name="ExploreTab"
+        name="Explore"
         component={ExploreTabNavigator}
         options={{
           tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
         }}
       />
       <BottomTab.Screen
-        name="MembersTab"
+        name="Members"
         component={MembersTabNavigator}
         options={{
           tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
@@ -65,7 +66,7 @@ function ChatTabNavigator() {
       <ChatTabStack.Screen
         name="ChatScreen"
         component={ChatScreen}
-        options={{ headerTitle: 'Tab One Title' }}
+        options={{ headerShown: false }}
       />
     </ChatTabStack.Navigator>
   );
@@ -79,7 +80,7 @@ function ExploreTabNavigator() {
       <ExploreTabStack.Screen
         name="ExploreScreen"
         component={ExploreScreen}
-        options={{ headerTitle: 'Tab Two Title' }}
+        options={{ headerTitle: 'Explore The Void' }}
       />
     </ExploreTabStack.Navigator>
   );
@@ -93,7 +94,7 @@ function MembersTabNavigator() {
       <MembersTabStack.Screen
         name="MembersScreen"
         component={MembersScreen}
-        options={{ headerTitle: 'Tab Three Title' }}
+        options={{ headerTitle: 'Members' }}
       />
     </MembersTabStack.Navigator>
   );
