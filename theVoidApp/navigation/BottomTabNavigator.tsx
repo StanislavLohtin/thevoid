@@ -10,9 +10,10 @@ import * as React from 'react';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
-import TabOneScreen from '../screens/TabOneScreen';
-import TabTwoScreen from '../screens/TabTwoScreen';
-import { BottomTabParamList, TabOneParamList, TabTwoParamList } from '../types';
+import ChatScreen from '../screens/ChatScreen';
+import ExploreScreen from '../screens/ExploreScreen';
+import MembersScreen from '../screens/MembersScreen';
+import {BottomTabParamList, ChatTabParamList, ExploreTabParamList, MembersTabParamList} from '../types';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -21,18 +22,25 @@ export default function BottomTabNavigator() {
 
   return (
     <BottomTab.Navigator
-      initialRouteName="TabOne"
+      initialRouteName="ChatTab"
       tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}>
       <BottomTab.Screen
-        name="TabOne"
-        component={TabOneNavigator}
+        name="ChatTab"
+        component={ChatTabNavigator}
         options={{
           tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
         }}
       />
       <BottomTab.Screen
-        name="TabTwo"
-        component={TabTwoNavigator}
+        name="ExploreTab"
+        component={ExploreTabNavigator}
+        options={{
+          tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
+        }}
+      />
+      <BottomTab.Screen
+        name="MembersTab"
+        component={MembersTabNavigator}
         options={{
           tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
         }}
@@ -49,30 +57,44 @@ function TabBarIcon(props: { name: React.ComponentProps<typeof Ionicons>['name']
 
 // Each tab has its own navigation stack, you can read more about this pattern here:
 // https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
-const TabOneStack = createStackNavigator<TabOneParamList>();
+const ChatTabStack = createStackNavigator<ChatTabParamList>();
 
-function TabOneNavigator() {
+function ChatTabNavigator() {
   return (
-    <TabOneStack.Navigator>
-      <TabOneStack.Screen
-        name="TabOneScreen"
-        component={TabOneScreen}
+    <ChatTabStack.Navigator>
+      <ChatTabStack.Screen
+        name="ChatScreen"
+        component={ChatScreen}
         options={{ headerTitle: 'Tab One Title' }}
       />
-    </TabOneStack.Navigator>
+    </ChatTabStack.Navigator>
   );
 }
 
-const TabTwoStack = createStackNavigator<TabTwoParamList>();
+const ExploreTabStack = createStackNavigator<ExploreTabParamList>();
 
-function TabTwoNavigator() {
+function ExploreTabNavigator() {
   return (
-    <TabTwoStack.Navigator>
-      <TabTwoStack.Screen
-        name="TabTwoScreen"
-        component={TabTwoScreen}
+    <ExploreTabStack.Navigator>
+      <ExploreTabStack.Screen
+        name="ExploreScreen"
+        component={ExploreScreen}
         options={{ headerTitle: 'Tab Two Title' }}
       />
-    </TabTwoStack.Navigator>
+    </ExploreTabStack.Navigator>
+  );
+}
+
+const MembersTabStack = createStackNavigator<MembersTabParamList>();
+
+function MembersTabNavigator() {
+  return (
+    <MembersTabStack.Navigator>
+      <MembersTabStack.Screen
+        name="MembersScreen"
+        component={MembersScreen}
+        options={{ headerTitle: 'Tab Three Title' }}
+      />
+    </MembersTabStack.Navigator>
   );
 }
