@@ -8,22 +8,27 @@ type MessageProps = TextProps & {
   avaUrl: string,
   text: string,
   time: Date,
-  incoming: boolean
+  incoming: boolean,
+  status?: string
 }
 
 export function Message(props: MessageProps) {
-  const ff2: string = props.avaUrl;
-  const ff = "./../assets/images/ava3.png";
+
+  function ellipsis(text: string) {
+    return text.length <= 43 ? text : text.substr(0, 40) + "...";
+  }
+
   return (
       <View style={styles.container}>
         <Image
             style={styles.userAva}
-            source={require(ff)}
+            source={{uri: "" + props.avaUrl}}
         />
-        <Text style={styles.name}> {props.name} </Text>
-        <Text> {props.text} </Text>
-
-        <Text> {props.avaUrl} </Text>
+        <View>
+          <Text style={styles.name}> {props.name} </Text>
+          <Text style={styles.text}> {ellipsis((props.incoming ? "" : "You: ") + props.text)} · {props.time.toLocaleTimeString()}</Text>
+        </View>
+        <Text> {props.status} </Text>
       </View>
   )
 }
@@ -33,17 +38,26 @@ const styles = StyleSheet.create({
     display: "flex",
     backgroundColor: "#1e1e20",
     flexDirection: "row",
+    paddingLeft: 15,
+    paddingRight: 15,
+    paddingTop: 15
   },
   userAva: {
-    minHeight: 20,
-    minWidth: 20,
-    width: 40,
-    height: 40,
-    alignSelf: "flex-end"
+    minHeight: 50,
+    minWidth: 50,
+    width: 60,
+    height: 60,
+    alignSelf: "flex-end",
+    borderRadius: 999,
+    marginRight: 10
   },
   name: {
     color: "white",
-    fontSize: 20
+    fontSize: 16
+  },
+  text: {
+    color: "grey",
+    fontSize: 13
   }
 
 });
