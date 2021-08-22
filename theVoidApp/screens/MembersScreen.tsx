@@ -1,31 +1,92 @@
 import * as React from 'react';
-import { StyleSheet } from 'react-native';
-
-import EditScreenInfo from '../components/EditScreenInfo';
-import { Text, View } from '../components/Themed';
+import {Image, StyleSheet, TextInput} from 'react-native';
+import {Text, View} from '../components/Themed';
+import {MessageDTO} from "../classes/MessageDTO";
+import {Message} from "../classes/Message";
+import {MemberComponent} from "../components/MemberComponent";
 
 export default function MembersScreen() {
+  const [text, onChangeText] = React.useState("");
+  const messagesJson: {messages: MessageDTO[]} = require("./../assets/messages.json");
+  console.info(messagesJson);
+
+  const messageViews = [];
+  for (let message of messagesJson.messages) {
+    messageViews.push(<MemberComponent message={new Message(message)} key={message.id} />);
+  }
+
   return (
-    <View style={styles.container}>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="/screens/MembersScreen.tsx" />
-    </View>
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <Text style={styles.title}> Members </Text>
+          <View style={styles.headerRight}>
+            <Image
+                style={styles.userAva}
+                source={require("./../assets/images/ava1.png")}
+            />
+          </View>
+        </View>
+        <View style={styles.messages}><TextInput
+            style={styles.searchInput}
+            onChangeText={onChangeText}
+            value={text}
+            placeholder="🔍 Search"
+            keyboardType="default"
+        >
+        </TextInput></View>
+        <View style={styles.messages}>{messageViews}</View>
+      </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    flexDirection: "column",
+    backgroundColor: "#1e1e20",
   },
   title: {
-    fontSize: 20,
-    fontWeight: 'bold',
+    fontSize: 34,
+    color: "#fff",
   },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
+  header: {
+    paddingTop: 50,
+    paddingBottom: 20,
+    width: "100%",
+    backgroundColor: "#023750",
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  headerRight: {
+    backgroundColor: "#023750",
+    justifyContent: "space-between",
+    paddingRight: 15,
+  },
+  logo: {
+    minHeight: 20,
+    minWidth: 20,
+    width: 120,
+    height: 120,
+    borderRadius: 999,
+  },
+  messages: {
+    backgroundColor: "#1e1e20",
+  },
+  searchInput: {
+    borderRadius: 10,
+    backgroundColor: "#243a44",
+    color: "#888a8f",
+    padding: 10,
+    fontSize: 20,
+    width: "95%",
+    margin: 10
+  },
+  userAva: {
+    minHeight: 20,
+    minWidth: 20,
+    width: 50,
+    height: 50,
+    alignSelf: "flex-end",
+    borderRadius: 999,
   },
 });

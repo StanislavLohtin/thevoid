@@ -125,7 +125,7 @@ function MembersTabNavigator() {
       <MembersTabStack.Screen
         name="MembersScreen"
         component={MembersScreen}
-        options={{ headerTitle: "Members" }}
+        options={{ headerShown: false }}
       />
     </MembersTabStack.Navigator>
   );
