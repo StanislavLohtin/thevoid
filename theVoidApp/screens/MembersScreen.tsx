@@ -4,14 +4,15 @@ import {Text, View} from '../components/Themed';
 import {MessageDTO} from "../classes/MessageDTO";
 import {Message} from "../classes/Message";
 import {MemberComponent} from "../components/MemberComponent";
+import {Ionicons} from "@expo/vector-icons";
 
 export default function MembersScreen() {
   const [text, onChangeText] = React.useState("");
-  const messagesJson: {messages: MessageDTO[]} = require("./../assets/messages.json");
-  console.info(messagesJson);
+  const membersJson: {messages: MessageDTO[]} = require("./../assets/messages.json");
+  console.info(membersJson);
 
   const messageViews = [];
-  for (let message of messagesJson.messages) {
+  for (let message of membersJson.messages) {
     messageViews.push(<MemberComponent message={new Message(message)} key={message.id} />);
   }
 
@@ -24,9 +25,10 @@ export default function MembersScreen() {
                 style={styles.userAva}
                 source={require("./../assets/images/ava1.png")}
             />
+            <Ionicons size={30} style={styles.addPersonIcon} name={"ios-person-add"} />
           </View>
         </View>
-        <View style={styles.messages}><TextInput
+        <View style={styles.members}><TextInput
             style={styles.searchInput}
             onChangeText={onChangeText}
             value={text}
@@ -34,7 +36,7 @@ export default function MembersScreen() {
             keyboardType="default"
         >
         </TextInput></View>
-        <View style={styles.messages}>{messageViews}</View>
+        <View style={styles.members}>{messageViews}</View>
       </View>
   );
 }
@@ -59,17 +61,16 @@ const styles = StyleSheet.create({
   },
   headerRight: {
     backgroundColor: "#023750",
-    justifyContent: "space-between",
     paddingRight: 15,
+    flexDirection: "row",
   },
-  logo: {
-    minHeight: 20,
-    minWidth: 20,
-    width: 120,
-    height: 120,
-    borderRadius: 999,
+  addPersonIcon: {
+    color: "#FFF",
+    marginTop: 12,
+    marginLeft: 25,
+    fontSize: 24
   },
-  messages: {
+  members: {
     backgroundColor: "#1e1e20",
   },
   searchInput: {

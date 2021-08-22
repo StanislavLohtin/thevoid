@@ -111,7 +111,7 @@ function ExploreTabNavigator() {
       <ExploreTabStack.Screen
         name="ExploreScreen"
         component={ExploreScreen}
-        options={{ headerTitle: "Explore The Void" }}
+        options={{ headerShown: false }}
       />
     </ExploreTabStack.Navigator>
   );
