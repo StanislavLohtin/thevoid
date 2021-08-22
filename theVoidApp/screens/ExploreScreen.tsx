@@ -1,12 +1,9 @@
 import * as React from "react";
-import { Image, StyleSheet, TextInput } from "react-native";
-
-import EditScreenInfo from "../components/EditScreenInfo";
-import { Text, View } from "../components/Themed";
-import { MessageDTO } from "../classes/MessageDTO";
-import { MemberComponent } from "../components/MemberComponent";
-import { Message } from "../classes/Message";
-import { Ionicons } from "@expo/vector-icons";
+import {StyleSheet, TextInput} from "react-native";
+import {Text, View} from "../components/Themed";
+import {MessageDTO} from "../classes/MessageDTO";
+import {MemberComponent} from "../components/MemberComponent";
+import {Message} from "../classes/Message";
 
 export default function ExploreScreen() {
   const [text, onChangeText] = React.useState("");
@@ -36,7 +33,7 @@ export default function ExploreScreen() {
         </TextInput>
       </View>
       <View style={styles.groups}>
-        <Text style={styles.activeGroup}>ALL</Text>
+        <Text style={[styles.group, styles.activeGroup]}>ALL</Text>
         <Text style={styles.group}>COMMUNITIES</Text>
       </View>
       <View style={styles.members}>{messageViews}</View>
@@ -61,13 +58,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between"
   },
   activeGroup: {
-    backgroundColor: "#6b4ffa",
-    width: "40%",
-    borderRadius: 15,
-    textAlign: "center",
-    padding: 5,
-    color: "#FFF",
-    marginLeft: 20
+    backgroundColor: "#6b4ffa"
   },
   group: {
     backgroundColor: "#2c2232",
@@ -76,6 +67,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     padding: 5,
     color: "#FFF",
+    marginLeft: 20,
     marginRight: 20
   },
   header: {
@@ -84,17 +76,6 @@ const styles = StyleSheet.create({
     width: "100%",
     backgroundColor: "#3c2643",
     justifyContent: "space-between",
-  },
-  headerRight: {
-    backgroundColor: "#023750",
-    paddingRight: 15,
-    flexDirection: "row",
-  },
-  addPersonIcon: {
-    color: "#FFF",
-    marginTop: 12,
-    marginLeft: 25,
-    fontSize: 24,
   },
   members: {
     backgroundColor: "#1e1e20",
@@ -107,13 +88,5 @@ const styles = StyleSheet.create({
     fontSize: 20,
     width: "95%",
     margin: 10,
-  },
-  userAva: {
-    minHeight: 20,
-    minWidth: 20,
-    width: 50,
-    height: 50,
-    alignSelf: "flex-end",
-    borderRadius: 999,
-  },
+  }
 });
