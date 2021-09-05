@@ -15,13 +15,13 @@ export function MessageComponent(props: MessageProps) {
 
   return (
     <View style={styles.container}>
-      <Image style={styles.userAva} source={{ uri: "" + msg.avaUrl }} />
+      <Image style={styles.userAva} source={{ uri: "" + msg.sender.avaUrl }} />
       <View>
-        <Text style={styles.name}> {msg.name} </Text>
+        <Text style={styles.name}> {msg.sender.name} </Text>
         <Text style={styles.text}>
           {" "}
-          {ellipsis((msg.incoming ? "" : "You: ") + msg.text)} ·{" "}
-          {msg.time.toLocaleTimeString()}
+          {ellipsis((msg.sentByCurrentUser() ? "" : "You: ") + msg.content)} ·{" "}
+          {msg.createdAt.toLocaleTimeString()}
         </Text>
       </View>
       <Text> {msg.status} </Text>

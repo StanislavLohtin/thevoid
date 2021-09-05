@@ -1,21 +1,30 @@
-import {MessageDTO} from "./MessageDTO";
+import { MessageDTO } from "./MessageDTO";
+import { User } from "./User";
+import { UserService } from "../services/UserService";
 
 export class Message {
-	id: number;
-	name: string;
-	avaUrl: string;
-	text: string;
-	time: Date;
-	incoming: boolean;
-	status?: string;
+  id: number;
+  content: string;
+  createdAt: Date;
+  sender: User;
+  receiver: User;
+  status: string;
 
-	constructor(messageDTO: MessageDTO) {
-		this.id = Number(messageDTO.id).valueOf();
-		this.name = messageDTO.name;
-		this.avaUrl = messageDTO.avaUrl;
-		this.text = messageDTO.text;
-		this.time = new Date(messageDTO.time);
-		this.incoming = messageDTO.incoming === "true";
-		this.status = messageDTO.status;
-	}
+  constructor(messageDTO: MessageDTO) {
+  	console.warn("creating message: messageDTO", messageDTO);
+    this.id = Number(messageDTO.id);
+    this.content = messageDTO.content;
+    this.createdAt = new Date(messageDTO.createdAt);
+    this.sender = UserService.getById(Number(messageDTO.sender));
+    this.receiver = UserService.getById(Number(messageDTO.receiver));
+    this.status = messageDTO.status;
+  }
+
+  sentByCurrentUser():boolean {
+    return this.sender.id === UserService.getCurrentUserId();
+  }
+
+  receivedByCurrentUser():boolean {
+    return this.receiver.id === UserService.getCurrentUserId();
+  }
 }

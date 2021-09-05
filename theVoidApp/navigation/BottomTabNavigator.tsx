@@ -10,7 +10,7 @@ import * as React from "react";
 
 import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
-import ChatScreen from "../screens/ChatScreen";
+import ChatListScreen from "../screens/ChatListScreen";
 import ExploreScreen from "../screens/ExploreScreen";
 import MembersScreen from "../screens/MembersScreen";
 import {
@@ -95,8 +95,8 @@ function ChatTabNavigator() {
   return (
     <ChatTabStack.Navigator>
       <ChatTabStack.Screen
-        name="ChatScreen"
-        component={ChatScreen}
+        name="ChatListScreen"
+        component={ChatListScreen}
         options={{ headerShown: false }}
       />
     </ChatTabStack.Navigator>

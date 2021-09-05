@@ -7,11 +7,13 @@ import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
 import { ColorSchemeName } from 'react-native';
+import firebase from 'firebase/app';
 
 import NotFoundScreen from '../screens/NotFoundScreen';
 import { RootStackParamList } from '../types';
 import BottomTabNavigator from './BottomTabNavigator';
 import LinkingConfiguration from './LinkingConfiguration';
+import {UserService} from "../services/UserService";
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -35,3 +37,18 @@ function RootNavigator() {
     </Stack.Navigator>
   );
 }
+
+const firebaseConfig = {
+    apiKey: "AIzaSyD_BqfEgKj5qxkUXjo1s4MQxL67ChQS19w",
+    authDomain: "thevoid-54561.firebaseapp.com",
+    projectId: "thevoid-54561",
+    storageBucket: "thevoid-54561.appspot.com",
+    messagingSenderId: "792083192023",
+    appId: "1:792083192023:web:9046e9337dc70da8f6f892",
+    measurementId: "G-TC8FLKK846"
+};
+
+firebase.initializeApp(firebaseConfig);
+
+UserService.init(1);
+UserService.fetchUsers();

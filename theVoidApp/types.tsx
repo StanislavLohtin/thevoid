@@ -15,7 +15,7 @@ export type BottomTabParamList = {
 };
 
 export type ChatTabParamList = {
-  ChatScreen: undefined;
+  ChatListScreen: undefined;
 };
 
 export type ExploreTabParamList = {

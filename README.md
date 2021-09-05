@@ -3,6 +3,7 @@
 * `cd theVoidApp/`
 * `expo start`
 * `expo start -c`
+* clear cache: `rm -rf /tmp/metro-*`
 
 
 <!-- The core Firebase JS SDK is always required and must be listed first -->

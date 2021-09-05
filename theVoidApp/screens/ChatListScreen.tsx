@@ -1,18 +1,25 @@
 import * as React from "react";
-import { StyleSheet, Image, TextInput } from "react-native";
-import { View } from "../components/Themed";
+import { StyleSheet, Image, TextInput, FlatList } from "react-native";
+import { View, Text } from "../components/Themed";
 import { MessageComponent } from "../components/MessageComponent";
-import {MessageDTO} from "../classes/MessageDTO";
-import {Message} from "../classes/Message";
+import { MessageDTO } from "../classes/MessageDTO";
+import { Message } from "../classes/Message";
+import firebase from "firebase";
 
-export default function ChatScreen() {
+async function fetchMessages(messages: Message[]) {
+  const data = await firebase.database().ref("/messages").get();
+  data.forEach((message) => {
+    const newMessage = new Message(message.toJSON() as unknown as MessageDTO);
+    if (newMessage.sentByCurrentUser() || newMessage.receivedByCurrentUser()) {
+      messages.push(newMessage);
+    }
+  });
+}
+
+export default function ChatListScreen() {
   const [text, onChangeText] = React.useState("");
-  const messagesJson: {messages: MessageDTO[]} = require("./../assets/messages.json");
-
-  const messageViews = [];
-  for (let message of messagesJson.messages) {
-    messageViews.push(<MessageComponent message={new Message(message)} key={message.id} />);
-  }
+  const messages: Message[] = [];
+  fetchMessages(messages);
 
   return (
     <View style={styles.container}>
@@ -33,14 +40,26 @@ export default function ChatScreen() {
             placeholder="🔍 Search"
             placeholderTextColor={"#888a8f"}
             keyboardType="default"
-          >
-          </TextInput>
+          ></TextInput>
         </View>
       </View>
-      <View style={styles.messages}>{messageViews}</View>
+      <FlatList
+        data={messages}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={({ item }) => <MessageComponent message={item} />}
+      />
     </View>
   );
 }
+
+/*function storeHighScore(userId, score) {
+  firebase
+    .database()
+    .ref("users/" + userId)
+    .set({
+      highscore: score,
+    });
+}*/
 
 const styles = StyleSheet.create({
   container: {
@@ -72,9 +91,6 @@ const styles = StyleSheet.create({
     width: 110,
     height: 110,
     borderRadius: 999,
-  },
-  messages: {
-    backgroundColor: "#1e1e20",
   },
   searchInput: {
     borderRadius: 10,

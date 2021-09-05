@@ -15,8 +15,8 @@ export function MemberComponent(props: MemberProps) {
 
   return (
     <View style={styles.container}>
-      <Image style={styles.userAva} source={{ uri: "" + msg.avaUrl }} />
-      <Text style={styles.name}> {msg.name} </Text>
+      <Image style={styles.userAva} source={{ uri: "" + msg.sender.avaUrl }} />
+      <Text style={styles.name}> {msg.sender.name} </Text>
       <Text> {msg.status} </Text>
     </View>
   );

@@ -1,9 +1,8 @@
 export interface MessageDTO {
 	id: string;
-	name: string;
-	avaUrl: string;
-	text: string;
-	time: string;
-	incoming: string;
-	status?: string;
+	content: string;
+	createdAt: string;
+	sender: string;
+	receiver: string;
+	status: string;
 }
