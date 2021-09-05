@@ -17,6 +17,5 @@ export class Message {
 		this.time = new Date(messageDTO.time);
 		this.incoming = messageDTO.incoming === "true";
 		this.status = messageDTO.status;
-		console.log(this);
 	}
 }

@@ -9,7 +9,6 @@ import {Ionicons} from "@expo/vector-icons";
 export default function MembersScreen() {
   const [text, onChangeText] = React.useState("");
   const membersJson: {messages: MessageDTO[]} = require("./../assets/messages.json");
-  console.info(membersJson);
 
   const messageViews = [];
   for (let message of membersJson.messages) {
@@ -33,6 +32,7 @@ export default function MembersScreen() {
             onChangeText={onChangeText}
             value={text}
             placeholder="🔍 Search"
+            placeholderTextColor={"#888a8f"}
             keyboardType="default"
         >
         </TextInput></View>

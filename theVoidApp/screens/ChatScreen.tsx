@@ -8,7 +8,6 @@ import {Message} from "../classes/Message";
 export default function ChatScreen() {
   const [text, onChangeText] = React.useState("");
   const messagesJson: {messages: MessageDTO[]} = require("./../assets/messages.json");
-  console.info(messagesJson);
 
   const messageViews = [];
   for (let message of messagesJson.messages) {
@@ -20,7 +19,7 @@ export default function ChatScreen() {
       <View style={styles.header}>
         <Image
           style={styles.logo}
-          source={require("./../assets/images/logo.png")}
+          source={require("./../assets/images/voidColorWhite.png")}
         />
         <View style={styles.headerRight}>
           <Image
@@ -32,6 +31,7 @@ export default function ChatScreen() {
             onChangeText={onChangeText}
             value={text}
             placeholder="🔍 Search"
+            placeholderTextColor={"#888a8f"}
             keyboardType="default"
           >
           </TextInput>
@@ -66,10 +66,11 @@ const styles = StyleSheet.create({
     paddingRight: 15,
   },
   logo: {
+    marginLeft: 15,
     minHeight: 20,
     minWidth: 20,
-    width: 120,
-    height: 120,
+    width: 110,
+    height: 110,
     borderRadius: 999,
   },
   messages: {
