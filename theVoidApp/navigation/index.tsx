@@ -52,4 +52,4 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
-UserService.init(1);
+UserService.init(2);

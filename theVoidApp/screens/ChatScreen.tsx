@@ -1,5 +1,5 @@
 import * as React from "react";
-import {StyleSheet, Image, TextInput, FlatList, Button} from "react-native";
+import { StyleSheet, Image, TextInput, FlatList, Button } from "react-native";
 import { View } from "../components/Themed";
 import { MessageComponent } from "../components/MessageComponent";
 import { MessageDTO } from "../classes/MessageDTO";
@@ -23,10 +23,29 @@ async function fetchMessages(messages: Message[], userId: number) {
 export default function ChatScreen() {
   const [text, onChangeText] = React.useState("");
   const route = useRoute();
-  const user = UserService.getById(Number(route.params.id));
+  const user = UserService.getById(Number((route.params as { id: string }).id));
 
   function onSendPress() {
-    console.log(text);
+    const newMessage: MessageDTO = {
+      createdAt: Date.now().toLocaleString(),
+      content: text,
+      sender: UserService.getCurrentUserId().toString(),
+      receiver: user.id.toString(),
+      status: "0",
+      id: UserService.getNextId(),
+    };
+    firebase
+      .database()
+      .ref("/messages")
+      .push(newMessage)
+      .then((status) => {
+          user.messages?.push(new Message(newMessage));
+        },
+        (e) => {
+          console.error("users failed!!");
+          console.error(e);
+        }
+      );
     onChangeText("");
   }
 
@@ -51,7 +70,7 @@ export default function ChatScreen() {
         placeholderTextColor={"#888a8f"}
         keyboardType="default"
       ></TextInput>
-      <Button title={"send"} onPress={onSendPress}/>
+      <Button title={"send"} onPress={onSendPress} />
     </View>
   );
 }

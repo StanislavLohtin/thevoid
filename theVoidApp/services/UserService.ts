@@ -103,6 +103,14 @@ export class UserService {
       console.log(user.messages);
     }
   }
+
+  public static getNextId(): string {
+    return (
+      UserService.getAllMessages()
+        .map((a) => a.id)
+        .sort((a, b) => b - a)[0] + 1
+    ).toString();
+  }
 }
 console.warn("init UserService!");
 let serviceInstance: UserService;
