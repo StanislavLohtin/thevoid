@@ -1,4 +1,5 @@
 import { UserDTO } from "./UserDTO";
+import {Message} from "./Message";
 
 export class User {
   id: number;
@@ -8,6 +9,7 @@ export class User {
   createdAt: Date;
   lastOnline: Date;
   avaUrl: string;
+  messages?: Message[];
 
   constructor(userDTO: UserDTO) {
   	console.warn("creating user", userDTO.id);

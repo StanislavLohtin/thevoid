@@ -1,10 +1,13 @@
 import { User } from "../classes/User";
 import firebase from "firebase";
 import { UserDTO } from "../classes/UserDTO";
+import { Message } from "../classes/Message";
+import { MessageDTO } from "../classes/MessageDTO";
 
 export class UserService {
   currentUserID: number = 1;
   users: User[] = [];
+  allMessages: Message[] = [];
 
   constructor(currentUserID: number) {
     this.currentUserID = currentUserID;
@@ -16,6 +19,8 @@ export class UserService {
 
   public static init(currentUserID: number) {
     serviceInstance = new UserService(currentUserID);
+    UserService.fetchUsers();
+    UserService.fetchMessages();
   }
 
   public static getById(id: number): User {
@@ -35,7 +40,11 @@ export class UserService {
     return this.getInstance().currentUserID;
   }
 
-  public static fetchUsers() {
+  public static getAllMessages() {
+    return this.getInstance().allMessages;
+  }
+
+  private static fetchUsers() {
     firebase
       .database()
       .ref("/users")
@@ -43,7 +52,8 @@ export class UserService {
       .then(
         (data) => {
           data.forEach((user) => {
-            this.getInstance().users.push(new User(user.toJSON() as unknown as UserDTO));
+            const newUser = new User(user.toJSON() as unknown as UserDTO);
+            this.getInstance().users.push(newUser);
           });
           console.warn("total users:", this.getInstance().users.length);
         },
@@ -52,6 +62,46 @@ export class UserService {
           console.error(e);
         }
       );
+  }
+
+  private static getAllMessagesForUserId(id: number): Message[] {
+    let result: Message[] = [];
+    for (let message of UserService.getAllMessages()) {
+      if (message.sender.id === id || message.receiver.id === id) {
+        result.push(message);
+      }
+    }
+    return result;
+  }
+
+  private static fetchMessages() {
+    firebase
+      .database()
+      .ref("/messages")
+      .get()
+      .then(
+        (data) => {
+          data.forEach((message) => {
+            this.getInstance().allMessages.push(
+              new Message(message.toJSON() as unknown as MessageDTO)
+            );
+          });
+          console.warn("total messages:", this.getInstance().users.length);
+          UserService.assignMessagesToUsers();
+        },
+        (e) => {
+          console.error("users failed!!");
+          console.error(e);
+        }
+      );
+  }
+
+  private static assignMessagesToUsers() {
+    for (let user of UserService.getUsers()) {
+      user.messages = UserService.getAllMessagesForUserId(user.id);
+      console.log("USER MESSAGES " + user.id);
+      console.log(user.messages);
+    }
   }
 }
 console.warn("init UserService!");

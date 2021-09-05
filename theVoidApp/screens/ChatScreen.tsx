@@ -1,65 +1,57 @@
 import * as React from "react";
-import { StyleSheet, Image, TextInput, FlatList } from "react-native";
-import { View, Text } from "../components/Themed";
+import {StyleSheet, Image, TextInput, FlatList, Button} from "react-native";
+import { View } from "../components/Themed";
 import { MessageComponent } from "../components/MessageComponent";
 import { MessageDTO } from "../classes/MessageDTO";
 import { Message } from "../classes/Message";
 import firebase from "firebase";
-import { ChatDTO } from "../classes/ChatDTO";
-import { Chat } from "../classes/Chat";
-import {UserService} from "../services/UserService";
-import {ChatComponent} from "../components/ChatComponent";
+import { useRoute } from "@react-navigation/native";
+import { UserService } from "../services/UserService";
 
-async function fetchChats(chats: Chat[]) {
-  const data = await firebase.database().ref("/chats").get();
-  data.forEach((chat) => {
-    const newChat = new Chat(chat.toJSON() as unknown as ChatDTO);
-    if (newChat.id > -1) {
-      chats.push(newChat);
-    }
-  });
-  for (let chat of chats) {
-    for (let message of UserService.getAllMessages()) {
-      if (message.id === chat.lastMessageId) {
-        chat.lastMessage = message;
-        chat.user = UserService.getById(chat.userId);
+async function fetchMessages(messages: Message[], userId: number) {
+  const data = await firebase.database().ref("/messages").get();
+  data.forEach((message) => {
+    const newMessage = new Message(message.toJSON() as unknown as MessageDTO);
+    if (newMessage.sentByCurrentUser() || newMessage.receivedByCurrentUser()) {
+      if (newMessage.sentByUser(userId) || newMessage.receivedByUser(userId)) {
+        messages.push(newMessage);
       }
     }
-  }
+  });
 }
 
-export default function ChatListScreen() {
+export default function ChatScreen() {
   const [text, onChangeText] = React.useState("");
-  const chats: Chat[] = [];
-  fetchChats(chats);
+  const route = useRoute();
+  const user = UserService.getById(Number(route.params.id));
+
+  function onSendPress() {
+    console.log(text);
+    onChangeText("");
+  }
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <Image
-          style={styles.logo}
-          source={require("./../assets/images/voidColorWhite.png")}
+          style={styles.userAva}
+          source={require("./../assets/images/ava1.png")}
         />
-        <View style={styles.headerRight}>
-          <Image
-            style={styles.userAva}
-            source={require("./../assets/images/ava1.png")}
-          />
-          <TextInput
-            style={styles.searchInput}
-            onChangeText={onChangeText}
-            value={text}
-            placeholder="🔍 Search"
-            placeholderTextColor={"#888a8f"}
-            keyboardType="default"
-          ></TextInput>
-        </View>
       </View>
       <FlatList
-        data={chats}
+        data={user.messages}
         keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => <ChatComponent chat={item} />}
+        renderItem={({ item }) => <MessageComponent message={item} />}
       />
+      <TextInput
+        style={styles.searchInput}
+        onChangeText={onChangeText}
+        value={text}
+        placeholder="Enter text"
+        placeholderTextColor={"#888a8f"}
+        keyboardType="default"
+      ></TextInput>
+      <Button title={"send"} onPress={onSendPress}/>
     </View>
   );
 }

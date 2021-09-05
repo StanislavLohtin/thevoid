@@ -27,4 +27,12 @@ export class Message {
   receivedByCurrentUser():boolean {
     return this.receiver.id === UserService.getCurrentUserId();
   }
+
+  sentByUser(id: number):boolean {
+    return this.sender.id === id;
+  }
+
+  receivedByUser(id: number):boolean {
+    return this.sender.id === id;
+  }
 }

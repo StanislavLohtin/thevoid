@@ -14,6 +14,7 @@ import { RootStackParamList } from '../types';
 import BottomTabNavigator from './BottomTabNavigator';
 import LinkingConfiguration from './LinkingConfiguration';
 import {UserService} from "../services/UserService";
+import ChatScreen from "../screens/ChatScreen";
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -34,6 +35,7 @@ function RootNavigator() {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Root" component={BottomTabNavigator} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
+      <Stack.Screen name="ChatScreen" component={ChatScreen} options={{ title: 'Chat!!' }} />
     </Stack.Navigator>
   );
 }
@@ -51,4 +53,3 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 UserService.init(1);
-UserService.fetchUsers();

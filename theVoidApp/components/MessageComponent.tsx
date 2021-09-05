@@ -1,7 +1,13 @@
 import * as React from "react";
 import { Text, TextProps } from "./Themed";
-import { Image, StyleSheet, View } from "react-native";
-import {Message} from "../classes/Message";
+import {
+  Image,
+  StyleSheet,
+  TouchableWithoutFeedback,
+  View,
+} from "react-native";
+import { Message } from "../classes/Message";
+import { useNavigation } from "@react-navigation/native";
 
 type MessageProps = TextProps & {
   message: Message;
@@ -15,13 +21,12 @@ export function MessageComponent(props: MessageProps) {
 
   return (
     <View style={styles.container}>
-      <Image style={styles.userAva} source={{ uri: "" + msg.sender.avaUrl }} />
       <View>
-        <Text style={styles.name}> {msg.sender.name} </Text>
         <Text style={styles.text}>
           {" "}
-          {ellipsis((msg.sentByCurrentUser() ? "" : "You: ") + msg.content)} ·{" "}
-          {msg.createdAt.toLocaleTimeString()}
+          {ellipsis(
+            (msg.sentByCurrentUser() ? "" : "You: ") + msg.content
+          )} · {msg.createdAt.toLocaleTimeString()}
         </Text>
       </View>
       <Text> {msg.status} </Text>
