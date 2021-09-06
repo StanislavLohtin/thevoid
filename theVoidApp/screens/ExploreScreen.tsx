@@ -1,20 +1,15 @@
 import * as React from "react";
 import {StyleSheet, TextInput} from "react-native";
 import {Text, View} from "../components/Themed";
-import {MessageDTO} from "../classes/MessageDTO";
 import {MemberComponent} from "../components/MemberComponent";
-import {Message} from "../classes/Message";
+import {UserService} from "../services/UserService";
 
 export default function ExploreScreen() {
   const [text, onChangeText] = React.useState("");
-  const membersJson: {
-    messages: MessageDTO[];
-  } = require("./../assets/messages.json");
-
   const messageViews = [];
-  for (let message of membersJson.messages) {
+  for (let message of UserService.getAllMessages()) {
     messageViews.push(
-      <MemberComponent message={new Message(message)} key={message.id} />
+      <MemberComponent message={message} key={message.id} />
     );
   }
 

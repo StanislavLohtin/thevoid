@@ -4,21 +4,9 @@ import { View } from "../components/Themed";
 import { MessageComponent } from "../components/MessageComponent";
 import { MessageDTO } from "../classes/MessageDTO";
 import { Message } from "../classes/Message";
-import firebase from "firebase";
 import { useRoute } from "@react-navigation/native";
 import { UserService } from "../services/UserService";
-
-async function fetchMessages(messages: Message[], userId: number) {
-  const data = await firebase.database().ref("/messages").get();
-  data.forEach((message) => {
-    const newMessage = new Message(message.toJSON() as unknown as MessageDTO);
-    if (newMessage.sentByCurrentUser() || newMessage.receivedByCurrentUser()) {
-      if (newMessage.sentByUser(userId) || newMessage.receivedByUser(userId)) {
-        messages.push(newMessage);
-      }
-    }
-  });
-}
+import { FirebaseService } from "../services/FirebaseService";
 
 export default function ChatScreen() {
   const [text, onChangeText] = React.useState("");
@@ -26,26 +14,28 @@ export default function ChatScreen() {
   const user = UserService.getById(Number((route.params as { id: string }).id));
 
   function onSendPress() {
-    const newMessage: MessageDTO = {
+    const newMessageDTO: MessageDTO = {
       createdAt: Date.now().toLocaleString(),
       content: text,
       sender: UserService.getCurrentUserId().toString(),
       receiver: user.id.toString(),
       status: "0",
-      id: UserService.getNextId(),
     };
-    firebase
-      .database()
-      .ref("/messages")
-      .push(newMessage)
-      .then((status) => {
-          user.messages?.push(new Message(newMessage));
-        },
-        (e) => {
-          console.error("users failed!!");
-          console.error(e);
+    FirebaseService.push("/messages", newMessageDTO).then(
+      (id) => {
+        if (!id.key) {
+          console.error("create failed");
+          return;
         }
-      );
+        const newMessage = new Message(newMessageDTO, id.key);
+        user.messages?.push(newMessage);
+        UserService.getAllMessages().push(newMessage);
+      },
+      (e) => {
+        console.error("send message failed!!");
+        console.error(e);
+      }
+    );
     onChangeText("");
   }
 

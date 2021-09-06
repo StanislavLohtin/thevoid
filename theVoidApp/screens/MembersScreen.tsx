@@ -1,18 +1,16 @@
 import * as React from 'react';
 import {Image, StyleSheet, TextInput} from 'react-native';
 import {Text, View} from '../components/Themed';
-import {MessageDTO} from "../classes/MessageDTO";
-import {Message} from "../classes/Message";
 import {MemberComponent} from "../components/MemberComponent";
 import {Ionicons} from "@expo/vector-icons";
+import {UserService} from "../services/UserService";
 
 export default function MembersScreen() {
   const [text, onChangeText] = React.useState("");
-  const membersJson: {messages: MessageDTO[]} = require("./../assets/messages.json");
 
   const messageViews = [];
-  for (let message of membersJson.messages) {
-    messageViews.push(<MemberComponent message={new Message(message)} key={message.id} />);
+  for (let message of UserService.getAllMessages()) {
+    messageViews.push(<MemberComponent message={message} key={message.id} />);
   }
 
   return (

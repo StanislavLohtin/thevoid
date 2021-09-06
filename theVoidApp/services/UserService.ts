@@ -1,8 +1,8 @@
 import { User } from "../classes/User";
-import firebase from "firebase";
 import { UserDTO } from "../classes/UserDTO";
 import { Message } from "../classes/Message";
 import { MessageDTO } from "../classes/MessageDTO";
+import { FirebaseService } from "./FirebaseService";
 
 export class UserService {
   currentUserID: number = 1;
@@ -18,6 +18,7 @@ export class UserService {
   }
 
   public static init(currentUserID: number) {
+    console.log("init UserService!");
     serviceInstance = new UserService(currentUserID);
     UserService.fetchUsers();
     UserService.fetchMessages();
@@ -45,23 +46,19 @@ export class UserService {
   }
 
   private static fetchUsers() {
-    firebase
-      .database()
-      .ref("/users")
-      .get()
-      .then(
-        (data) => {
-          data.forEach((user) => {
-            const newUser = new User(user.toJSON() as unknown as UserDTO);
-            this.getInstance().users.push(newUser);
-          });
-          console.warn("total users:", this.getInstance().users.length);
-        },
-        (e) => {
-          console.error("users failed!!");
-          console.error(e);
-        }
-      );
+    FirebaseService.get("/users").then(
+      (data) => {
+        data.forEach((user: any) => {
+          const newUser = new User(user.toJSON() as unknown as UserDTO);
+          this.getInstance().users.push(newUser);
+        });
+        console.warn("total users:", this.getInstance().users.length);
+      },
+      (e) => {
+        console.error("users failed!!");
+        console.error(e);
+      }
+    );
   }
 
   private static getAllMessagesForUserId(id: number): Message[] {
@@ -75,42 +72,34 @@ export class UserService {
   }
 
   private static fetchMessages() {
-    firebase
-      .database()
-      .ref("/messages")
-      .get()
-      .then(
-        (data) => {
-          data.forEach((message) => {
-            this.getInstance().allMessages.push(
-              new Message(message.toJSON() as unknown as MessageDTO)
-            );
-          });
-          console.warn("total messages:", this.getInstance().users.length);
-          UserService.assignMessagesToUsers();
-        },
-        (e) => {
-          console.error("users failed!!");
-          console.error(e);
-        }
-      );
+    FirebaseService.get("/messages").then(
+      (data) => {
+          console.warn("messages!!!!!:", data);
+        data.forEach((message) => {
+          if (!message.ref.key) {
+            console.error("messages has no key!!", message);
+            return;
+          }
+          this.getInstance().allMessages.push(
+            new Message(message.toJSON() as unknown as MessageDTO, message.ref.key)
+          );
+        });
+        console.warn("total messages:", this.getInstance().users.length);
+        UserService.assignMessagesToUsers();
+      },
+      (e) => {
+        console.error("users failed!!", e);
+      }
+    );
   }
 
   private static assignMessagesToUsers() {
     for (let user of UserService.getUsers()) {
       user.messages = UserService.getAllMessagesForUserId(user.id);
-      console.log("USER MESSAGES " + user.id);
-      console.log(user.messages);
     }
   }
 
-  public static getNextId(): string {
-    return (
-      UserService.getAllMessages()
-        .map((a) => a.id)
-        .sort((a, b) => b - a)[0] + 1
-    ).toString();
-  }
 }
-console.warn("init UserService!");
+
+console.log("Loaded UserService!");
 let serviceInstance: UserService;

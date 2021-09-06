@@ -3,16 +3,16 @@ import { User } from "./User";
 import { UserService } from "../services/UserService";
 
 export class Message {
-  id: number;
+  id: string;
   content: string;
   createdAt: Date;
   sender: User;
   receiver: User;
   status: string;
 
-  constructor(messageDTO: MessageDTO) {
+  constructor(messageDTO: MessageDTO, id: string) {
   	console.warn("creating message: messageDTO", messageDTO);
-    this.id = Number(messageDTO.id);
+    this.id = id;
     this.content = messageDTO.content;
     this.createdAt = new Date(messageDTO.createdAt);
     this.sender = UserService.getById(Number(messageDTO.sender));

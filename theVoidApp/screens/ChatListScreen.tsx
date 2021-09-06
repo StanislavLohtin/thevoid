@@ -1,18 +1,15 @@
 import * as React from "react";
 import { StyleSheet, Image, TextInput, FlatList } from "react-native";
 import { View, Text } from "../components/Themed";
-import { MessageComponent } from "../components/MessageComponent";
-import { MessageDTO } from "../classes/MessageDTO";
-import { Message } from "../classes/Message";
-import firebase from "firebase";
 import { ChatDTO } from "../classes/ChatDTO";
 import { Chat } from "../classes/Chat";
 import {UserService} from "../services/UserService";
 import {ChatComponent} from "../components/ChatComponent";
+import {FirebaseService} from "../services/FirebaseService";
 
 async function fetchChats(chats: Chat[]) {
-  const data = await firebase.database().ref("/chats").get();
-  data.forEach((chat) => {
+  const data = await FirebaseService.get("/chats");
+  data.forEach((chat: any) => {
     const newChat = new Chat(chat.toJSON() as unknown as ChatDTO);
     if (newChat.id > -1) {
       chats.push(newChat);

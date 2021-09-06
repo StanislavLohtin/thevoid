@@ -6,7 +6,7 @@ import {UserService} from "../services/UserService";
 export class Chat {
   id: number;
   userId: number = -1;
-  lastMessageId: number;
+  lastMessageId: string;
   user?: User;
   lastMessage?: Message;
 
@@ -17,7 +17,7 @@ export class Chat {
     } else if (Number(chatDTO.user2) === UserService.getCurrentUserId()) {
       this.userId = Number( chatDTO.user1);
     }
-    this.lastMessageId = Number(chatDTO.lastMessage);
-  	console.warn("creating chat", this);
+    this.lastMessageId = chatDTO.lastMessage;
+  	console.log("Creating chat", this);
   }
 }

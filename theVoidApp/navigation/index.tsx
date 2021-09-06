@@ -15,6 +15,7 @@ import BottomTabNavigator from './BottomTabNavigator';
 import LinkingConfiguration from './LinkingConfiguration';
 import {UserService} from "../services/UserService";
 import ChatScreen from "../screens/ChatScreen";
+import {FirebaseService} from "../services/FirebaseService";
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -40,16 +41,5 @@ function RootNavigator() {
   );
 }
 
-const firebaseConfig = {
-    apiKey: "AIzaSyD_BqfEgKj5qxkUXjo1s4MQxL67ChQS19w",
-    authDomain: "thevoid-54561.firebaseapp.com",
-    projectId: "thevoid-54561",
-    storageBucket: "thevoid-54561.appspot.com",
-    messagingSenderId: "792083192023",
-    appId: "1:792083192023:web:9046e9337dc70da8f6f892",
-    measurementId: "G-TC8FLKK846"
-};
-
-firebase.initializeApp(firebaseConfig);
-
-UserService.init(2);
+FirebaseService.init();
+UserService.init(1);
