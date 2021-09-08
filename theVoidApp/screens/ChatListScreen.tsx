@@ -1,34 +1,30 @@
 import * as React from "react";
 import { StyleSheet, Image, TextInput, FlatList } from "react-native";
-import { View, Text } from "../components/Themed";
+import { View } from "../components/Themed";
 import { ChatDTO } from "../classes/ChatDTO";
 import { Chat } from "../classes/Chat";
-import {UserService} from "../services/UserService";
 import {ChatComponent} from "../components/ChatComponent";
 import {FirebaseService} from "../services/FirebaseService";
+import {useEffect} from "react";
 
-async function fetchChats(chats: Chat[]) {
-  const data = await FirebaseService.get("/chats");
-  data.forEach((chat: any) => {
-    const newChat = new Chat(chat.toJSON() as unknown as ChatDTO);
-    if (newChat.id > -1) {
-      chats.push(newChat);
-    }
-  });
-  for (let chat of chats) {
-    for (let message of UserService.getAllMessages()) {
-      if (message.id === chat.lastMessageId) {
-        chat.lastMessage = message;
-        chat.user = UserService.getById(chat.userId);
-      }
-    }
-  }
-}
+
 
 export default function ChatListScreen() {
   const [text, onChangeText] = React.useState("");
-  const chats: Chat[] = [];
-  fetchChats(chats);
+  const [chats, setChats] = React.useState([]);
+  useEffect(() =>  {
+
+    async function fetchChats() {
+      const result: Chat[] = [];
+      const data = await FirebaseService.get("/chats");
+      data.forEach((chat: any) => {
+        result.push(new Chat(chat.toJSON() as unknown as ChatDTO));
+      });
+      setChats(result);
+    }
+
+    fetchChats();
+  }, []);
 
   return (
     <View style={styles.container}>

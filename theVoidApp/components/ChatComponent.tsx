@@ -15,12 +15,9 @@ type ChatProps = TextProps & {
 
 export function ChatComponent(props: ChatProps) {
   const chat = props.chat;
-  console.warn("CHAT");
-  console.warn(chat);
+  console.log("CHAT:", chat);
   const navigation = useNavigation();
   const user = chat.user;
-  console.warn("USER");
-  console.warn(user);
 
   function onChatClick() {
     navigation.navigate("ChatScreen", { id: chat.userId });

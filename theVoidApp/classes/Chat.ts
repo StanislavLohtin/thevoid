@@ -18,6 +18,7 @@ export class Chat {
       this.userId = Number( chatDTO.user1);
     }
     this.lastMessageId = chatDTO.lastMessage;
-  	console.log("Creating chat", this);
+    this.lastMessage = UserService.getMessageById(this.lastMessageId);
+  	console.log("Creating chat: ", this.id);
   }
 }

@@ -1,17 +1,13 @@
 import * as React from 'react';
-import {Image, StyleSheet, TextInput} from 'react-native';
+import {FlatList, Image, StyleSheet, TextInput} from 'react-native';
 import {Text, View} from '../components/Themed';
-import {MemberComponent} from "../components/MemberComponent";
 import {Ionicons} from "@expo/vector-icons";
 import {UserService} from "../services/UserService";
+import {MemberComponent} from "../components/MemberComponent";
 
 export default function MembersScreen() {
   const [text, onChangeText] = React.useState("");
-
-  const messageViews = [];
-  for (let message of UserService.getAllMessages()) {
-    messageViews.push(<MemberComponent message={message} key={message.id} />);
-  }
+  const users = UserService.getUsers();
 
   return (
       <View style={styles.container}>
@@ -34,7 +30,11 @@ export default function MembersScreen() {
             keyboardType="default"
         >
         </TextInput></View>
-        <View style={styles.members}>{messageViews}</View>
+        <FlatList
+          data={users}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={({ item }) => <MemberComponent user={item} />}
+        />
       </View>
   );
 }

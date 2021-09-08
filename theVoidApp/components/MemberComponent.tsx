@@ -1,23 +1,23 @@
 import * as React from "react";
 import { Text, TextProps } from "./Themed";
 import { Image, StyleSheet, View } from "react-native";
-import {Message} from "../classes/Message";
+import {User} from "../classes/User";
 
 type MemberProps = TextProps & {
-  message: Message;
+  user: User;
 };
 
 export function MemberComponent(props: MemberProps) {
-  const msg = props.message;
+  const user = props.user;
   function ellipsis(text: string) {
     return text.length <= 38 ? text : text.substr(0, 35) + "...";
   }
 
   return (
     <View style={styles.container}>
-      <Image style={styles.userAva} source={{ uri: "" + msg.sender.avaUrl }} />
-      <Text style={styles.name}> {msg.sender.name} </Text>
-      <Text> {msg.status} </Text>
+      <Image style={styles.userAva} source={{ uri: "" + user.avaUrl }} />
+      <Text style={styles.name}> {user.name} </Text>
+      <Text> {user.email} </Text>
     </View>
   );
 }

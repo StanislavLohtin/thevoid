@@ -1,15 +1,15 @@
 import * as React from "react";
 import {StyleSheet, TextInput} from "react-native";
 import {Text, View} from "../components/Themed";
-import {MemberComponent} from "../components/MemberComponent";
 import {UserService} from "../services/UserService";
+import {MessageComponent} from "../components/MessageComponent";
 
 export default function ExploreScreen() {
   const [text, onChangeText] = React.useState("");
   const messageViews = [];
   for (let message of UserService.getAllMessages()) {
     messageViews.push(
-      <MemberComponent message={message} key={message.id} />
+      <MessageComponent message={message} key={message.id} />
     );
   }
 

@@ -12,7 +12,7 @@ export class User {
   messages?: Message[];
 
   constructor(userDTO: UserDTO) {
-  	console.warn("creating user", userDTO.id);
+  	console.log("creating user", userDTO.id);
     this.id = Number(userDTO.id);
     this.name = userDTO.name;
     this.email = userDTO.email;

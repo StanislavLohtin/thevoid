@@ -11,13 +11,13 @@ export class Message {
   status: string;
 
   constructor(messageDTO: MessageDTO, id: string) {
-  	console.warn("creating message: messageDTO", messageDTO);
     this.id = id;
     this.content = messageDTO.content;
     this.createdAt = new Date(messageDTO.createdAt);
     this.sender = UserService.getById(Number(messageDTO.sender));
     this.receiver = UserService.getById(Number(messageDTO.receiver));
     this.status = messageDTO.status;
+  	console.log(`Creating message ${this.id}: "${this.content}"`);
   }
 
   sentByCurrentUser():boolean {

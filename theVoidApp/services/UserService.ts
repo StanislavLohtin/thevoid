@@ -33,6 +33,15 @@ export class UserService {
     throw new Error("User with id " + id + " not found!");
   }
 
+  public static getMessageById(id: string): Message {
+    for (let message of this.getInstance().allMessages) {
+      if (message.id === id) {
+        return message;
+      }
+    }
+    throw new Error("Message with id " + id + " not found!");
+  }
+
   public static getUsers() {
     return this.getInstance().users;
   }
@@ -52,7 +61,7 @@ export class UserService {
           const newUser = new User(user.toJSON() as unknown as UserDTO);
           this.getInstance().users.push(newUser);
         });
-        console.warn("total users:", this.getInstance().users.length);
+        console.log("total users:", this.getInstance().users.length);
       },
       (e) => {
         console.error("users failed!!");
@@ -74,7 +83,7 @@ export class UserService {
   private static fetchMessages() {
     FirebaseService.get("/messages").then(
       (data) => {
-          console.warn("messages!!!!!:", data);
+          console.log("messages!!!!!:", data);
         data.forEach((message) => {
           if (!message.ref.key) {
             console.error("messages has no key!!", message);
@@ -84,7 +93,7 @@ export class UserService {
             new Message(message.toJSON() as unknown as MessageDTO, message.ref.key)
           );
         });
-        console.warn("total messages:", this.getInstance().users.length);
+        console.log("total messages:", this.getInstance().users.length);
         UserService.assignMessagesToUsers();
       },
       (e) => {
