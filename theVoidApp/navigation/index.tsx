@@ -7,7 +7,6 @@ import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
 import { ColorSchemeName } from 'react-native';
-import firebase from 'firebase/app';
 
 import NotFoundScreen from '../screens/NotFoundScreen';
 import { RootStackParamList } from '../types';
@@ -16,8 +15,10 @@ import LinkingConfiguration from './LinkingConfiguration';
 import {UserService} from "../services/UserService";
 import ChatScreen from "../screens/ChatScreen";
 import {FirebaseService} from "../services/FirebaseService";
+import Routes from "./Routes";
+import {AuthUserProvider} from "./AuthUserProvider";
 
-export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
+/*export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
     <NavigationContainer
       linking={LinkingConfiguration}
@@ -25,7 +26,7 @@ export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeNa
       <RootNavigator />
     </NavigationContainer>
   );
-}
+}*/
 
 // A root stack navigator is often used for displaying modals on top of all other content
 // Read more here: https://reactnavigation.org/docs/modal
@@ -38,6 +39,14 @@ function RootNavigator() {
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
       <Stack.Screen name="ChatScreen" component={ChatScreen} options={{ title: 'Chat!!' }} />
     </Stack.Navigator>
+  );
+}
+
+export default function Providers() {
+  return (
+    <AuthUserProvider>
+      <Routes />
+    </AuthUserProvider>
   );
 }
 
