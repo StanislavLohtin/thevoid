@@ -1,14 +1,18 @@
 import * as React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import HomeScreen from '../screens/HomeScreen';
+import BottomTabNavigator from "./BottomTabNavigator";
+import NotFoundScreen from "../screens/NotFoundScreen";
+import ChatScreen from "../screens/ChatScreen";
 
 const Stack = createStackNavigator();
 
 export default function AppStack() {
   return (
-    <Stack.Navigator>
-      <Stack.Screen name="Home" component={HomeScreen} />
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="Root" component={BottomTabNavigator} />
+      <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
+      <Stack.Screen name="ChatScreen" component={ChatScreen} options={{ title: 'Chat!!' }} />
     </Stack.Navigator>
   );
 }
