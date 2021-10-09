@@ -1,22 +1,37 @@
-import firebase from 'firebase';
-import 'firebase/auth';
+import firebase from "firebase";
+import "firebase/auth";
 
-import firebaseConfig from './firebaseConfig';
+import firebaseConfig from "./firebaseConfig";
+import UserService from "../../services/UserService";
+import FirebaseService, { APP_NAME } from "../../services/FirebaseService";
 
 // Initialize Firebase App
 
 if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig);
+  firebase.initializeApp(firebaseConfig, APP_NAME);
 }
 
-export const auth = firebase.auth();
+export const auth = firebase.auth(FirebaseService.app);
 
-export const loginWithEmail = (email, password) =>
-  auth.signInWithEmailAndPassword(email, password);
+export const loginWithEmail = async (email, password) => {
+  console.warn("loginWithEmail");
+  await auth.signInWithEmailAndPassword(email, password);
+  UserService.getUser(auth.currentUser.uid);
+};
 
-export const registerWithEmail = (email, password) =>
-  auth.createUserWithEmailAndPassword(email, password);
+export const registerWithEmail = async (email, password, username) => {
+  console.warn("registerWithEmail");
+  await auth.createUserWithEmailAndPassword(email, password);
+  UserService.createUser(auth.currentUser.uid, email, username);
+};
 
 export const logout = () => auth.signOut();
 
-export const passwordReset = email => auth.sendPasswordResetEmail(email);
+export const passwordReset = (email) => auth.sendPasswordResetEmail(email);
+
+if (auth.currentUser) {
+  console.info("signed in: ", auth.currentUser.uid, auth.currentUser);
+  UserService.getUser(auth.currentUser.uid);
+} else {
+  console.info(auth);
+}

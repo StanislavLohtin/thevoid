@@ -58,6 +58,7 @@ export default function LoginScreen({ navigation }) {
         onSubmit={values => handleOnLogin(values)}
       >
         <FormField
+          width=""
           name="email"
           leftIcon="email"
           placeholder="Enter email"
@@ -67,6 +68,7 @@ export default function LoginScreen({ navigation }) {
           autoFocus={true}
         />
         <FormField
+          width=""
           name="password"
           leftIcon="lock"
           placeholder="Enter password"

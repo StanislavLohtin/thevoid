@@ -5,19 +5,19 @@ import { MessageComponent } from "../components/MessageComponent";
 import { MessageDTO } from "../classes/MessageDTO";
 import { Message } from "../classes/Message";
 import { useRoute } from "@react-navigation/native";
-import { UserService } from "../services/UserService";
-import { FirebaseService } from "../services/FirebaseService";
+import UserService from "../services/UserService";
+import FirebaseService from "../services/FirebaseService";
 
 export default function ChatScreen() {
   const [text, onChangeText] = React.useState("");
   const route = useRoute();
-  const user = UserService.getById(Number((route.params as { id: string }).id));
+  const user = UserService.getById((route.params as { id: string }).id);
 
   function onSendPress() {
-    const newMessageDTO: MessageDTO = {
+    /*const newMessageDTO: MessageDTO = {
       createdAt: Date.now().toLocaleString(),
       content: text,
-      sender: UserService.getCurrentUserId().toString(),
+      sender: UserService.currentUser.id,
       receiver: user.id.toString(),
       status: "0",
     };
@@ -35,7 +35,7 @@ export default function ChatScreen() {
         console.error("send message failed!!");
         console.error(e);
       }
-    );
+    );*/
     onChangeText("");
   }
 
@@ -47,11 +47,11 @@ export default function ChatScreen() {
           source={require("./../assets/images/ava1.png")}
         />
       </View>
-      <FlatList
-        data={user.messages}
+      {/*<FlatList
+        data={user}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => <MessageComponent message={item} />}
-      />
+      />*/}
       <TextInput
         style={styles.searchInput}
         onChangeText={onChangeText}

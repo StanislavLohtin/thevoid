@@ -1,23 +1,32 @@
 import * as React from "react";
 import { Text, TextProps } from "./Themed";
 import { Image, StyleSheet, View } from "react-native";
-import {User} from "../classes/User";
+import { CurrentUser } from "../classes/CurrentUser";
+import firebase from "firebase";
 
 type MemberProps = TextProps & {
-  user: User;
+  user: CurrentUser;
 };
 
 export function MemberComponent(props: MemberProps) {
+
+  const [avaUrl, setAvaUrl] = React.useState("");
+
   const user = props.user;
-  function ellipsis(text: string) {
-    return text.length <= 38 ? text : text.substr(0, 35) + "...";
-  }
+
+  const storageRef = firebase.storage().ref();
+
+  const imagesRef = storageRef.child("avatars");
+  const avaRef = imagesRef.child(user.id + ".png");
+  avaRef.getDownloadURL().then((url) => {
+    setAvaUrl(url);
+  });
 
   return (
     <View style={styles.container}>
-      <Image style={styles.userAva} source={{ uri: "" + user.avaUrl }} />
-      <Text style={styles.name}> {user.name} </Text>
-      <Text> {user.email} </Text>
+      <Image style={styles.userAva} source={{ uri: avaUrl }} />
+      <Text style={styles.name}> {user.username} </Text>
+      {/*<Text> {user.email} </Text>*/}
     </View>
   );
 }
@@ -46,7 +55,7 @@ const styles = StyleSheet.create({
     marginTop: 15,
     borderBottomColor: "rgba(200, 200, 200, 0.2)",
     borderBottomWidth: 0.3,
-    width: "100%"
+    width: "100%",
   },
   text: {
     color: "grey",

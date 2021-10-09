@@ -1,13 +1,13 @@
 import { MessageDTO } from "./MessageDTO";
-import { User } from "./User";
+import { CurrentUser } from "./CurrentUser";
 import { UserService } from "../services/UserService";
 
 export class Message {
   id: string;
   content: string;
   createdAt: Date;
-  sender: User;
-  receiver: User;
+  sender: CurrentUser;
+  receiver: CurrentUser;
   status: string;
 
   constructor(messageDTO: MessageDTO, id: string) {

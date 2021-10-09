@@ -43,6 +43,7 @@ export default function ForgotPasswordScreen({ navigation }) {
         onSubmit={values => handlePasswordReset(values)}
       >
         <FormField
+          width=""
           name="email"
           leftIcon="email"
           placeholder="Enter email"

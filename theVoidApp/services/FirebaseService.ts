@@ -1,6 +1,8 @@
 import firebase from "firebase";
 
-export class FirebaseService {
+export const APP_NAME = "TheVoidApp";
+
+class _FirebaseService {
   app: firebase.app.App;
 
   constructor() {
@@ -11,32 +13,29 @@ export class FirebaseService {
       storageBucket: "thevoid-54561.appspot.com",
       messagingSenderId: "792083192023",
       appId: "1:792083192023:web:9046e9337dc70da8f6f892",
-      measurementId: "G-TC8FLKK846"
+      measurementId: "G-TC8FLKK846",
     };
 
-    this.app = firebase.initializeApp(firebaseConfig, "TheVoidApp");
+    this.app = firebase.initializeApp(firebaseConfig, APP_NAME);
   }
 
-  private static getInstance() {
-    return serviceInstance;
+  public getApp(): firebase.app.App {
+    return this.app;
   }
 
-  public static init() {
-    console.log("init FirebaseService!");
-    serviceInstance = new FirebaseService();
+  public get(path: string): Promise<firebase.database.DataSnapshot> {
+    return this.app.database().ref(path).get();
   }
 
-  public static getApp(): firebase.app.App {
-    return serviceInstance.app;
+  public push(path: string, obj: object): firebase.database.ThenableReference {
+    return this.app.database().ref(path).push(obj);
   }
 
-  public static get(path: string): Promise<firebase.database.DataSnapshot> {
-    return serviceInstance.app.database().ref(path).get();
-  }
-
-  public static push(path: string, obj: object): firebase.database.ThenableReference {
-    return serviceInstance.app.database().ref(path).push(obj);
+  public set(path: string, obj: object): Promise<any> {
+    return this.app.database().ref(path).set(obj);
   }
 }
+
 console.log("Loaded FirebaseService!");
-let serviceInstance: FirebaseService;
+const FirebaseService = new _FirebaseService();
+export default FirebaseService;

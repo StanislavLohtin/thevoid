@@ -4,7 +4,7 @@ import { View } from "../components/Themed";
 import { ChatDTO } from "../classes/ChatDTO";
 import { Chat } from "../classes/Chat";
 import {ChatComponent} from "../components/ChatComponent";
-import {FirebaseService} from "../services/FirebaseService";
+import FirebaseService from "../services/FirebaseService";
 import {useEffect} from "react";
 
 
@@ -23,7 +23,7 @@ export default function ChatListScreen() {
       setChats(result);
     }
 
-    fetchChats();
+    // fetchChats();
   }, []);
 
   return (

@@ -1,9 +1,10 @@
+import {ChatDTO} from "./ChatDTO";
+
 export interface UserDTO {
-	id: string;
-	name: string;
+	username: string;
 	email: string;
-	password: string;
 	createdAt: string;
 	lastOnline: string;
-	avaUrl: string;
+	status: string;
+	chatIds?: string[];
 }

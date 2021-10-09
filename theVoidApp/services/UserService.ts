@@ -1,12 +1,49 @@
-import { User } from "../classes/User";
+import { CurrentUser } from "../classes/CurrentUser";
 import { UserDTO } from "../classes/UserDTO";
-import { Message } from "../classes/Message";
-import { MessageDTO } from "../classes/MessageDTO";
-import { FirebaseService } from "./FirebaseService";
+import FirebaseService from "./FirebaseService";
+import { UserPublic } from "../classes/UserPublic";
 
-export class UserService {
-  currentUserID: number = 1;
-  users: User[] = [];
+class _UserService {
+  currentUser: CurrentUser = null;
+  users: UserPublic[] = [];
+
+  public createUser(uid: string, email: string, username: string) {
+    const now = Date.now().toString();
+    const newUser: UserDTO = {
+      email: email,
+      username: username,
+      createdAt: now,
+      lastOnline: now,
+      status: "Hello, I am using the Void!",
+      chatIds: [],
+    };
+
+    FirebaseService.set("/users/" + uid, newUser).then(
+      () => {
+        this.currentUser = new CurrentUser(uid, newUser);
+      },
+      (e) => {
+        throw e;
+      }
+    );
+  }
+
+  public async getUser(uid: string) {
+    const user = await FirebaseService.get("/user/" + uid);
+    this.currentUser = new CurrentUser(uid, user.toJSON() as UserDTO);
+  }
+
+  public getById(id: string): UserPublic {
+    for (let user of this.users) {
+      if (user.id === id) {
+        return user;
+      }
+    }
+    throw new Error("CurrentUser with id " + id + " not found!");
+  }
+
+  /*  currentUserID: number = 1;
+  users: CurrentUser[] = [];
   allMessages: Message[] = [];
 
   constructor(currentUserID: number) {
@@ -24,13 +61,13 @@ export class UserService {
     UserService.fetchMessages();
   }
 
-  public static getById(id: number): User {
+  public static getById(id: number): CurrentUser {
     for (let user of this.getInstance().users) {
       if (user.id === id) {
         return user;
       }
     }
-    throw new Error("User with id " + id + " not found!");
+    throw new Error("CurrentUser with id " + id + " not found!");
   }
 
   public static getMessageById(id: string): Message {
@@ -58,7 +95,7 @@ export class UserService {
     FirebaseService.get("/users").then(
       (data) => {
         data.forEach((user: any) => {
-          const newUser = new User(user.toJSON() as unknown as UserDTO);
+          const newUser = new CurrentUser(user.toJSON() as unknown as CurrentUserDTO);
           this.getInstance().users.push(newUser);
         });
         console.log("total users:", this.getInstance().users.length);
@@ -106,9 +143,9 @@ export class UserService {
     for (let user of UserService.getUsers()) {
       user.messages = UserService.getAllMessagesForUserId(user.id);
     }
-  }
-
+  }*/
 }
 
 console.log("Loaded UserService!");
-let serviceInstance: UserService;
+const UserService = new _UserService();
+export default UserService;
