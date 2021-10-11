@@ -4,8 +4,10 @@ import FirebaseService from "./FirebaseService";
 import { UserPublic } from "../classes/UserPublic";
 
 class _UserService {
-  currentUser: CurrentUser = null;
+  currentUser: CurrentUser;
   users: UserPublic[] = [];
+  currentUserPromiseResolve: (CurrentUser) => void;
+  currentUserPromiseReject: (string) => void;
 
   public createUser(uid: string, email: string, username: string) {
     const now = Date.now().toString();
@@ -21,16 +23,50 @@ class _UserService {
     FirebaseService.set("/users/" + uid, newUser).then(
       () => {
         this.currentUser = new CurrentUser(uid, newUser);
+        console.warn("currentUserPromiseResolve");
+        this.currentUserPromiseResolve(this.currentUser);
+        /*this.currentUser.getAvaUrl().then(
+          (value) => {
+            this.currentUserPromiseResolve(this.currentUser);
+          },
+          (reason) => {
+            this.currentUserPromiseReject(reason);
+          }
+        );*/
       },
-      (e) => {
-        throw e;
+      (reason) => {
+        console.warn("currentUserPromiseReject");
+        this.currentUserPromiseReject(reason);
       }
     );
   }
 
+  public getCurrentUser(): Promise<CurrentUser> {
+    console.log("getCurrentUser");
+    return new Promise<CurrentUser>((resolve, reject) => {
+      if (this.currentUser) {
+        resolve(this.currentUser);
+        return;
+      }
+      this.currentUserPromiseResolve = resolve;
+      this.currentUserPromiseReject = reject;
+    });
+  }
+
   public async getUser(uid: string) {
-    const user = await FirebaseService.get("/user/" + uid);
+    const user = await FirebaseService.get("/users/" + uid);
     this.currentUser = new CurrentUser(uid, user.toJSON() as UserDTO);
+    this.currentUserPromiseResolve(this.currentUser);
+    /*this.currentUser.getAvaUrl().then(
+      (value) => {
+        console.log(`getAvaUrl:${value}`);
+        this.currentUserPromiseResolve(this.currentUser);
+      },
+      (reason) => {
+        console.warn(`reject: ${reason}`);
+        this.currentUserPromiseReject(reason);
+      }
+    );*/
   }
 
   public getById(id: string): UserPublic {
@@ -146,6 +182,5 @@ class _UserService {
   }*/
 }
 
-console.log("Loaded UserService!");
 const UserService = new _UserService();
 export default UserService;

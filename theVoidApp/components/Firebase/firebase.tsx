@@ -29,9 +29,8 @@ export const logout = () => auth.signOut();
 
 export const passwordReset = (email) => auth.sendPasswordResetEmail(email);
 
-if (auth.currentUser) {
-  console.info("signed in: ", auth.currentUser.uid, auth.currentUser);
-  UserService.getUser(auth.currentUser.uid);
-} else {
-  console.info(auth);
-}
+auth.onAuthStateChanged(async function (user) {
+  if (user) {
+    UserService.getUser(user.uid);
+  }
+});

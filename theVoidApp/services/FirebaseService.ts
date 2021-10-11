@@ -36,6 +36,5 @@ class _FirebaseService {
   }
 }
 
-console.log("Loaded FirebaseService!");
 const FirebaseService = new _FirebaseService();
 export default FirebaseService;

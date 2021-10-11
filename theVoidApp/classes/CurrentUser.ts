@@ -1,7 +1,6 @@
 import { UserDTO } from "./UserDTO";
 import { UserPublic } from "./UserPublic";
 import { Chat } from "./Chat";
-import AvaService from "../services/AvaService";
 
 export class CurrentUser extends UserPublic {
   username: string;
@@ -13,9 +12,9 @@ export class CurrentUser extends UserPublic {
   chats?: Chat[];
 
   constructor(uid: string, userDTO: UserDTO) {
-    console.log("creating user", uid, userDTO);
+    console.log("CurrentUser ", uid, userDTO);
 
-    super(uid, userDTO.username);
+    super(uid, userDTO.username, userDTO.avaUrl);
 
     this.username = userDTO.username;
     this.email = userDTO.email;

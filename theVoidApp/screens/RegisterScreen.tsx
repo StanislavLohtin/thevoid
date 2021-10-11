@@ -82,14 +82,12 @@ export default function RegisterScreen({ navigation }) {
         onSubmit={values => handleOnSignUp(values)}
       >
         <FormField
-          width=""
           name="name"
           leftIcon="account"
           placeholder="Enter name"
           autoFocus={true}
         />
         <FormField
-          width=""
           name="email"
           leftIcon="email"
           placeholder="Enter email"
@@ -98,7 +96,6 @@ export default function RegisterScreen({ navigation }) {
           textContentType="emailAddress"
         />
         <FormField
-          width=""
           name="password"
           leftIcon="lock"
           placeholder="Enter password"
@@ -110,7 +107,6 @@ export default function RegisterScreen({ navigation }) {
           handlePasswordVisibility={handlePasswordVisibility}
         />
         <FormField
-          width=""
           name="confirmPassword"
           leftIcon="lock"
           placeholder="Confirm password"

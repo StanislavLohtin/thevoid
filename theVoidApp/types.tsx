@@ -7,6 +7,7 @@ export type RootStackParamList = {
   Root: undefined;
   NotFound: undefined;
   ChatScreen: undefined;
+  UserProfileScreen: undefined;
 };
 
 export type BottomTabParamList = {

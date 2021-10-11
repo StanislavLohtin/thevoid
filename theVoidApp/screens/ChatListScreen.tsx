@@ -1,18 +1,32 @@
 import * as React from "react";
-import { StyleSheet, Image, TextInput, FlatList } from "react-native";
-import { View } from "../components/Themed";
+import {
+  StyleSheet,
+  Image,
+  TextInput,
+  FlatList,
+  TouchableWithoutFeedback,
+} from "react-native";
+import { Text, View } from "../components/Themed";
 import { ChatDTO } from "../classes/ChatDTO";
 import { Chat } from "../classes/Chat";
-import {ChatComponent} from "../components/ChatComponent";
+import { ChatComponent } from "../components/ChatComponent";
 import FirebaseService from "../services/FirebaseService";
-import {useEffect} from "react";
-
-
+import { useEffect, useState } from "react";
+import UserService from "../services/UserService";
+import { useNavigation } from "@react-navigation/native";
 
 export default function ChatListScreen() {
-  const [text, onChangeText] = React.useState("");
-  const [chats, setChats] = React.useState([]);
-  useEffect(() =>  {
+  const [text, onChangeText] = useState("");
+  const [chats, setChats] = useState([]);
+  const [currentUser, setCurrentUser] = useState(null);
+  const navigation = useNavigation();
+  useEffect(() => {
+    const getCurrentUser = async () => {
+      const currentUser = await UserService.getCurrentUser();
+      setCurrentUser(currentUser);
+    };
+
+    getCurrentUser();
 
     async function fetchChats() {
       const result: Chat[] = [];
@@ -26,6 +40,10 @@ export default function ChatListScreen() {
     // fetchChats();
   }, []);
 
+  function onAvatarPress() {
+    navigation.navigate("UserProfileScreen");
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -34,10 +52,16 @@ export default function ChatListScreen() {
           source={require("./../assets/images/voidColorWhite.png")}
         />
         <View style={styles.headerRight}>
-          <Image
-            style={styles.userAva}
-            source={require("./../assets/images/ava1.png")}
-          />
+          <TouchableWithoutFeedback onPress={onAvatarPress}>
+            <Image
+              style={styles.userAva}
+              source={
+                currentUser?.avaUrl
+                  ? { uri: currentUser.avaUrl }
+                  : require("./../assets/images/ava2.png")
+              }
+            />
+          </TouchableWithoutFeedback>
           <TextInput
             style={styles.searchInput}
             onChangeText={onChangeText}

@@ -31,7 +31,7 @@ export function ChatComponent(props: ChatProps) {
           source={{ uri: "" + chat.user?.avaUrl }}
         />
         <View>
-          <Text style={styles.name}> {chat.user?.name} </Text>
+          <Text style={styles.name}> {chat.user?.username} </Text>
           <Text style={styles.text}>
             {" "}
             {ellipsis(
