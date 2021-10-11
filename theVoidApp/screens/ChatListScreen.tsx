@@ -7,13 +7,11 @@ import {
   TouchableWithoutFeedback,
 } from "react-native";
 import { Text, View } from "../components/Themed";
-import { ChatDTO } from "../classes/ChatDTO";
-import { Chat } from "../classes/Chat";
 import { ChatComponent } from "../components/ChatComponent";
-import FirebaseService from "../services/FirebaseService";
 import { useEffect, useState } from "react";
 import UserService from "../services/UserService";
 import { useNavigation } from "@react-navigation/native";
+import ChatService from "../services/ChatService";
 
 export default function ChatListScreen() {
   const [text, onChangeText] = useState("");
@@ -24,20 +22,12 @@ export default function ChatListScreen() {
     const getCurrentUser = async () => {
       const currentUser = await UserService.getCurrentUser();
       setCurrentUser(currentUser);
+      const chats = await ChatService.getChatsForUser(currentUser);
+      console.warn("setting chats:" , chats);
+      setChats(chats);
     };
 
     getCurrentUser();
-
-    async function fetchChats() {
-      const result: Chat[] = [];
-      const data = await FirebaseService.get("/chats");
-      data.forEach((chat: any) => {
-        result.push(new Chat(chat.toJSON() as unknown as ChatDTO));
-      });
-      setChats(result);
-    }
-
-    // fetchChats();
   }, []);
 
   function onAvatarPress() {

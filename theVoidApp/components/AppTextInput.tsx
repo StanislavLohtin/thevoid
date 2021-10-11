@@ -5,10 +5,10 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Colors from '../utils/colors';
 
 export default function AppTextInput({
-  leftIcon,
+  leftIcon = undefined,
   width = '100%',
-  rightIcon,
-  handlePasswordVisibility,
+  rightIcon = undefined,
+  handlePasswordVisibility = undefined,
   ...otherProps
 }) {
   return (

@@ -1,4 +1,4 @@
-import { UserDTO } from "./UserDTO";
+import { CurrentUserDTO } from "./CurrentUserDTO";
 import { UserPublic } from "./UserPublic";
 import { Chat } from "./Chat";
 
@@ -11,9 +11,7 @@ export class CurrentUser extends UserPublic {
   chatIds?: string[];
   chats?: Chat[];
 
-  constructor(uid: string, userDTO: UserDTO) {
-    console.log("CurrentUser ", uid, userDTO);
-
+  constructor(uid: string, userDTO: CurrentUserDTO) {
     super(uid, userDTO.username, userDTO.avaUrl);
 
     this.username = userDTO.username;
@@ -21,7 +19,9 @@ export class CurrentUser extends UserPublic {
     this.status = userDTO.status;
     this.createdAt = new Date(userDTO.createdAt);
     this.lastOnline = new Date(userDTO.lastOnline);
-    this.chatIds = userDTO.chatIds;
+    this.chatIds = Object.values(userDTO.chatIds);
     this.chats = [];
+
+    console.log("CurrentUser ", this);
   }
 }

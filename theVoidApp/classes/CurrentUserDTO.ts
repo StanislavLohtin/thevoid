@@ -1,4 +1,4 @@
-export interface UserDTO {
+export interface CurrentUserDTO {
 	username: string;
 	email: string;
 	createdAt: string;

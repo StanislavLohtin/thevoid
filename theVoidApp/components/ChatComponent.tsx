@@ -17,10 +17,10 @@ export function ChatComponent(props: ChatProps) {
   const chat = props.chat;
   console.log("CHAT:", chat);
   const navigation = useNavigation();
-  const user = chat.user;
+  const otherUser = chat.otherUser;
 
   function onChatClick() {
-    navigation.navigate("ChatScreen", { id: chat.userId });
+    navigation.navigate("ChatScreen", { id: chat.id });
   }
 
   return (
@@ -28,10 +28,10 @@ export function ChatComponent(props: ChatProps) {
       <View style={styles.container}>
         <Image
           style={styles.userAva}
-          source={{ uri: "" + chat.user?.avaUrl }}
+          source={{ uri: "" + otherUser?.avaUrl }}
         />
         <View>
-          <Text style={styles.name}> {chat.user?.username} </Text>
+          <Text style={styles.name}> {otherUser?.username} </Text>
           <Text style={styles.text}>
             {" "}
             {ellipsis(

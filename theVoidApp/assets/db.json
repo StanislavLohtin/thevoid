@@ -2,16 +2,18 @@
   "chats": [
     {
       "info": {
+        "lastMessageId": 2,
         "type": 0,
-        "lastMessage": 2,
         "usersPublic": [
           {
-            "id": 0,
-            "username": "user1"
+            "id": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
+            "username": "test@test.com",
+            "avaUrl": "https://firebasestorage.googleapis.com/v0/b/thevoid-54561.appspot.com/o/avatars%2FOjr2dobmnbMbpxEEf7y0Me8fae43.png?alt=media&token=2fef62fd-a817-4a70-9219-3f532dce0817"
           },
           {
-            "id": 1,
-            "username": "user2"
+            "id": "8KOoXumeqAXwN5sCi4OOu0ZGHHD3",
+            "username": "user2",
+            "avaUrl": "https://firebasestorage.googleapis.com/v0/b/thevoid-54561.appspot.com/o/avatars%2FOjr2dobmnbMbpxEEf7y0Me8fae43.png?alt=media&token=2fef62fd-a817-4a70-9219-3f532dce0817"
           }
         ]
       },
@@ -20,40 +22,41 @@
           {
             "content": "message1",
             "createdAt": 1633798140815,
-            "type": 0,
             "sender": 0,
-            "status": 2
+            "status": 2,
+            "type": 0
           },
           {
             "content": "message2",
             "createdAt": 1633798141815,
-            "type": 0,
             "sender": 1,
-            "status": 0
+            "status": 0,
+            "type": 0
           },
           {
             "content": "message3",
             "createdAt": 1633798144815,
-            "type": 0,
             "sender": 0,
-            "status": 1
+            "status": 1,
+            "type": 0
           }
         ]
       }
     },
     {
       "info": {
+        "lastMessageId": 0,
         "type": 1,
-        "title": "course1 title",
         "description": "course1 descr",
-        "lastMessage": 0,
+        "title": "course1 title",
+        "chatImage": "",
         "usersPublic": [
           {
             "id": 0,
             "username": "user1"
           },
           {
-            "id": 1,
+            "id": "8KOoXumeqAXwN5sCi4OOu0ZGHHD3",
             "username": "user2"
           }
         ]
@@ -63,22 +66,31 @@
           {
             "content": "message4",
             "createdAt": 1633798120815,
-            "type": 0,
             "sender": 0,
-            "status": 2
+            "status": 2,
+            "type": 0
           }
         ]
       }
     }
   ],
-  "users": [
-    {
-      "chatIds": [0, 1],
-      "createdAt": 1633798040815,
+  "users": {
+    "8KOoXumeqAXwN5sCi4OOu0ZGHHD3": {
+      "createdAt": "1633819307424",
+      "email": "test2@test.com",
+      "lastOnline": "1633819307424",
+      "status": "Hello, I am using the Void!",
+      "username": "user2",
+      "chatIds": ["0"]
+    },
+    "Ojr2dobmnbMbpxEEf7y0Me8fae43": {
+      "avaUrl": "https://firebasestorage.googleapis.com/v0/b/thevoid-54561.appspot.com/o/avatars%2FOjr2dobmnbMbpxEEf7y0Me8fae43.png?alt=media&token=2fef62fd-a817-4a70-9219-3f532dce0817",
+      "createdAt": "1633819081808",
       "email": "test@test.com",
-      "lastOnline": 1633798113815,
-      "status": 1,
-      "username": "test1"
+      "lastOnline": "1633819081808",
+      "status": "Hello, I am using the Void!",
+      "username": "test@test.com",
+      "chatIds": ["0", "1"]
     }
-  ]
+  }
 }

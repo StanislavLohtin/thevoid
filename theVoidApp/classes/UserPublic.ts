@@ -11,26 +11,19 @@ export class UserPublic {
     this.avaUrl = avaUrl;
   }
 
-  public getAvaUrl(): Promise<string> {
-    let resolveUrl;
-    let rejectUrl;
+  public updateAvaUrl(): Promise<string> {
     console.log(`getting avaUrl for ${this.id}`);
 
-    AvaService.getAvaUrl(this.id).then(
+    return AvaService.getAvaUrl(this.id).then(
       (url) => {
         console.log(`url: ${url}`);
         this.avaUrl = url;
-        resolveUrl(url);
+        return url;
       },
       (reason) => {
-        console.warn(reason);
-        rejectUrl(reason);
+        console.warn(`reason: ${reason}`);
+        return reason;
       }
     );
-
-    return new Promise<string>((resolve, reject) => {
-      resolveUrl = resolve;
-      rejectUrl = reject;
-    });
   }
 }
