@@ -1,22 +1,29 @@
 import FirebaseService from "./FirebaseService";
 import { Message } from "../classes/Message";
 import { MessageDTO } from "../classes/MessageDTO";
-import {CurrentUser} from "../classes/CurrentUser";
+import { CurrentUser } from "../classes/CurrentUser";
 
 class _MessageService {
-  messageIds: Set<string> = new Set<string>();
+  messages: Set<Message> = new Set<Message>();
 
   public async fetchMessageById(chatId: string, id: string): Promise<Message> {
-    if (this.messageIds.has(id)) {
-      return;
+    console.log("fetchMessageById " + id);
+    const messageWithId = this.getMessageById(id);
+    if (messageWithId) {
+      return Promise.resolve(messageWithId);
     }
     return new Promise<Message>((resolve, reject) => {
       FirebaseService.get(`chats/${chatId}/messages/recent/${id}`).then(
         (messageDto) => {
-          this.messageIds.add(id);
-          resolve(
-            new Message(id, messageDto.toJSON() as unknown as MessageDTO)
+          if (this.getMessageById(id) !== undefined) {
+            return;
+          }
+          let newMessage = new Message(
+            id,
+            messageDto.toJSON() as unknown as MessageDTO
           );
+          this.messages.add(newMessage);
+          resolve(newMessage);
         },
         (reason) => {
           console.warn(reason);
@@ -26,22 +33,26 @@ class _MessageService {
     });
   }
 
-  public async fetchMessagesForUser(user: CurrentUser): Promise<Message[]> {
-    return new Promise<Message[]>((resolve, reject) => {
-      resolve([]);
-      /*FirebaseService.get(`chats/${chatId}/messages/recent/${id}`).then(
-        (messageDto) => {
-          this.messageIds.add(id);
-          resolve(
-            new Message(id, messageDto.toJSON() as unknown as MessageDTO)
-          );
-        },
-        (reason) => {
-          console.warn(reason);
-          reject(reason);
-        }
-      );*/
-    });
+  public async fetchLastMessagesForUser(user: CurrentUser): Promise<Message[]> {
+    console.log("fetchLastMessagesForUser");
+    const result = [];
+    for (const chat of user.chats) {
+      result.push(
+        this.fetchMessageById(chat.id, chat.lastMessageId).then((message) => {
+          chat.lastMessage = message;
+        })
+      );
+    }
+    return Promise.all(result);
+  }
+
+  private getMessageById(id: string): Message | undefined {
+    for (const message of this.messages) {
+      if (message.id === id) {
+        return message;
+      }
+    }
+    return undefined;
   }
 }
 

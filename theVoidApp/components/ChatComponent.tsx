@@ -28,7 +28,9 @@ export function ChatComponent(props: ChatProps) {
       <View style={styles.container}>
         <Image
           style={styles.userAva}
-          source={{ uri: "" + otherUser?.avaUrl }}
+          source={otherUser?.avaUrl
+            ? { uri: otherUser.avaUrl }
+            : require("./../assets/images/defaultAva.png")}
         />
         <View>
           <Text style={styles.name}> {otherUser?.username} </Text>

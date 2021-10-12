@@ -32,5 +32,7 @@ export const passwordReset = (email) => auth.sendPasswordResetEmail(email);
 auth.onAuthStateChanged(async function (user) {
   if (user) {
     UserService.getUser(user.uid);
+  } else {
+    UserService.resetAll();
   }
 });

@@ -48,7 +48,7 @@ export default function ChatListScreen() {
               source={
                 currentUser?.avaUrl
                   ? { uri: currentUser.avaUrl }
-                  : require("./../assets/images/ava2.png")
+                  : require("./../assets/images/defaultAva.png")
               }
             />
           </TouchableWithoutFeedback>
