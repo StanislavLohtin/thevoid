@@ -33,6 +33,7 @@ class _UserService {
 
   private initCurrentUser(uid: string, newUser: CurrentUserDTO) {
     this.currentUser = new CurrentUser(uid, newUser);
+    this.users.push(this.currentUser);
     this.currentUserPromiseResolve(this.currentUser);
     /*this.currentUser.updateAvaUrl().then(
       (value) => {
@@ -68,7 +69,8 @@ class _UserService {
         return user;
       }
     }
-    throw new Error("CurrentUser with id " + id + " not found!");
+    console.warn("User with id " + id + " not found!");
+    return null;
   }
 
   public addUserToListIfNotIn(newUser: UserPublic): void {

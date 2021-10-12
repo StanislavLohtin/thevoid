@@ -12,6 +12,7 @@ export class Chat {
   description?: string;
   lastMessage?: Message;
   otherUser: UserPublic;
+  messages: Message[] = [];
 
   constructor(id: string, chatDTO: ChatInfoDTO) {
     const currentUser = UserService.currentUser;
@@ -37,5 +38,12 @@ export class Chat {
     // }
 
     console.log("Creating chat: ", this.id);
+  }
+
+  public addMessageIfNotInList(newMessage: Message): void {
+    if (this.messages.find((message) => message.id === newMessage.id)) {
+      return;
+    }
+    this.messages.push(newMessage);
   }
 }

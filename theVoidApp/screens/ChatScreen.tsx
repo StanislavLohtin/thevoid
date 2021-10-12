@@ -1,60 +1,76 @@
 import * as React from "react";
 import { StyleSheet, Image, TextInput, FlatList, Button } from "react-native";
-import { View } from "../components/Themed";
+import { Text, View } from "../components/Themed";
 import { MessageComponent } from "../components/MessageComponent";
 import { MessageDTO } from "../classes/MessageDTO";
 import { Message } from "../classes/Message";
-import { useRoute } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import UserService from "../services/UserService";
 import FirebaseService from "../services/FirebaseService";
+import { useEffect } from "react";
+import ChatService from "../services/ChatService";
+import MessageService from "../services/MessageService";
+import Colors from "../utils/colors";
+import IconButton from "../components/IconButton";
 
 export default function ChatScreen() {
-  const [text, onChangeText] = React.useState("");
+  const [text, setText] = React.useState("");
   const route = useRoute();
-  const user = UserService.getById((route.params as { id: string }).id);
+  const navigation = useNavigation();
+  const chat = UserService.currentUser.getChatById(
+    (route.params as { id: string }).id
+  );
+
+  const [messages, setMessages] = React.useState([chat.lastMessage]);
+
+  useEffect(() => {
+    const fetchMessages = async () => {
+      MessageService.fetchRecentMessagesFromChat(chat, () => {
+        console.warn("setting messages:", chat.messages);
+        setMessages(chat.messages);
+      });
+    };
+
+    fetchMessages();
+  }, []);
 
   function onSendPress() {
-    /*const newMessageDTO: MessageDTO = {
-      createdAt: Date.now().toLocaleString(),
-      content: text,
-      sender: UserService.currentUser.id,
-      receiver: user.id.toString(),
-      status: "0",
-    };
-    FirebaseService.push("/messages", newMessageDTO).then(
-      (id) => {
-        if (!id.key) {
-          console.error("create failed");
-          return;
-        }
-        const newMessage = new Message(newMessageDTO, id.key);
-        user.messages?.push(newMessage);
-        UserService.getAllMessages().push(newMessage);
-      },
-      (e) => {
-        console.error("send message failed!!");
-        console.error(e);
-      }
-    );*/
-    onChangeText("");
+    const newMessage = MessageService.buildMessage(chat, text);
+    // chat.messages.push(newMessage);
+    // setMessages(chat.messages);
+    setText("");
+    MessageService.sendMessage(chat, newMessage);
   }
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
+        <IconButton
+          style={styles.backButton}
+          iconName="keyboard-backspace"
+          color={Colors.white}
+          size={30}
+          onPress={() => navigation.goBack()}
+        />
         <Image
           style={styles.userAva}
-          source={require("./../assets/images/ava1.png")}
+          source={
+            chat.otherUser?.avaUrl
+              ? { uri: chat.otherUser.avaUrl }
+              : require("./../assets/images/defaultAva.png")
+          }
         />
+        <Text style={styles.title}> {chat.otherUser.username} </Text>
       </View>
-      {/*<FlatList
-        data={user}
+      <FlatList
+        data={messages}
+        extraData={setMessages}
         keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => <MessageComponent message={item} />}
-      />*/}
+        renderItem={({ item }) => <MessageComponent message={item} key={item.id} />}
+      />
       <TextInput
         style={styles.searchInput}
-        onChangeText={onChangeText}
+        onChangeText={setText}
         value={text}
         placeholder="Enter text"
         placeholderTextColor={"#888a8f"}
@@ -65,15 +81,6 @@ export default function ChatScreen() {
   );
 }
 
-/*function storeHighScore(userId, score) {
-  firebase
-    .database()
-    .ref("users/" + userId)
-    .set({
-      highscore: score,
-    });
-}*/
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -83,6 +90,9 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: "bold",
+  },
+  backButton: {
+    marginVertical: 10,
   },
   header: {
     paddingTop: 50,

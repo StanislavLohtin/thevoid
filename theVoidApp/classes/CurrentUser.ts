@@ -17,11 +17,15 @@ export class CurrentUser extends UserPublic {
     this.username = userDTO.username;
     this.email = userDTO.email;
     this.status = userDTO.status;
-    this.createdAt = new Date(userDTO.createdAt);
-    this.lastOnline = new Date(userDTO.lastOnline);
+    this.createdAt = new Date(Number(userDTO.createdAt));
+    this.lastOnline = new Date(Number(userDTO.lastOnline));
     this.chatIds = Object.values(userDTO.chatIds);
     this.chats = [];
 
     console.log("CurrentUser ", this);
+  }
+
+  public getChatById(id: string): Chat {
+    return this.chats.find((chat) => chat.id === id);
   }
 }

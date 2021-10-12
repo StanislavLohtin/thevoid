@@ -1,12 +1,13 @@
 import FirebaseService from "./FirebaseService";
 import { Message } from "../classes/Message";
 import { MessageDTO } from "../classes/MessageDTO";
-import { CurrentUser } from "../classes/CurrentUser";
+import { Chat } from "../classes/Chat";
+import UserService from "./UserService";
 
 class _MessageService {
   messages: Set<Message> = new Set<Message>();
 
-  public async fetchMessageById(chatId: string, id: string): Promise<Message> {
+  public fetchMessageById(chatId: string, id: string): Promise<Message> {
     console.log("fetchMessageById " + id);
     const messageWithId = this.getMessageById(id);
     if (messageWithId) {
@@ -33,8 +34,47 @@ class _MessageService {
     });
   }
 
-  public async fetchLastMessagesForUser(user: CurrentUser): Promise<Message[]> {
-    console.log("fetchLastMessagesForUser");
+  public fetchRecentMessagesFromChat(chat: Chat, callback: () => void): void {
+    FirebaseService.startOnChangeListener(
+      `chats/${chat.id}/messages/recent`,
+      (data) => {
+        for (const [key, value] of Object.entries(data)) {
+          let newMessage = new Message(key, value as MessageDTO);
+          chat.addMessageIfNotInList(newMessage);
+          this.addMessageIfNotInList(newMessage);
+        }
+        callback();
+      }
+    );
+  }
+
+  public buildMessage(chat: Chat, text: string): Message {
+    return new Message("pending", {
+      createdAt: Date.now().toString(),
+      content: text,
+      sender: UserService.currentUser.id,
+      status: "0",
+      type: "0",
+    });
+  }
+
+  public sendMessage(chat: Chat, message: Message): Promise<Message> {
+    message.messageDTO.status = "1";
+    return FirebaseService.push(
+      `chats/${chat.id}/messages/recent`,
+      message.messageDTO
+    ).then((id) => {
+      if (!id.key) {
+        throw new Error("create failed");
+      }
+      message.id = id.key;
+      chat.lastMessage = message;
+      _MessageService.updateLastMessageId(chat.id, message.id);
+      return message;
+    });
+  }
+
+  /*  public async fetchLastMessagesForUser(user: CurrentUser): Promise<Message[]> {
     const result = [];
     for (const chat of user.chats) {
       result.push(
@@ -44,7 +84,7 @@ class _MessageService {
       );
     }
     return Promise.all(result);
-  }
+  }*/
 
   private getMessageById(id: string): Message | undefined {
     for (const message of this.messages) {
@@ -53,6 +93,22 @@ class _MessageService {
       }
     }
     return undefined;
+  }
+
+  private addMessageIfNotInList(newMessage: Message): void {
+    if ([...this.messages].find((message) => message.id === newMessage.id)) {
+      return;
+    }
+    this.messages.add(newMessage);
+  }
+
+  private static updateLastMessageId(chatId: string, messageId: string): void {
+    FirebaseService.set(`chats/${chatId}/info/lastMessageId`, messageId).catch(
+      (reason) => {
+        console.warn(reason);
+        throw new Error(reason);
+      }
+    );
   }
 }
 

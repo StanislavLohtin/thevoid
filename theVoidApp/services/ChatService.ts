@@ -17,7 +17,7 @@ class _ChatService {
           (chatDto) => {
             let chat = new Chat(
               chatId,
-              chatDto.toJSON() as unknown as ChatInfoDTO
+              chatDto.val() as ChatInfoDTO
             );
             user.chats.push(chat);
             MessageService.fetchMessageById(chatId, chat.lastMessageId).then(

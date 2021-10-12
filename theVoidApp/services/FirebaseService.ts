@@ -27,11 +27,25 @@ class _FirebaseService {
     return this.app.database().ref(path).get();
   }
 
+  public startOnChangeListener(path: string, callback: (any) => void): void {
+    this.app
+      .database()
+      .ref(path)
+      .on("value", (snapshot) => {
+        const data = snapshot.val();
+        callback(data);
+      });
+  }
+
+  /*  public once(path: string): Promise<firebase.database.DataSnapshot> {
+    return this.app.database().ref(path).once("value");
+  }*/
+
   public push(path: string, obj: object): firebase.database.ThenableReference {
     return this.app.database().ref(path).push(obj);
   }
 
-  public set(path: string, obj: object): Promise<any> {
+  public set(path: string, obj: any): Promise<any> {
     return this.app.database().ref(path).set(obj);
   }
 }
