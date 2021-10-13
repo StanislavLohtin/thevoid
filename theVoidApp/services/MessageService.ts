@@ -19,10 +19,7 @@ class _MessageService {
           if (this.getMessageById(id) !== undefined) {
             return;
           }
-          let newMessage = new Message(
-            id,
-            messageDto.toJSON() as unknown as MessageDTO
-          );
+          let newMessage = new Message(id, messageDto.val());
           this.messages.add(newMessage);
           resolve(newMessage);
         },

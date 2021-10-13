@@ -1,17 +1,13 @@
 import * as React from "react";
-import { StyleSheet, Image, TextInput, FlatList, Button } from "react-native";
+import { useEffect } from "react";
+import { FlatList, Image, StyleSheet, TextInput } from "react-native";
 import { Text, View } from "../components/Themed";
 import { MessageComponent } from "../components/MessageComponent";
-import { MessageDTO } from "../classes/MessageDTO";
-import { Message } from "../classes/Message";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import UserService from "../services/UserService";
-import FirebaseService from "../services/FirebaseService";
-import { useEffect } from "react";
-import ChatService from "../services/ChatService";
 import MessageService from "../services/MessageService";
-import Colors from "../utils/colors";
 import IconButton from "../components/IconButton";
+import { darkerPurple } from "../constants/Colors";
 
 export default function ChatScreen() {
   const [text, setText] = React.useState("");
@@ -20,6 +16,7 @@ export default function ChatScreen() {
   const chat = UserService.currentUser.getChatById(
     (route.params as { id: string }).id
   );
+  let refreshTrigger = { counter: 1 };
 
   const [messages, setMessages] = React.useState([chat.lastMessage]);
 
@@ -28,6 +25,7 @@ export default function ChatScreen() {
       MessageService.fetchRecentMessagesFromChat(chat, () => {
         console.warn("setting messages:", chat.messages);
         setMessages(chat.messages);
+        refreshTrigger.counter++;
       });
     };
 
@@ -46,10 +44,10 @@ export default function ChatScreen() {
     <View style={styles.container}>
       <View style={styles.header}>
         <IconButton
-          style={styles.backButton}
-          iconName="keyboard-backspace"
-          color={Colors.white}
-          size={30}
+          style={styles.button}
+          iconName="chevron-left"
+          color={darkerPurple}
+          size={42}
           onPress={() => navigation.goBack()}
         />
         <Image
@@ -62,21 +60,35 @@ export default function ChatScreen() {
         />
         <Text style={styles.title}> {chat.otherUser.username} </Text>
       </View>
-      <FlatList
-        data={messages}
-        extraData={setMessages}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => <MessageComponent message={item} key={item.id} />}
-      />
-      <TextInput
-        style={styles.searchInput}
-        onChangeText={setText}
-        value={text}
-        placeholder="Enter text"
-        placeholderTextColor={"#888a8f"}
-        keyboardType="default"
-      ></TextInput>
-      <Button title={"send"} onPress={onSendPress} />
+      <View style={styles.content}>
+        <FlatList
+          style={styles.messageList}
+          data={messages}
+          extraData={refreshTrigger}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={({ item }) => (
+            <MessageComponent message={item} key={item.id} />
+          )}
+        />
+
+        <View style={styles.inputRow}>
+          <TextInput
+            style={styles.input}
+            onChangeText={setText}
+            value={text}
+            placeholder="Enter text"
+            placeholderTextColor={"#888a8f"}
+            keyboardType="default"
+          ></TextInput>
+          <IconButton
+            style={styles.sendButton}
+            iconName="menu-right"
+            color={darkerPurple}
+            size={50}
+            onPress={onSendPress}
+          />
+        </View>
+      </View>
     </View>
   );
 }
@@ -86,26 +98,34 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "column",
     backgroundColor: "#1e1e20",
+    justifyContent: "space-between",
+  },
+  content: {
+    backgroundColor: "transparent",
   },
   title: {
-    fontSize: 20,
-    fontWeight: "bold",
+    fontSize: 18,
+    color: "white",
+    paddingTop: 5,
+    paddingLeft: 5,
   },
-  backButton: {
-    marginVertical: 10,
+  button: {},
+  sendButton: {
+    maxHeight: 26,
+    maxWidth: 40,
+    top: -12,
+  },
+  messageList: {
+    maxHeight: "calc(100vh - 128px)",
+    backgroundColor: "transparent",
   },
   header: {
-    paddingTop: 50,
-    paddingBottom: 20,
+    paddingTop: 25,
+    paddingBottom: 10,
+    backgroundColor: "transparent",
     width: "100%",
-    backgroundColor: "#023750",
     flexDirection: "row",
-    justifyContent: "space-between",
-  },
-  headerRight: {
-    backgroundColor: "#023750",
-    justifyContent: "space-between",
-    paddingRight: 15,
+    justifyContent: "flex-start",
   },
   logo: {
     marginLeft: 15,
@@ -115,19 +135,31 @@ const styles = StyleSheet.create({
     height: 110,
     borderRadius: 999,
   },
-  searchInput: {
-    borderRadius: 10,
-    backgroundColor: "#243a44",
-    color: "#888a8f",
-    padding: 10,
-    fontSize: 20,
-    width: 240,
+  input: {
+    borderRadius: 20,
+    backgroundColor: "#1e1e20",
+    color: "white",
+    fontSize: 15,
+    width: "90%",
+    paddingTop: 5,
+    paddingRight: 5,
+    paddingBottom: 5,
+    paddingLeft: 8,
+  },
+  inputRow: {
+    backgroundColor: "#2e2e30",
+    paddingTop: 7,
+    paddingRight: 10,
+    paddingBottom: 5,
+    paddingLeft: 10,
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   userAva: {
     minHeight: 20,
     minWidth: 20,
-    width: 50,
-    height: 50,
+    width: 40,
+    height: 40,
     alignSelf: "flex-end",
     borderRadius: 999,
   },

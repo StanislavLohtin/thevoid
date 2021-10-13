@@ -1,6 +1,9 @@
 const tintColorLight = '#6c50fa';
 const tintColorDark = '#fff';
 
+export const defPurple = "#6c51f8";
+export const darkerPurple = "#6e54f0";
+
 export default {
   light: {
     text: '#000',

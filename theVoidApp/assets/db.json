@@ -47,7 +47,7 @@
       "info": {
         "chatImage": "",
         "description": "course1 descr",
-        "lastMessageId": 0,
+        "lastMessageId": "-MlvJMXWJLw3nrM145g2",
         "title": "course1 title",
         "type": 1,
         "usersPublic": [
@@ -62,22 +62,43 @@
         ]
       },
       "messages": {
-        "recent": [
-          {
-            "content": "message4",
-            "createdAt": 1633798120815,
+        "recent": {
+          "-MlvGPoNVM4d7DT52O22": {
+            "content": "a3",
+            "createdAt": "1634155736599",
             "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
-            "status": 2,
-            "type": 0
+            "status": "1",
+            "type": "0"
           },
-          {
-            "content": "message5",
-            "createdAt": 1633798122815,
+          "-MlvGPoNVM4d7DT52OVz": {
+            "content": "a2",
+            "createdAt": "1634155735599",
             "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
-            "status": 2,
-            "type": 0
+            "status": "1",
+            "type": "0"
+          },
+          "-MlvGx6hsVF0Bj9rdvOP": {
+            "content": "a4",
+            "createdAt": "1634155876103",
+            "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
+            "status": "1",
+            "type": "0"
+          },
+          "-MlvJMXWJLw3nrM145gE": {
+            "content": "a5",
+            "createdAt": "1634156508590",
+            "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
+            "status": "1",
+            "type": "0"
+          },
+          "-MlvJMXWJLw3nrM145g2": {
+            "content": "b1",
+            "createdAt": "1634156509590",
+            "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
+            "status": "1",
+            "type": "0"
           }
-        ]
+        }
       }
     }
   ],
