@@ -8,6 +8,7 @@ import UserService from "../services/UserService";
 import MessageService from "../services/MessageService";
 import IconButton from "../components/IconButton";
 import { darkerPurple } from "../constants/Colors";
+import ChatService from "../services/ChatService";
 
 export default function ChatScreen() {
   const [text, setText] = React.useState("");
@@ -16,20 +17,24 @@ export default function ChatScreen() {
   const chat = UserService.currentUser.getChatById(
     (route.params as { id: string }).id
   );
-  let refreshTrigger = { counter: 1 };
+  const refreshTrigger = { counter: 1 };
 
   const [messages, setMessages] = React.useState([chat.lastMessage]);
 
   useEffect(() => {
     const fetchMessages = async () => {
       MessageService.fetchRecentMessagesFromChat(chat, () => {
-        console.warn("setting messages:", chat.messages);
+        console.log("setting messages:", chat.messages);
         setMessages(chat.messages);
         refreshTrigger.counter++;
       });
     };
+    ChatService.currentChatId = chat.id;
 
     fetchMessages();
+    return () => {
+      ChatService.currentChatId = undefined;
+    };
   }, []);
 
   function onSendPress() {
@@ -70,7 +75,7 @@ export default function ChatScreen() {
             <MessageComponent message={item} key={item.id} />
           )}
         />
-
+        {/*remove for android: style={styles.messageList}*/}
         <View style={styles.inputRow}>
           <TextInput
             style={styles.input}
@@ -116,11 +121,11 @@ const styles = StyleSheet.create({
     top: -12,
   },
   messageList: {
-    maxHeight: "calc(100vh - 128px)",
+    maxHeight: "calc(100vh - 140px)",
     backgroundColor: "transparent",
   },
   header: {
-    paddingTop: 25,
+    paddingTop: 45,
     paddingBottom: 10,
     backgroundColor: "transparent",
     width: "100%",

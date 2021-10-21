@@ -32,8 +32,7 @@ class _FirebaseService {
       .database()
       .ref(path)
       .on("value", (snapshot) => {
-        const data = snapshot.val();
-        callback(data);
+        callback(snapshot.val());
       });
   }
 

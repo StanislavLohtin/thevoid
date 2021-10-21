@@ -6,26 +6,34 @@ import {
   FlatList,
   TouchableWithoutFeedback,
 } from "react-native";
-import { Text, View } from "../components/Themed";
+import { View } from "../components/Themed";
 import { ChatComponent } from "../components/ChatComponent";
 import { useEffect, useState } from "react";
 import UserService from "../services/UserService";
 import { useNavigation } from "@react-navigation/native";
 import ChatService from "../services/ChatService";
+import {Chat} from "../classes/Chat";
 
 export default function ChatListScreen() {
   const [text, onChangeText] = useState("");
   const [chats, setChats] = useState([]);
   const [currentUser, setCurrentUser] = useState(null);
   const navigation = useNavigation();
+
+  const updateChatList = (updatedChats: Chat[]) => {
+    console.log("setting chats:", updatedChats);
+    setChats(updatedChats);
+  };
+
   useEffect(() => {
     const getCurrentUser = async () => {
       const currentUser = await UserService.getCurrentUser();
       setCurrentUser(currentUser);
-      const chats = await ChatService.getChatsForUser(currentUser);
-      console.warn("setting chats:" , chats);
-      setChats(chats);
+      await ChatService.getChatsForUser(currentUser, updateChatList);
     };
+    navigation.addListener("state", (newValue) => {
+      console.log("newValue!!! ", newValue);
+    });
 
     getCurrentUser();
   }, []);
@@ -70,15 +78,6 @@ export default function ChatListScreen() {
     </View>
   );
 }
-
-/*function storeHighScore(userId, score) {
-  firebase
-    .database()
-    .ref("users/" + userId)
-    .set({
-      highscore: score,
-    });
-}*/
 
 const styles = StyleSheet.create({
   container: {

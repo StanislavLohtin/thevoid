@@ -2,7 +2,7 @@
   "chats": [
     {
       "info": {
-        "lastMessageId": 2,
+        "lastMessageId": "-MmEe7Fvxk0YFXQPt_Db",
         "type": 0,
         "usersPublic": [
           {
@@ -18,44 +18,67 @@
         ]
       },
       "messages": {
-        "recent": [
-          {
+        "recent": {
+          "0": {
             "content": "message1",
             "createdAt": 1633798140815,
             "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
             "status": 2,
             "type": 0
           },
-          {
+          "1": {
             "content": "message2",
             "createdAt": 1633798141815,
             "sender": "8KOoXumeqAXwN5sCi4OOu0ZGHHD3",
             "status": 0,
             "type": 0
           },
-          {
+          "2": {
             "content": "message3",
             "createdAt": 1633798144815,
             "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
             "status": 1,
             "type": 0
+          },
+          "-MlvJualqv2VTdiip9CQ": {
+            "content": "a2",
+            "createdAt": "1634156652222",
+            "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
+            "status": "1",
+            "type": "0"
+          },
+          "-MmCw_Lb8Nd31YEjr3qJ": {
+            "content": "yo nigga",
+            "createdAt": "1634469040449",
+            "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
+            "status": "1",
+            "type": "0"
+          },
+          "-MmEe7Fvxk0YFXQPt_Db": {
+            "content": "sup dude",
+            "createdAt": "1634497757515",
+            "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
+            "status": "1",
+            "type": "0"
           }
-        ]
+        }
       }
     },
     {
       "info": {
         "chatImage": "",
         "description": "course1 descr",
-        "lastMessageId": "-MlvJMXWJLw3nrM145g2",
+        "lastMessageId": "-MmCvKeNAhA-KI6DeIfw",
         "title": "course1 title",
-        "type": 1,
+        "type": 0,
         "usersPublic": [
           {
+            "avaUrl": "https://firebasestorage.googleapis.com/v0/b/thevoid-54561.appspot.com/o/avatars%2FOjr2dobmnbMbpxEEf7y0Me8fae43.png?alt=media&token=2fef62fd-a817-4a70-9219-3f532dce0817",
             "id": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
             "username": "user1"
           },
           {
+            "avaUrl": "https://firebasestorage.googleapis.com/v0/b/thevoid-54561.appspot.com/o/avatars%2FOjr2dobmnbMbpxEEf7y0Me8fae43.png?alt=media&token=2fef62fd-a817-4a70-9219-3f532dce0817",
             "id": "8KOoXumeqAXwN5sCi4OOu0ZGHHD3",
             "username": "user2"
           }
@@ -84,6 +107,13 @@
             "status": "1",
             "type": "0"
           },
+          "-MlvJMXWJLw3nrM145g2": {
+            "content": "b1",
+            "createdAt": "1634156509590",
+            "sender": "8KOoXumeqAXwN5sCi4OOu0ZGHHD3",
+            "status": "1",
+            "type": "0"
+          },
           "-MlvJMXWJLw3nrM145gE": {
             "content": "a5",
             "createdAt": "1634156508590",
@@ -91,9 +121,121 @@
             "status": "1",
             "type": "0"
           },
-          "-MlvJMXWJLw3nrM145g2": {
-            "content": "b1",
-            "createdAt": "1634156509590",
+          "-MlvXo2s8sYaUT6uR8E1": {
+            "content": "q1",
+            "createdAt": "1634160295384",
+            "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
+            "status": "1",
+            "type": "0"
+          },
+          "-MlvXoQNr7TO2JsGAVnf": {
+            "content": "q2",
+            "createdAt": "1634160296887",
+            "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
+            "status": "1",
+            "type": "0"
+          },
+          "-MlvXogiz4nqSjetfIgr": {
+            "content": "q3",
+            "createdAt": "1634160297998",
+            "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
+            "status": "1",
+            "type": "0"
+          },
+          "-MlvXowNwFs_pttH0I98": {
+            "content": "q4",
+            "createdAt": "1634160299001",
+            "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
+            "status": "1",
+            "type": "0"
+          },
+          "-MlvXpM8fBE4wbCzTLzI": {
+            "content": "q5",
+            "createdAt": "1634160300713",
+            "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
+            "status": "1",
+            "type": "0"
+          },
+          "-MlvXpkUQKNHgC0whve7": {
+            "content": "q6",
+            "createdAt": "1634160302336",
+            "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
+            "status": "2",
+            "type": "0"
+          },
+          "-MlvXqfCsrsImYeHwkbJ": {
+            "content": "q7",
+            "createdAt": "1634160306094",
+            "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
+            "status": "3",
+            "type": "0"
+          },
+          "-MlvXrSb2GxwqbW03VNG": {
+            "content": "q8",
+            "createdAt": "1634160309319",
+            "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
+            "status": "1",
+            "type": "0"
+          },
+          "-Mlvrc2RR3bGMnLBiBKU": {
+            "content": "s4",
+            "createdAt": "1634165751156",
+            "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
+            "status": "1",
+            "type": "0"
+          },
+          "-Mlvtv5KdwUUje4fLi8L": {
+            "content": "you mate how ur doing?",
+            "createdAt": "1634166353446",
+            "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
+            "status": "1",
+            "type": "0"
+          },
+          "-MlvuPIKYKUCdgbszFxx": {
+            "content": "I told u not to ignore me, you worthless piece of meat. I hope u die!",
+            "createdAt": "1634166481250",
+            "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
+            "status": "1",
+            "type": "0"
+          },
+          "-MlvxBc-NQBV2JhF78EY": {
+            "content": "Omfg",
+            "createdAt": "1634167211750",
+            "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
+            "status": "1",
+            "type": "0"
+          },
+          "-Mm-qNRgSULpy0qdYGnk": {
+            "content": "yo, i am sorry!",
+            "createdAt": "1634249310697",
+            "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
+            "status": "1",
+            "type": "0"
+          },
+          "-MmCsOwZ1uDdrui3eHkm": {
+            "content": "stop ignoring me, i said i am sorry!",
+            "createdAt": "1634467945165",
+            "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
+            "status": "1",
+            "type": "0"
+          },
+          "-MmCsjeaMDzdc9iI-bVg": {
+            "content": "do u think you are better than me?",
+            "createdAt": "1634468034126",
+            "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
+            "status": "1",
+            "type": "0"
+          },
+          "-MmCvKeNAhA-KI6DeIfw": {
+            "content": "I thought so!",
+            "createdAt": "1634468714042",
+            "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
+            "status": "1",
+            "type": "0"
+          },
+          "-MmCvKeNAhA-KI6DeIf2": {
+            "content": "b2",
+            "createdAt": "1634468714042",
             "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
             "status": "1",
             "type": "0"

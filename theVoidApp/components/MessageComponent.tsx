@@ -40,8 +40,7 @@ const styles = StyleSheet.create({
   message: {
     borderRadius: 15,
     backgroundColor: defPurple,
-    marginTop: 3,
-    marginBottom: 3,
+    marginBottom: 6,
     marginLeft: 10,
     marginRight: 10,
     paddingTop: 4,
@@ -63,7 +62,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     right: 2,
     fontSize: 10,
-    bottom: -5,
+    bottom: -3,
     flexDirection: "row",
   },
   createdAt: {

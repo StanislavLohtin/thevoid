@@ -40,6 +40,8 @@ class _MessageService {
           chat.addMessageIfNotInList(newMessage);
           this.addMessageIfNotInList(newMessage);
         }
+        // chat.lastMessage = chat.messages[chat.messages.length - 1];
+        // UserService.updateLastMessageOfChat(chat.id, chat.messages)
         callback();
       }
     );
@@ -106,6 +108,15 @@ class _MessageService {
         throw new Error(reason);
       }
     );
+  }
+
+  getById(id: string): Message | undefined {
+    for (const message of this.messages) {
+      if (message.id === id) {
+        return message;
+      }
+    }
+    return undefined;
   }
 }
 

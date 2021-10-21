@@ -3,10 +3,14 @@ import { StyleSheet, Image, Button } from "react-native";
 import { View, Text } from "../components/Themed";
 import UserService from "../services/UserService";
 import {logout} from "../components/Firebase/firebase";
+import {darkerPurple} from "../constants/Colors";
+import {useNavigation} from "@react-navigation/native";
+import IconButton from "../components/IconButton";
 
 export default function UserProfileScreen() {
 
   const user = UserService.currentUser;
+  const navigation = useNavigation();
 
   function onLogoutPress() {
     logout();
@@ -15,6 +19,13 @@ export default function UserProfileScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
+        <IconButton
+          style={styles.button}
+          iconName="chevron-left"
+          color={darkerPurple}
+          size={42}
+          onPress={() => navigation.goBack()}
+        />
         <Image
           style={styles.userAva}
           source={{uri: user.avaUrl}}
@@ -37,6 +48,8 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: "bold",
+  },
+  button: {
   },
   header: {
     paddingTop: 50,

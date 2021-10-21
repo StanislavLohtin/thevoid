@@ -8,16 +8,29 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Chat } from "../classes/Chat";
+import { useEffect } from "react";
+import ChatService from "../services/ChatService";
+import { useState } from "react";
 
 type ChatProps = TextProps & {
   chat: Chat;
 };
 
 export function ChatComponent(props: ChatProps) {
-  const chat = props.chat;
+  const chatInitial = props.chat;
+  const [chat, setChat] = useState(chatInitial);
   console.log("CHAT:", chat);
   const navigation = useNavigation();
   const otherUser = chat.otherUser;
+
+  const updateChat = (updatedChat: Chat) => {
+    console.log("setting new chat:", updatedChat);
+    setChat(updatedChat);
+  };
+
+  useEffect(() => {
+    // ChatService.watchChat(chat.id, updateChat);
+  });
 
   function onChatClick() {
     navigation.navigate("ChatScreen", { id: chat.id });
@@ -28,9 +41,11 @@ export function ChatComponent(props: ChatProps) {
       <View style={styles.container}>
         <Image
           style={styles.userAva}
-          source={otherUser?.avaUrl
-            ? { uri: otherUser.avaUrl }
-            : require("./../assets/images/defaultAva.png")}
+          source={
+            otherUser?.avaUrl
+              ? { uri: otherUser.avaUrl }
+              : require("./../assets/images/defaultAva.png")
+          }
         />
         <View>
           <Text style={styles.name}> {otherUser?.username} </Text>
