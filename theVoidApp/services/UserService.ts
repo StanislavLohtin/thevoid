@@ -3,6 +3,7 @@ import { CurrentUserDTO } from "../classes/CurrentUserDTO";
 import FirebaseService from "./FirebaseService";
 import { UserPublic } from "../classes/UserPublic";
 import MessageService from "./MessageService";
+import {Message} from "../classes/Message";
 
 class _UserService {
   currentUser: CurrentUser;
@@ -87,13 +88,15 @@ class _UserService {
     this.currentUser = null;
   }
 
-  public updateLastMessageOfChat(chatId: string, messageId: string): void {
+  public updateLastMessageOfChat(chatId: string, messageId: string): Message {
     const chat = this.currentUser.getChatById(chatId);
     if (!chat) {
       return;
     }
     chat.lastMessageId = messageId;
     chat.lastMessage = MessageService.getById(messageId);
+    console.log("updating last msg: ", chat.lastMessage);
+    return chat.lastMessage;
   }
 }
 

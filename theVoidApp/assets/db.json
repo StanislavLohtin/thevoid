@@ -2,7 +2,7 @@
   "chats": [
     {
       "info": {
-        "lastMessageId": "-MmEe7Fvxk0YFXQPt_Db",
+        "lastMessageId": "-MmZdvCsqIUOgJ5B4Zjs",
         "type": 0,
         "usersPublic": [
           {
@@ -60,6 +60,20 @@
             "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
             "status": "1",
             "type": "0"
+          },
+          "-MmZdHD9vB7ksmmy2e6_": {
+            "content": "yo m71",
+            "createdAt": "1634849858340",
+            "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
+            "status": "1",
+            "type": "0"
+          },
+          "-MmZdvCsqIUOgJ5B4Zjs": {
+            "content": "m8 i mean",
+            "createdAt": "1634850026254",
+            "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
+            "status": "1",
+            "type": "0"
           }
         }
       }
@@ -68,7 +82,7 @@
       "info": {
         "chatImage": "",
         "description": "course1 descr",
-        "lastMessageId": "-MmCvKeNAhA-KI6DeIfw",
+        "lastMessageId": "-MmZd7AGnehAM3q8B_o3",
         "title": "course1 title",
         "type": 0,
         "usersPublic": [
@@ -226,6 +240,13 @@
             "status": "1",
             "type": "0"
           },
+          "-MmCvKeNAhA-KI6DeIf2": {
+            "content": "b2",
+            "createdAt": "1634468714042",
+            "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
+            "status": "1",
+            "type": "0"
+          },
           "-MmCvKeNAhA-KI6DeIfw": {
             "content": "I thought so!",
             "createdAt": "1634468714042",
@@ -233,11 +254,32 @@
             "status": "1",
             "type": "0"
           },
-          "-MmCvKeNAhA-KI6DeIf2": {
-            "content": "b2",
-            "createdAt": "1634468714042",
+          "-MmZak2xwwVnDCkhs9Nm": {
+            "content": "really?",
+            "createdAt": "1634849194145",
             "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
             "status": "1",
+            "type": "0"
+          },
+          "-MmZaoM9odtoLR-2VEhF": {
+            "content": "does not seem to work",
+            "createdAt": "1634849211757",
+            "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
+            "status": "1",
+            "type": "0"
+          },
+          "-MmZd7AGnehAM3q8B_oi": {
+            "content": "works now?",
+            "createdAt": "1634849817195",
+            "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
+            "status": "1",
+            "type": "0"
+          },
+          "-MmZd7AGnehAM3q8B_o3": {
+            "content": "b3",
+            "createdAt": "1634849819295",
+            "sender": "8KOoXumeqAXwN5sCi4OOu0ZGHHD3",
+            "status": "2",
             "type": "0"
           }
         }

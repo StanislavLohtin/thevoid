@@ -17,19 +17,14 @@ type ChatProps = TextProps & {
 };
 
 export function ChatComponent(props: ChatProps) {
-  const chatInitial = props.chat;
-  const [chat, setChat] = useState(chatInitial);
+  const chat = props.chat;
+  const [lastMessage, setLastMessage] = useState(chat.lastMessage);
   console.log("CHAT:", chat);
   const navigation = useNavigation();
   const otherUser = chat.otherUser;
 
-  const updateChat = (updatedChat: Chat) => {
-    console.log("setting new chat:", updatedChat);
-    setChat(updatedChat);
-  };
-
   useEffect(() => {
-    // ChatService.watchChat(chat.id, updateChat);
+    ChatService.watchLastMessageOfAChat(chat.id, setLastMessage);
   });
 
   function onChatClick() {
@@ -52,10 +47,10 @@ export function ChatComponent(props: ChatProps) {
           <Text style={styles.text}>
             {" "}
             {ellipsis(
-              (chat.lastMessage?.sentByCurrentUser() ? "" : "You: ") +
-                chat.lastMessage?.content
+              (lastMessage?.sentByCurrentUser() ? "You: " : "") +
+                lastMessage?.content
             )}{" "}
-            · {chat.lastMessage?.createdAt.toLocaleTimeString()}
+            · {lastMessage?.createdAt.toLocaleTimeString()}
           </Text>
         </View>
       </View>

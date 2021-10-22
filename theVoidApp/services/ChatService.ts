@@ -60,13 +60,14 @@ class _ChatService {
     });
   }
 
-  watchChat(chatId: string, updateChat: (Chat) => void) {
+  watchLastMessageOfAChat(chatId: string, setLastMessage: (Message) => void) {
     FirebaseService.startOnChangeListener(
       `chats/${chatId}/info/lastMessageId`,
       (newMessageId) => {
-        UserService.updateLastMessageOfChat(chatId, newMessageId);
         console.log("newMessageId", newMessageId);
-        updateChat(_ChatService.sortByDate(UserService.currentUser.chats));
+        setLastMessage(
+          UserService.updateLastMessageOfChat(chatId, newMessageId)
+        );
       }
     );
   }
