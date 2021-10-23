@@ -67,7 +67,7 @@ export default function ChatScreen() {
       </View>
       <View style={styles.content}>
         <FlatList
-          style={styles.messageList}
+          // style={styles.messageList}
           data={messages}
           extraData={refreshTrigger}
           keyExtractor={(item) => item.id.toString()}

@@ -24,7 +24,7 @@ export function ChatComponent(props: ChatProps) {
   const otherUser = chat.otherUser;
 
   useEffect(() => {
-    ChatService.watchLastMessageOfAChat(chat.id, setLastMessage);
+    ChatService.watchLastMessageOfAChat(chat.id, setLastMessage, navigation);
   });
 
   function onChatClick() {

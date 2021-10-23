@@ -82,7 +82,7 @@
       "info": {
         "chatImage": "",
         "description": "course1 descr",
-        "lastMessageId": "-MmZd7AGnehAM3q8B_o3",
+        "lastMessageId": "-MmZezA3lqZs2SP9tFuZ",
         "title": "course1 title",
         "type": 0,
         "usersPublic": [
@@ -268,6 +268,13 @@
             "status": "1",
             "type": "0"
           },
+          "-MmZd7AGnehAM3q8B_o3": {
+            "content": "b3",
+            "createdAt": "1634849819295",
+            "sender": "8KOoXumeqAXwN5sCi4OOu0ZGHHD3",
+            "status": "2",
+            "type": "0"
+          },
           "-MmZd7AGnehAM3q8B_oi": {
             "content": "works now?",
             "createdAt": "1634849817195",
@@ -275,11 +282,39 @@
             "status": "1",
             "type": "0"
           },
-          "-MmZd7AGnehAM3q8B_o3": {
-            "content": "b3",
-            "createdAt": "1634849819295",
+          "-MmZezA3lqZs2SP9tCuK": {
+            "content": "does it or does it not?",
+            "createdAt": "1634850304616",
+            "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
+            "status": "1",
+            "type": "0"
+          },
+          "-MmZezA3lqZs2SP9tCuZ": {
+            "content": "b4",
+            "createdAt": "1634850324616",
             "sender": "8KOoXumeqAXwN5sCi4OOu0ZGHHD3",
-            "status": "2",
+            "status": "1",
+            "type": "0"
+          },
+          "-MmZezA3lqZs2SP9tDuZ": {
+            "content": "b5",
+            "createdAt": "1634850328616",
+            "sender": "8KOoXumeqAXwN5sCi4OOu0ZGHHD3",
+            "status": "1",
+            "type": "0"
+          },
+          "-MmZezA3lqZs2SP9tEuZ": {
+            "content": "b6",
+            "createdAt": "1634850338616",
+            "sender": "8KOoXumeqAXwN5sCi4OOu0ZGHHD3",
+            "status": "1",
+            "type": "0"
+          },
+          "-MmZezA3lqZs2SP9tFuZ": {
+            "content": "b7",
+            "createdAt": "1634850348616",
+            "sender": "8KOoXumeqAXwN5sCi4OOu0ZGHHD3",
+            "status": "1",
             "type": "0"
           }
         }

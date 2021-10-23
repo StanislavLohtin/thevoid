@@ -1,14 +1,13 @@
 import * as React from "react";
-import { StyleSheet, Image, Button } from "react-native";
+import { StyleSheet, Image, Button, Alert } from "react-native";
 import { View, Text } from "../components/Themed";
 import UserService from "../services/UserService";
-import {logout} from "../components/Firebase/firebase";
-import {darkerPurple} from "../constants/Colors";
-import {useNavigation} from "@react-navigation/native";
+import { logout } from "../components/Firebase/firebase";
+import { darkerPurple } from "../constants/Colors";
+import { useNavigation } from "@react-navigation/native";
 import IconButton from "../components/IconButton";
 
 export default function UserProfileScreen() {
-
   const user = UserService.currentUser;
   const navigation = useNavigation();
 
@@ -26,10 +25,7 @@ export default function UserProfileScreen() {
           size={42}
           onPress={() => navigation.goBack()}
         />
-        <Image
-          style={styles.userAva}
-          source={{uri: user.avaUrl}}
-        />
+        <Image style={styles.userAva} source={{ uri: user.avaUrl }} />
       </View>
       <Text> {user.username} </Text>
       <Text> {user.email} </Text>
@@ -49,8 +45,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
   },
-  button: {
-  },
+  button: {},
   header: {
     paddingTop: 50,
     paddingBottom: 20,
