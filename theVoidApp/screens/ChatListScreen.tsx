@@ -31,9 +31,6 @@ export default function ChatListScreen() {
       setCurrentUser(currentUser);
       await ChatService.getChatsForUser(currentUser, updateChatList);
     };
-    navigation.addListener("state", (newValue) => {
-      console.log("newValue!!! ", newValue);
-    });
 
     getCurrentUser();
   }, []);

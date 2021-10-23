@@ -20,6 +20,7 @@ import {
   MembersTabParamList,
 } from "../types";
 import { StyleSheet } from "react-native";
+import UserService from "../services/UserService";
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -55,16 +56,18 @@ export default function BottomTabNavigator() {
           tabBarLabel: "",
         }}
       />
-      <BottomTab.Screen
-        name="Members"
-        component={MembersTabNavigator}
-        options={{
-          tabBarIcon: ({ color }) => (
-            <TabBarIcon name="ios-people" color={color} />
-          ),
-          tabBarLabel: "",
-        }}
-      />
+       { UserService.currentUser?.isAdmin &&
+        <BottomTab.Screen
+          name="Members"
+          component={MembersTabNavigator}
+          options={{
+            tabBarIcon: ({ color }) => (
+              <TabBarIcon name="ios-people" color={color} />
+            ),
+            tabBarLabel: "",
+          }}
+        />
+      }
     </BottomTab.Navigator>
   );
 }
@@ -74,7 +77,7 @@ const styles = StyleSheet.create({
     color: "#686f76",
     backgroundColor: "#2e2e30",
     paddingTop: 8,
-    borderTopWidth: 0
+    borderTopWidth: 0,
   },
 });
 

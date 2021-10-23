@@ -30,11 +30,11 @@ export default function MembersScreen() {
             keyboardType="default"
         >
         </TextInput></View>
-        {/*<FlatList
+        <FlatList
           data={users}
           keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) => <MemberComponent user={item} />}
-        />*/}
+        />
       </View>
   );
 }

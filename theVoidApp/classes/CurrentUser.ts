@@ -10,8 +10,9 @@ export class CurrentUser extends UserPublic {
   status: string;
   chatIds?: string[];
   chats?: Chat[];
+  isAdmin: boolean;
 
-  constructor(uid: string, userDTO: CurrentUserDTO) {
+  constructor(uid: string, userDTO: CurrentUserDTO, isAdmin: boolean) {
     super(uid, userDTO.username, userDTO.avaUrl);
 
     this.username = userDTO.username;
@@ -21,6 +22,7 @@ export class CurrentUser extends UserPublic {
     this.lastOnline = new Date(Number(userDTO.lastOnline));
     this.chatIds = Object.values(userDTO.chatIds);
     this.chats = [];
+    this.isAdmin = isAdmin;
 
     console.log("CurrentUser ", this);
   }

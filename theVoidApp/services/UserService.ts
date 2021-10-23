@@ -24,7 +24,7 @@ class _UserService {
 
     FirebaseService.set("/users/" + uid, newUser).then(
       () => {
-        this.initCurrentUser(uid, newUser);
+        this.initCurrentUser(uid, newUser, false);
       },
       (reason) => {
         console.warn("currentUserPromiseReject");
@@ -33,8 +33,8 @@ class _UserService {
     );
   }
 
-  private initCurrentUser(uid: string, newUser: CurrentUserDTO) {
-    this.currentUser = new CurrentUser(uid, newUser);
+  private initCurrentUser(uid: string, newUser: CurrentUserDTO, isAdmin: boolean) {
+    this.currentUser = new CurrentUser(uid, newUser, isAdmin);
     this.users.push(this.currentUser);
     this.currentUserPromiseResolve(this.currentUser);
     /*this.currentUser.updateAvaUrl().then(
@@ -62,7 +62,8 @@ class _UserService {
 
   public async getUser(uid: string) {
     const user = await FirebaseService.get("/users/" + uid);
-    this.initCurrentUser(uid, user.toJSON() as CurrentUserDTO);
+    const isAdmin = await FirebaseService.get("/permissions/" + uid);
+    this.initCurrentUser(uid, user.val() as CurrentUserDTO, isAdmin.val() === "mojet");
   }
 
   public getById(id: string): UserPublic {

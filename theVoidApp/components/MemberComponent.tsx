@@ -3,9 +3,10 @@ import { Text, TextProps } from "./Themed";
 import { Image, StyleSheet, View } from "react-native";
 import { CurrentUser } from "../classes/CurrentUser";
 import firebase from "firebase";
+import {UserPublic} from "../classes/UserPublic";
 
 type MemberProps = TextProps & {
-  user: CurrentUser;
+  user: UserPublic;
 };
 
 export function MemberComponent(props: MemberProps) {
@@ -14,19 +15,19 @@ export function MemberComponent(props: MemberProps) {
 
   const user = props.user;
 
-  const storageRef = firebase.storage().ref();
+/*  const storageRef = firebase.storage().ref();
 
   const imagesRef = storageRef.child("avatars");
   const avaRef = imagesRef.child(user.id + ".png");
   avaRef.getDownloadURL().then((url) => {
     setAvaUrl(url);
-  });
+  });*/
 
   return (
     <View style={styles.container}>
-      <Image style={styles.userAva} source={{ uri: avaUrl }} />
+      <Image style={styles.userAva} source={{ uri: user.avaUrl }} />
       <Text style={styles.name}> {user.username} </Text>
-      {/*<Text> {user.email} </Text>*/}
+      <Text style={styles.text}> id: {user.id} </Text>
     </View>
   );
 }
