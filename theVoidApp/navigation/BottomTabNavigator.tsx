@@ -56,7 +56,7 @@ export default function BottomTabNavigator() {
           tabBarLabel: "",
         }}
       />
-       { UserService.currentUser?.isAdmin &&
+      {UserService.currentUser?.isAdmin && (
         <BottomTab.Screen
           name="Members"
           component={MembersTabNavigator}
@@ -67,7 +67,7 @@ export default function BottomTabNavigator() {
             tabBarLabel: "",
           }}
         />
-      }
+      )}
     </BottomTab.Navigator>
   );
 }

@@ -2,7 +2,7 @@
   "chats": [
     {
       "info": {
-        "lastMessageId": "-MmZdvCsqIUOgJ5B4Zjs",
+        "lastMessageId": "-Mmo-SrQ0UBZT2Biv4Wd",
         "type": 0,
         "usersPublic": [
           {
@@ -74,6 +74,27 @@
             "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
             "status": "1",
             "type": "0"
+          },
+          "-Mmo-SrQ0UBZT2Biv4Wa": {
+            "content": "hi looser",
+            "createdAt": "1635107591793",
+            "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
+            "status": "1",
+            "type": "0"
+          },
+          "-Mmo-SrQ0UBZT2Biv4Wc": {
+            "content": "u are a looser, not me",
+            "createdAt": "1635107691793",
+            "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
+            "status": "1",
+            "type": "0"
+          },
+          "-Mmo-SrQ0UBZT2Biv4Wd": {
+            "content": "drugoi user",
+            "createdAt": "1635107791793",
+            "sender": "8KOoXumeqAXwN5sCi4OOu0ZGHHD3",
+            "status": "1",
+            "type": "0"
           }
         }
       }
@@ -82,7 +103,7 @@
       "info": {
         "chatImage": "",
         "description": "course1 descr",
-        "lastMessageId": "-MmZezA3lqZs2SP9tFuZ",
+        "lastMessageId": "-MmZezA3lqZs2SP9tGuZ",
         "title": "course1 title",
         "type": 0,
         "usersPublic": [
@@ -316,15 +337,24 @@
             "sender": "8KOoXumeqAXwN5sCi4OOu0ZGHHD3",
             "status": "1",
             "type": "0"
+          },
+          "-MmZezA3lqZs2SP9tGuZ": {
+            "content": "b8 yoyo biatch!",
+            "createdAt": "1634850748616",
+            "sender": "8KOoXumeqAXwN5sCi4OOu0ZGHHD3",
+            "status": "1",
+            "type": "0"
           }
         }
       }
     }
   ],
+  "permissions": {
+    "Ojr2dobmnbMbpxEEf7y0Me8fae43": "mojet"
+  },
   "users": {
     "8KOoXumeqAXwN5sCi4OOu0ZGHHD3": {
-      "avaUrl": "https://firebasestorage.googleapis.com/v0/b/thevoid-54561.appspot.com/o/avatars%2FOjr2dobmnbMbpxEEf7y0Me8fae43.png?alt=media&token=2fef62fd-a817-4a70-9219-3f532dce0817",
-      "chatIds": ["0", "1"],
+      "chatIds": ["0"],
       "createdAt": "1633819307424",
       "email": "test2@test.com",
       "lastOnline": "1633819307424",

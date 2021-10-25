@@ -27,7 +27,6 @@ export function MemberComponent(props: MemberProps) {
     <View style={styles.container}>
       <Image style={styles.userAva} source={{ uri: user.avaUrl }} />
       <Text style={styles.name}> {user.username} </Text>
-      <Text style={styles.text}> id: {user.id} </Text>
     </View>
   );
 }

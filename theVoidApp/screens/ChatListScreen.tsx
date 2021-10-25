@@ -12,7 +12,9 @@ import { useEffect, useState } from "react";
 import UserService from "../services/UserService";
 import { useNavigation } from "@react-navigation/native";
 import ChatService from "../services/ChatService";
-import {Chat} from "../classes/Chat";
+import { Chat } from "../classes/Chat";
+import IconButton from "../components/IconButton";
+import { darkerPurple } from "../constants/Colors";
 
 export default function ChatListScreen() {
   const [text, onChangeText] = useState("");
@@ -47,16 +49,27 @@ export default function ChatListScreen() {
           source={require("./../assets/images/voidColorWhite.png")}
         />
         <View style={styles.headerRight}>
-          <TouchableWithoutFeedback onPress={onAvatarPress}>
-            <Image
-              style={styles.userAva}
-              source={
-                currentUser?.avaUrl
-                  ? { uri: currentUser.avaUrl }
-                  : require("./../assets/images/defaultAva.png")
-              }
-            />
-          </TouchableWithoutFeedback>
+          <View style={styles.headerTopRow}>
+            <TouchableWithoutFeedback onPress={onAvatarPress}>
+              <Image
+                style={styles.userAva}
+                source={
+                  currentUser?.avaUrl
+                    ? { uri: currentUser.avaUrl }
+                    : require("./../assets/images/defaultAva.png")
+                }
+              />
+            </TouchableWithoutFeedback>
+            {UserService.currentUser?.isAdmin && (
+              <IconButton
+                style={styles.createChatButton}
+                iconName="square-edit-outline"
+                color={"white"}
+                size={25}
+                onPress={() => navigation.navigate("CreateChatScreen")}
+              />
+            )}
+          </View>
           <TextInput
             style={styles.searchInput}
             onChangeText={onChangeText}
@@ -99,6 +112,11 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingRight: 15,
   },
+  headerTopRow: {
+    flexDirection: "row",
+    backgroundColor: "transparent",
+    justifyContent: "flex-end",
+  },
   logo: {
     marginLeft: 15,
     minHeight: 20,
@@ -106,6 +124,10 @@ const styles = StyleSheet.create({
     width: 110,
     height: 110,
     borderRadius: 999,
+  },
+  createChatButton: {
+    marginLeft: 20,
+    marginTop: 8,
   },
   searchInput: {
     borderRadius: 10,
