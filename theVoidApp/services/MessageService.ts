@@ -38,6 +38,10 @@ class _MessageService {
     FirebaseService.startOnChangeListener(
       `chats/${chat.id}/messages/recent`,
       (data) => {
+        if (!data) {
+          callback();
+          return;
+        }
         for (const [key, value] of Object.entries(data)) {
           let newMessage = new Message(key, value as MessageDTO);
           chat.addMessageIfNotInList(newMessage);
