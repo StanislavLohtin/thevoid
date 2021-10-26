@@ -25,7 +25,14 @@ export function UserInAListComponent(props: MemberProps) {
   return (
     <TouchableWithoutFeedback onPress={onTouchUser}>
       <View style={styles.container}>
-        <Image style={styles.userAva} source={{ uri: user.avaUrl }} />
+        <Image
+          style={styles.userAva}
+          source={
+            user?.avaUrl
+              ? { uri: user.avaUrl }
+              : require("./../assets/images/defaultAva.png")
+          }
+        />
         <Text style={styles.name}> {user.username} </Text>
         {isSelected && (
           <MaterialCommunityIcons

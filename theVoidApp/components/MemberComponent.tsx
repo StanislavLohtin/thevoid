@@ -1,21 +1,18 @@
 import * as React from "react";
 import { Text, TextProps } from "./Themed";
 import { Image, StyleSheet, View } from "react-native";
-import { CurrentUser } from "../classes/CurrentUser";
-import firebase from "firebase";
-import {UserPublic} from "../classes/UserPublic";
+import { UserPublic } from "../classes/UserPublic";
 
 type MemberProps = TextProps & {
   user: UserPublic;
 };
 
 export function MemberComponent(props: MemberProps) {
-
   const [avaUrl, setAvaUrl] = React.useState("");
 
   const user = props.user;
 
-/*  const storageRef = firebase.storage().ref();
+  /*  const storageRef = firebase.storage().ref();
 
   const imagesRef = storageRef.child("avatars");
   const avaRef = imagesRef.child(user.id + ".png");
@@ -25,7 +22,14 @@ export function MemberComponent(props: MemberProps) {
 
   return (
     <View style={styles.container}>
-      <Image style={styles.userAva} source={{ uri: user.avaUrl }} />
+      <Image
+        style={styles.userAva}
+        source={
+          user?.avaUrl
+            ? { uri: user.avaUrl }
+            : require("./../assets/images/defaultAva.png")
+        }
+      />
       <Text style={styles.name}> {user.username} </Text>
     </View>
   );

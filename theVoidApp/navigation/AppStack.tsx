@@ -14,7 +14,7 @@ export default function AppStack() {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Root" component={BottomTabNavigator} />
       <Stack.Screen name="NotFound" component={NotFoundScreen}/>
-      <Stack.Screen name="ChatScreen" component={ChatScreen}/>
+      <Stack.Screen name="ChatScreen" component={ChatScreen} options={{title:"ChatScreen!!"}}/>
       <Stack.Screen name="CreateChatScreen" component={CreateChatScreen}/>
       <Stack.Screen name="UserProfileScreen" component={UserProfileScreen}/>
     </Stack.Navigator>

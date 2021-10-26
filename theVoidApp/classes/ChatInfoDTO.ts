@@ -6,5 +6,5 @@ export interface ChatInfoDTO {
 	description?: string;
 	title?: string;
 	chatImage?: string;
-	usersPublic: UserPublicDTO[];
+	usersPublic: Map<string, UserPublicDTO>;
 }

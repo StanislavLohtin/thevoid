@@ -21,11 +21,11 @@ export class Chat {
     this.lastMessageId = chatDTO.lastMessageId;
     this.title = chatDTO.title;
     this.description = chatDTO.description;
-    for (const user of Object.values(chatDTO.usersPublic)) {
-      if (user.id === UserService.currentUser.id) {
+    for (const [userId, user] of Object.entries(chatDTO.usersPublic)) {
+      if (userId === UserService.currentUser.id) {
         continue;
       }
-      let newUser = new UserPublic(user.id, user.username, user.avaUrl);
+      let newUser = new UserPublic(userId, user.username, user.avaUrl);
       this.usersPublic.push(newUser);
       UserService.addUserToListIfNotIn(newUser);
     }

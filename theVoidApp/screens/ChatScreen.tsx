@@ -19,7 +19,7 @@ export default function ChatScreen() {
   );
   const refreshTrigger = { counter: 1 };
 
-  const [messages, setMessages] = React.useState([chat.lastMessage]);
+  const [messages, setMessages] = React.useState(chat.lastMessage ? [chat.lastMessage] : []);
 
   useEffect(() => {
     const fetchMessages = async () => {

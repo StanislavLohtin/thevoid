@@ -1,45 +1,22 @@
 {
-  "chats": [
-    {
+  "chats": {
+    "chatId1": {
       "info": {
-        "lastMessageId": "-Mmo-SrQ0UBZT2Biv4Wd",
+        "lastMessageId": "-Mmo0wz7MO94hg87lIt7",
         "type": 0,
-        "usersPublic": [
-          {
+        "usersPublic": {
+          "Ojr2dobmnbMbpxEEf7y0Me8fae43": {
             "avaUrl": "https://firebasestorage.googleapis.com/v0/b/thevoid-54561.appspot.com/o/avatars%2FOjr2dobmnbMbpxEEf7y0Me8fae43.png?alt=media&token=2fef62fd-a817-4a70-9219-3f532dce0817",
-            "id": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
             "username": "test@test.com"
           },
-          {
-            "avaUrl": "https://firebasestorage.googleapis.com/v0/b/thevoid-54561.appspot.com/o/avatars%2FOjr2dobmnbMbpxEEf7y0Me8fae43.png?alt=media&token=2fef62fd-a817-4a70-9219-3f532dce0817",
-            "id": "8KOoXumeqAXwN5sCi4OOu0ZGHHD3",
+          "8KOoXumeqAXwN5sCi4OOu0ZGHHD3": {
+            "avaUrl": "",
             "username": "user2"
           }
-        ]
+        }
       },
       "messages": {
         "recent": {
-          "0": {
-            "content": "message1",
-            "createdAt": 1633798140815,
-            "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
-            "status": 2,
-            "type": 0
-          },
-          "1": {
-            "content": "message2",
-            "createdAt": 1633798141815,
-            "sender": "8KOoXumeqAXwN5sCi4OOu0ZGHHD3",
-            "status": 0,
-            "type": 0
-          },
-          "2": {
-            "content": "message3",
-            "createdAt": 1633798144815,
-            "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
-            "status": 1,
-            "type": 0
-          },
           "-MlvJualqv2VTdiip9CQ": {
             "content": "a2",
             "createdAt": "1634156652222",
@@ -95,29 +72,34 @@
             "sender": "8KOoXumeqAXwN5sCi4OOu0ZGHHD3",
             "status": "1",
             "type": "0"
+          },
+          "-Mmo0wz7MO94hg87lIt7": {
+            "content": "refresh",
+            "createdAt": "1635107981407",
+            "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
+            "status": "1",
+            "type": "0"
           }
         }
       }
     },
-    {
+    "chatId2": {
       "info": {
         "chatImage": "",
         "description": "course1 descr",
         "lastMessageId": "-MmZezA3lqZs2SP9tGuZ",
         "title": "course1 title",
         "type": 0,
-        "usersPublic": [
-          {
+        "usersPublic": {
+          "Ojr2dobmnbMbpxEEf7y0Me8fae43": {
             "avaUrl": "https://firebasestorage.googleapis.com/v0/b/thevoid-54561.appspot.com/o/avatars%2FOjr2dobmnbMbpxEEf7y0Me8fae43.png?alt=media&token=2fef62fd-a817-4a70-9219-3f532dce0817",
-            "id": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
             "username": "user1"
           },
-          {
-            "avaUrl": "https://firebasestorage.googleapis.com/v0/b/thevoid-54561.appspot.com/o/avatars%2FOjr2dobmnbMbpxEEf7y0Me8fae43.png?alt=media&token=2fef62fd-a817-4a70-9219-3f532dce0817",
-            "id": "8KOoXumeqAXwN5sCi4OOu0ZGHHD3",
+          "8KOoXumeqAXwN5sCi4OOu0ZGHHD3": {
+            "avaUrl": "",
             "username": "user2"
           }
-        ]
+        }
       },
       "messages": {
         "recent": {
@@ -348,13 +330,13 @@
         }
       }
     }
-  ],
+  },
   "permissions": {
     "Ojr2dobmnbMbpxEEf7y0Me8fae43": "mojet"
   },
   "users": {
     "8KOoXumeqAXwN5sCi4OOu0ZGHHD3": {
-      "chatIds": ["0"],
+      "chatIds": { "chatId1": "chatId1" },
       "createdAt": "1633819307424",
       "email": "test2@test.com",
       "lastOnline": "1633819307424",
@@ -363,7 +345,7 @@
     },
     "Ojr2dobmnbMbpxEEf7y0Me8fae43": {
       "avaUrl": "https://firebasestorage.googleapis.com/v0/b/thevoid-54561.appspot.com/o/avatars%2FOjr2dobmnbMbpxEEf7y0Me8fae43.png?alt=media&token=2fef62fd-a817-4a70-9219-3f532dce0817",
-      "chatIds": ["0", "1"],
+      "chatIds": { "chatId1": "chatId1", "chatId2": "chatId2" },
       "createdAt": "1633819081808",
       "email": "test@test.com",
       "lastOnline": "1633819081808",

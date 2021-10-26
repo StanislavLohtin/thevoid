@@ -8,6 +8,9 @@ class _MessageService {
   messages: Set<Message> = new Set<Message>();
 
   public fetchMessageById(chatId: string, id: string): Promise<Message> {
+    if (!id) {
+      return Promise.resolve(undefined);
+    }
     console.log("fetchMessageById " + id);
     const messageWithId = this.getMessageById(id);
     if (messageWithId) {

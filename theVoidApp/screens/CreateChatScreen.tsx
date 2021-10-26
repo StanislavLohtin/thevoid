@@ -8,29 +8,40 @@ import IconButton from "../components/IconButton";
 import { darkerPurple } from "../constants/Colors";
 import { UserInAListComponent } from "../components/UserInAListComponent";
 import { UserPublic } from "../classes/UserPublic";
+import ChatService from "../services/ChatService";
 
 export default function CreateChatScreen() {
   const [searchText, setSearchText] = React.useState("");
-  const [name, setName] = React.useState("");
+  const [title, setTitle] = React.useState("");
   const [selectedUsers] = React.useState(new Set<UserPublic>());
   const users = UserService.users;
   const navigation = useNavigation();
 
   useEffect(() => {}, []);
 
-  function onCreateChat() {
+  async function onCreateChat() {
     if (selectedUsers.size < 2) {
       console.warn("need at least 2 users for a chat");
       return;
     }
-    if (name.length < 2) {
-      console.warn("enter longer chat name");
-      return;
-    }
-    console.log(`creating chat with name: ${name}`);
+    console.log(`trying to create chat with name: ${title}`);
     setSearchText("");
-    setName("");
-    // ChatService.currentChatId;
+    let usersPublicDTOs = new Map();
+    for (const user of selectedUsers) {
+      usersPublicDTOs.set(user.id, {
+        avaUrl: user.avaUrl,
+        username: user.username,
+      });
+    }
+    const success = await ChatService.createChat({
+      title: title,
+      lastMessageId: "",
+      type: "0",
+      usersPublic: usersPublicDTOs,
+    });
+    if (success) {
+      navigation.navigate("ChatListScreen");
+    }
   }
 
   function onTouchUser(user: UserPublic) {
@@ -65,9 +76,9 @@ export default function CreateChatScreen() {
       <View style={styles.content}>
         <TextInput
           style={styles.input}
-          onChangeText={setName}
-          value={name}
-          placeholder="Chat Name"
+          onChangeText={setTitle}
+          value={title}
+          placeholder="Group/Course Title"
           placeholderTextColor={"#888a8f"}
           keyboardType="default"
         ></TextInput>

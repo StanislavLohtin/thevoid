@@ -6,6 +6,7 @@ import MessageService from "./MessageService";
 import UserService from "./UserService";
 import { Alert } from "react-native";
 import { Message } from "../classes/Message";
+import { ChatInfoDTOUpload } from "../classes/ChatInfoDTOUpload";
 
 class _ChatService {
   private _currentChatId: string;
@@ -15,7 +16,6 @@ class _ChatService {
   }
 
   set currentChatId(value: string) {
-    console.log("currentChatId:" + value);
     this._currentChatId = value;
   }
 
@@ -59,11 +59,18 @@ class _ChatService {
     });
   }
 
-  watchLastMessageOfAChat(chatId: string, setLastMessage: (Message) => void, navigation) {
+  watchLastMessageOfAChat(
+    chatId: string,
+    setLastMessage: (Message) => void,
+    navigation
+  ) {
     FirebaseService.startOnChangeListener(
       `chats/${chatId}/info/lastMessageId`,
       (newMessageId) => {
-        if (MessageService.getById(newMessageId) !== undefined) {
+        if (
+          MessageService.getById(newMessageId) !== undefined ||
+          !newMessageId
+        ) {
           return;
         }
         console.log("newMessageId", newMessageId);
@@ -81,11 +88,52 @@ class _ChatService {
     );
   }
 
-  public static sortByDate(chats: Chat[]): Chat[] {
+  async createChat(chatInfo: ChatInfoDTO): Promise<boolean> {
+    const currentUserInChat = chatInfo.usersPublic.get(
+      UserService.currentUser.id
+    );
+    if (currentUserInChat) {
+      chatInfo.usersPublic = chatInfo.usersPublic.set(
+        UserService.currentUser.id,
+        {
+          avaUrl: currentUserInChat.avaUrl,
+          username: currentUserInChat.username,
+        }
+      );
+    }
+
+    const usersPublicObjectInsteadOfMap = {};
+    for (const [userId, user] of chatInfo.usersPublic) {
+      usersPublicObjectInsteadOfMap[userId] = user;
+    }
+
+    const chatInfoDTOUpload: ChatInfoDTOUpload = { ...chatInfo };
+    chatInfoDTOUpload.usersPublic = usersPublicObjectInsteadOfMap;
+
+    const id = await FirebaseService.push(`chats/`, {
+      info: chatInfoDTOUpload,
+    });
+
+    if (!id.key) {
+      console.warn("create failed");
+      return false;
+    }
+    if (currentUserInChat) {
+      UserService.currentUser.chats.push(new Chat(id.key, chatInfo));
+    }
+
+    for (const userId of chatInfo.usersPublic.keys()) {
+      await FirebaseService.set(`users/${userId}/chatIds/${id.key}`, id.key);
+    }
+
+    return true;
+  }
+
+  static sortByDate(chats: Chat[]): Chat[] {
     return chats.sort(
       (chat1, chat2) =>
-        chat2.lastMessage.createdAt.getTime() -
-        chat1.lastMessage.createdAt.getTime()
+        chat2.lastMessage?.createdAt.getTime() -
+        chat1.lastMessage?.createdAt.getTime()
     );
   }
 
