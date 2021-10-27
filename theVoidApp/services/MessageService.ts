@@ -74,7 +74,6 @@ class _MessageService {
         throw new Error("create failed");
       }
       message.id = id.key;
-      chat.lastMessage = message;
       _MessageService.updateLastMessageId(chat.id, message.id);
       return message;
     });

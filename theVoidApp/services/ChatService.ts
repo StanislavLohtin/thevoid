@@ -10,6 +10,7 @@ import { ChatInfoDTOUpload } from "../classes/ChatInfoDTOUpload";
 
 class _ChatService {
   private _currentChatId: string;
+  private watchingChats: string[] = [];
 
   get currentChatId(): string {
     return this._currentChatId;
@@ -64,13 +65,14 @@ class _ChatService {
     setLastMessage: (Message) => void,
     navigation
   ) {
+    if (this.watchingChats.includes(chatId)) {
+      return;
+    }
+    this.watchingChats.push(chatId);
     FirebaseService.startOnChangeListener(
       `chats/${chatId}/info/lastMessageId`,
       (newMessageId) => {
-        if (
-          MessageService.getById(newMessageId) !== undefined ||
-          !newMessageId
-        ) {
+        if (!newMessageId) {
           return;
         }
         console.log("newMessageId", newMessageId);
