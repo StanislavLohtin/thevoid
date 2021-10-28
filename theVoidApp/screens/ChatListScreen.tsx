@@ -14,7 +14,6 @@ import { useNavigation } from "@react-navigation/native";
 import ChatService from "../services/ChatService";
 import { Chat } from "../classes/Chat";
 import IconButton from "../components/IconButton";
-import { darkerPurple } from "../constants/Colors";
 
 export default function ChatListScreen() {
   const [text, onChangeText] = useState("");
@@ -82,7 +81,7 @@ export default function ChatListScreen() {
       </View>
       <FlatList
         data={chats}
-        keyExtractor={(item) => item.id.toString()}
+        keyExtractor={(item) => item.id}
         renderItem={({ item }) => <ChatComponent chat={item} />}
       />
     </View>

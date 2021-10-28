@@ -9,8 +9,10 @@ import MessageService from "../services/MessageService";
 import IconButton from "../components/IconButton";
 import { darkerPurple } from "../constants/Colors";
 import ChatService from "../services/ChatService";
+import FlowService from "../services/FlowService";
 
 export default function ChatScreen() {
+  FlowService.init();
   const [text, setText] = React.useState("");
   const route = useRoute();
   const navigation = useNavigation();
@@ -19,7 +21,9 @@ export default function ChatScreen() {
   );
   const refreshTrigger = { counter: 1 };
 
-  const [messages, setMessages] = React.useState(chat.lastMessage ? [chat.lastMessage] : []);
+  const [messages, setMessages] = React.useState(
+    chat.lastMessage ? [chat.lastMessage] : []
+  );
 
   useEffect(() => {
     const fetchMessages = async () => {
@@ -42,7 +46,8 @@ export default function ChatScreen() {
     // chat.messages.push(newMessage);
     // setMessages(chat.messages);
     setText("");
-    MessageService.sendMessage(chat, newMessage);
+
+    // MessageService.sendMessage(chat, newMessage);
   }
 
   return (
