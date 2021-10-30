@@ -69,10 +69,11 @@ class _ChatService {
       return;
     }
     this.watchingChats.push(chatId);
+    const chat = UserService.currentUser.getChatById(chatId);
     FirebaseService.startOnChangeListener(
       `chats/${chatId}/info/lastMessageId`,
       (newMessageId) => {
-        if (!newMessageId) {
+        if (!newMessageId || chat.lastMessageId === newMessageId) {
           return;
         }
         console.log("newMessageId", newMessageId);

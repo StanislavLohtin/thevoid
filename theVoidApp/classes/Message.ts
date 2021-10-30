@@ -9,6 +9,7 @@ export enum MessageType {
   VIDEO,
   AUDIO,
 }
+
 export enum MessageStatus {
   CREATED,
   SENT,

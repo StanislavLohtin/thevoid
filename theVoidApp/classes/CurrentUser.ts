@@ -20,7 +20,7 @@ export class CurrentUser extends UserPublic {
     this.status = userDTO.status;
     this.createdAt = new Date(Number(userDTO.createdAt));
     this.lastOnline = new Date(Number(userDTO.lastOnline));
-    this.chatIds = Object.values(userDTO.chatIds);
+    this.chatIds = userDTO.chatIds ? Object.values(userDTO.chatIds) : [];
     this.chats = [];
     this.isAdmin = isAdmin;
 

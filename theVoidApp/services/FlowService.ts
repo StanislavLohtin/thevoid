@@ -1,16 +1,18 @@
+import { v4 } from "uuid";
+import UserService from "./UserService";
 const request = require("request");
 
 class _FlowService {
-  private sessionId: string = this.uuidv4();
+  private sessionId: string = v4();
   private socketUrl: string;
-  private CLIENT_ID = "YXAtQUZqdS1YfGNDRnN1X0dpag==";
+  private CLIENT_ID = "YXU0Q3phbXZMfGNoeFJaRGplYw==";
+  private THREAD_ID = "THREAD_ID2";
   private webSocket: WebSocket;
 
   constructor() {
     console.log("initing Flow AI");
     this.getSocketUrl().then(() => {
       this.connectToSocket();
-      this.startPingPong();
     });
   }
 
@@ -19,7 +21,7 @@ class _FlowService {
       method: "GET",
       url: "https://sdk.flow.ai/socket.info",
       headers: {
-        "x-flowai-threadid": "THREAD_ID",
+        "x-flowai-threadid": this.THREAD_ID,
         "x-flowai-clientid": this.CLIENT_ID,
         "x-flowai-sessionid": this.sessionId,
       },
@@ -42,9 +44,25 @@ class _FlowService {
   init() {}
 
   startPingPong(): void {
+    console.log("starting PingPong!");
     setInterval(() => {
-      this.webSocket.send(JSON.stringify({ type: "ping" }));
+      this.sendToSocket({ type: "ping" });
     }, 10 * 1000);
+  }
+
+  sendMessage(text: string) {
+    const message = {
+      type: "message.send",
+      payload: {
+        threadId: this.THREAD_ID,
+        speech: text,
+        originator: {
+          name: UserService.currentUser.username,
+          role: UserService.currentUser.isAdmin ? "moderator" : "external",
+        },
+      },
+    };
+    this.sendToSocket(message);
   }
 
   private connectToSocket(): void {
@@ -56,30 +74,25 @@ class _FlowService {
   }
 
   private onOpen(event: any): void {
-    console.log("connected");
+    FlowService.startPingPong();
   }
 
   private onMessage(event: any): void {
     console.log("onMessage", event);
+
   }
 
   private onError(event: any): void {
-    console.log(JSON.stringify(event.data));
+    console.warn(JSON.stringify(event.data));
   }
 
   private onClose(event: any): void {
+    console.log("CLOSING SOCKET!");
     console.log(JSON.stringify(event.data));
   }
 
-  private uuidv4() {
-    // @ts-ignore
-    return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (c) =>
-      (
-        c ^
-        (Math.random()[0] & (15 >> (c / 4)))
-        // (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))
-      ).toString(16)
-    );
+  private sendToSocket(obj: object) {
+    this.webSocket.send(JSON.stringify(obj));
   }
 }
 

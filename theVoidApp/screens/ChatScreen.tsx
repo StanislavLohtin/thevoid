@@ -46,6 +46,7 @@ export default function ChatScreen() {
     // chat.messages.push(newMessage);
     // setMessages(chat.messages);
     setText("");
+    FlowService.sendMessage(text);
 
     // MessageService.sendMessage(chat, newMessage);
   }
@@ -72,7 +73,7 @@ export default function ChatScreen() {
       </View>
       <View style={styles.content}>
         <FlatList
-          style={styles.messageList}
+          // style={styles.messageList}
           data={messages}
           extraData={refreshTrigger}
           keyExtractor={(item) => item.id.toString()}

@@ -7,7 +7,7 @@ import {
   View,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { Chat } from "../classes/Chat";
+import { Chat, ChatType } from "../classes/Chat";
 import { useEffect } from "react";
 import ChatService from "../services/ChatService";
 import { useState } from "react";
@@ -31,26 +31,32 @@ export function ChatComponent(props: ChatProps) {
     navigation.navigate("ChatScreen", { id: chat.id });
   }
 
+  let avaUrl = require("./../assets/images/defaultAva.png");
+  if (chat.type === ChatType.PRIVATE) {
+    if (otherUser?.avaUrl) {
+      avaUrl = { uri: otherUser.avaUrl };
+    }
+  } else if (chat.chatImage) {
+    avaUrl = { uri: chat.chatImage };
+  }
+
   return (
     <TouchableWithoutFeedback onPress={onChatClick}>
       <View style={styles.container}>
-        <Image
-          style={styles.userAva}
-          source={
-            otherUser?.avaUrl
-              ? { uri: otherUser.avaUrl }
-              : require("./../assets/images/defaultAva.png")
-          }
-        />
+        <Image style={styles.userAva} source={avaUrl} />
         <View>
-          <Text style={styles.name}> {otherUser?.username} </Text>
+          <Text style={styles.name}>
+            {chat.type === ChatType.PRIVATE ? otherUser?.username : chat.title}
+          </Text>
           <Text style={styles.text}>
-            {" "}
-            {ellipsis(
-              (lastMessage?.sentByCurrentUser() ? "You: " : "") +
-                lastMessage?.content
-            )}{" "}
-            · {lastMessage?.createdAt.toLocaleTimeString()}
+            {lastMessage
+              ? ellipsis(
+                  (lastMessage?.sentByCurrentUser() ? "You: " : "") +
+                    lastMessage?.content
+                ) +
+                " · " +
+                lastMessage?.createdAt.toLocaleTimeString()
+              : "No messages yet."}
           </Text>
         </View>
       </View>

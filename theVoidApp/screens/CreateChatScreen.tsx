@@ -29,7 +29,7 @@ export default function CreateChatScreen() {
     let usersPublicDTOs = new Map();
     for (const user of selectedUsers) {
       usersPublicDTOs.set(user.id, {
-        avaUrl: user.avaUrl,
+        avaUrl: user.avaUrl || "",
         username: user.username,
       });
     }

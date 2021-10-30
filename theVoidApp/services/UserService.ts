@@ -3,7 +3,7 @@ import { CurrentUserDTO } from "../classes/CurrentUserDTO";
 import FirebaseService from "./FirebaseService";
 import { UserPublic } from "../classes/UserPublic";
 import MessageService from "./MessageService";
-import {Message} from "../classes/Message";
+import { Message } from "../classes/Message";
 
 class _UserService {
   currentUser: CurrentUser;
@@ -33,10 +33,20 @@ class _UserService {
     );
   }
 
-  private initCurrentUser(uid: string, newUser: CurrentUserDTO, isAdmin: boolean) {
+  private initCurrentUser(
+    uid: string,
+    newUser: CurrentUserDTO,
+    isAdmin: boolean
+  ) {
     this.currentUser = new CurrentUser(uid, newUser, isAdmin);
     this.users.push(this.currentUser);
-    this.currentUserPromiseResolve(this.currentUser);
+    if (isAdmin) {
+      this.loadAllUsers().then(() => {
+        this.currentUserPromiseResolve(this.currentUser);
+      });
+    } else {
+      this.currentUserPromiseResolve(this.currentUser);
+    }
     /*this.currentUser.updateAvaUrl().then(
       (value) => {
         console.log(`updateAvaUrl:${value}`);
@@ -63,7 +73,11 @@ class _UserService {
   public async getUser(uid: string) {
     const user = await FirebaseService.get("/users/" + uid);
     const isAdmin = await FirebaseService.get("/permissions/" + uid);
-    this.initCurrentUser(uid, user.val() as CurrentUserDTO, isAdmin.val() === "mojet");
+    this.initCurrentUser(
+      uid,
+      user.val() as CurrentUserDTO,
+      isAdmin.val() === "mojet"
+    );
   }
 
   public getById(id: string): UserPublic {
@@ -98,6 +112,26 @@ class _UserService {
     chat.lastMessage = MessageService.getById(messageId);
     console.log("updating last msg: ", chat.lastMessage);
     return chat.lastMessage;
+  }
+
+  private loadAllUsers(): Promise<boolean> {
+    return new Promise<boolean>(async (res, rej) => {
+      const allUsers = await FirebaseService.get("/users/");
+      try {
+        for (const [userId, userData] of Object.entries(allUsers.val())) {
+          const userPublic = userData as UserPublic;
+          const newUser = new UserPublic(
+            userId,
+            userPublic.username,
+            userPublic.avaUrl
+          );
+          this.addUserToListIfNotIn(newUser);
+        }
+        res(true);
+      } catch (e) {
+        rej(false);
+      }
+    });
   }
 }
 
