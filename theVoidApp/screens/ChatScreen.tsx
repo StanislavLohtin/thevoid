@@ -10,9 +10,9 @@ import IconButton from "../components/IconButton";
 import { darkerPurple } from "../constants/Colors";
 import ChatService from "../services/ChatService";
 import FlowService from "../services/FlowService";
+import { ChatType } from "../classes/Chat";
 
 export default function ChatScreen() {
-  FlowService.init();
   const [text, setText] = React.useState("");
   const route = useRoute();
   const navigation = useNavigation();
@@ -34,6 +34,9 @@ export default function ChatScreen() {
       });
     };
     ChatService.currentChatId = chat.id;
+    if (chat.type === ChatType.COURSE) {
+      FlowService.openSocketForChat(chat);
+    }
 
     fetchMessages();
     return () => {
@@ -46,7 +49,7 @@ export default function ChatScreen() {
     // chat.messages.push(newMessage);
     // setMessages(chat.messages);
     setText("");
-    FlowService.sendMessage(text);
+    FlowService.sendMessage(chat, text);
 
     // MessageService.sendMessage(chat, newMessage);
   }
