@@ -1,6 +1,5 @@
 import { v4 } from "uuid";
 import UserService from "./UserService";
-const request = require("request");
 
 class _FlowService {
   private sessionId: string = v4();
@@ -19,7 +18,6 @@ class _FlowService {
   private getSocketUrl(): Promise<string> {
     const options = {
       method: "GET",
-      url: "https://sdk.flow.ai/socket.info",
       headers: {
         "x-flowai-threadid": this.THREAD_ID,
         "x-flowai-clientid": this.CLIENT_ID,
@@ -27,17 +25,15 @@ class _FlowService {
       },
     };
 
-    return new Promise((res, rej) => {
-      request(options, (error, response, body: string) => {
-        const bodyObj: { status: string; payload: { endpoint: string } } =
-          JSON.parse(body);
-        if (error || bodyObj.status !== "ok") {
-          rej(error);
-        }
-
-        this.socketUrl = bodyObj.payload.endpoint;
-        res(this.socketUrl);
-      });
+    return new Promise(async (res, rej) => {
+      const response = await fetch("https://sdk.flow.ai/socket.info", options);
+      if (!response.ok) {
+        rej(response.status);
+      }
+      type responseType = { status: string; payload: { endpoint: string } };
+      const bodyObj: responseType = await response.json();
+      this.socketUrl = bodyObj.payload.endpoint;
+      res(this.socketUrl);
     });
   }
 
@@ -79,7 +75,6 @@ class _FlowService {
 
   private onMessage(event: any): void {
     console.log("onMessage", event);
-
   }
 
   private onError(event: any): void {
