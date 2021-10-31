@@ -4,4 +4,6 @@ export interface MessageDTO {
 	createdAt: string;
 	sender: string;
 	status: string;
+	options?: string;
+	media?: string;
 }

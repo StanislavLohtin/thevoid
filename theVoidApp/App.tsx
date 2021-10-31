@@ -11,6 +11,12 @@ export default function App() {
   const isLoadingComplete = useCachedResources();
   const colorScheme = useColorScheme();
 
+/*  const styles = StyleSheet.create({
+    body: {
+      maxHeight: "100vh"
+    },
+  });*/
+
   if (!isLoadingComplete) {
     return null;
   } else {

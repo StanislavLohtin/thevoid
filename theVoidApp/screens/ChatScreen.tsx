@@ -19,7 +19,7 @@ export default function ChatScreen() {
   const chat = UserService.currentUser.getChatById(
     (route.params as { id: string }).id
   );
-  const refreshTrigger = { counter: 1 };
+  let flatListRef;
 
   const [messages, setMessages] = React.useState(
     chat.lastMessage ? [chat.lastMessage] : []
@@ -29,8 +29,7 @@ export default function ChatScreen() {
     const fetchMessages = async () => {
       MessageService.fetchRecentMessagesFromChat(chat, () => {
         console.log("setting messages:", chat.messages);
-        setMessages(chat.messages);
-        refreshTrigger.counter++;
+        setMessages([...chat.messages].reverse());
       });
     };
     ChatService.currentChatId = chat.id;
@@ -49,9 +48,14 @@ export default function ChatScreen() {
     // chat.messages.push(newMessage);
     // setMessages(chat.messages);
     setText("");
-    FlowService.sendMessage(chat, text);
+    if (chat.type === ChatType.COURSE) {
+      FlowService.sendMessage(chat, text);
+    }
+    MessageService.sendMessage(chat, newMessage);
+  }
 
-    // MessageService.sendMessage(chat, newMessage);
+  function onOptionSelect(option: string) {
+    setText(option);
   }
 
   return (
@@ -76,15 +80,14 @@ export default function ChatScreen() {
       </View>
       <View style={styles.content}>
         <FlatList
-          // style={styles.messageList}
+          style={styles.messageList}
           data={messages}
-          extraData={refreshTrigger}
+          inverted
           keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) => (
-            <MessageComponent message={item} key={item.id} />
+            <MessageComponent message={item} key={item.id} onOptionSelect={onOptionSelect}/>
           )}
         />
-        {/*remove for android: style={styles.messageList}*/}
         <View style={styles.inputRow}>
           <TextInput
             style={styles.input}
@@ -116,6 +119,7 @@ const styles = StyleSheet.create({
   },
   content: {
     backgroundColor: "transparent",
+    marginBottom: 40
   },
   title: {
     fontSize: 18,
@@ -130,7 +134,7 @@ const styles = StyleSheet.create({
     top: -12,
   },
   messageList: {
-    maxHeight: "calc(100vh - 140px)",
+    // maxHeight: "calc(100vh - 140px)",
     backgroundColor: "transparent",
   },
   header: {

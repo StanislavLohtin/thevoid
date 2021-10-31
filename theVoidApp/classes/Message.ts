@@ -25,6 +25,8 @@ export class Message {
   createdAt: Date;
   sender: UserPublic;
   status: number;
+  options?: string[] = [];
+  media?: string;
   messageDTO: MessageDTO;
   createdAtShort: string;
 
@@ -36,6 +38,10 @@ export class Message {
     this.createdAt = new Date(Number(messageDTO.createdAt));
     this.sender = UserService.getById(messageDTO.sender);
     this.status = Number(messageDTO.status);
+    if (messageDTO.options) {
+      this.options = messageDTO.options.split(" | ");
+    }
+    this.media = messageDTO.media;
     this.createdAtShort =
       this.createdAt.getHours().toString().padStart(2, "0") +
       ":" +
