@@ -103,13 +103,13 @@ class _UserService {
     this.currentUser = null;
   }
 
-  public updateLastMessageOfChat(chatId: string, messageId: string): Message {
+  public updateLastMessageOfChat(chatId: string, message: Message): Message {
     const chat = this.currentUser.getChatById(chatId);
     if (!chat) {
       return;
     }
-    chat.lastMessageId = messageId;
-    chat.lastMessage = MessageService.getById(messageId);
+    chat.lastMessageId = message.id;
+    chat.lastMessage = message;
     console.log("updating last msg: ", chat.lastMessage);
     return chat.lastMessage;
   }

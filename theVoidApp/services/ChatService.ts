@@ -27,9 +27,6 @@ class _ChatService {
     const promises = [];
 
     for (const chatId of user.chatIds) {
-      /*if (this.userHasChatWithId(user, chatId)) {
-        continue;
-      }*/
       const newPromise = new Promise((res, rej) => {
         FirebaseService.get(`chats/${chatId}/info`).then(
           (chatDto) => {
@@ -77,16 +74,18 @@ class _ChatService {
           return;
         }
         console.log("newMessageId", newMessageId);
-        MessageService.fetchMessageById(chatId, newMessageId).then(() => {
-          let newMessage = UserService.updateLastMessageOfChat(
-            chatId,
-            newMessageId
-          );
-          setLastMessage(newMessage);
-          if (this.currentChatId !== chatId) {
-            this.alertNewMessage(newMessage, chatId, navigation);
+        MessageService.fetchMessageById(chatId, newMessageId).then(
+          (message) => {
+            let newMessage = UserService.updateLastMessageOfChat(
+              chatId,
+              message
+            );
+            setLastMessage(newMessage);
+            if (this.currentChatId !== chatId) {
+              this.alertNewMessage(newMessage, chatId, navigation);
+            }
           }
-        });
+        );
       }
     );
   }

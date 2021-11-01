@@ -5,7 +5,7 @@
 
 import { Ionicons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { createStackNavigator } from "@react-navigation/stack";
+import { createStackNavigator} from "@react-navigation/stack";
 import * as React from "react";
 
 import Colors from "../constants/Colors";
@@ -37,7 +37,6 @@ export default function BottomTabNavigator() {
     >
       <BottomTab.Screen
         name="Chat"
-        key="asdasd"
         component={ChatTabNavigator}
         options={{
           tabBarIcon: ({ color }) => (
@@ -96,11 +95,10 @@ const ChatTabStack = createStackNavigator<ChatTabParamList>();
 
 function ChatTabNavigator() {
   return (
-    <ChatTabStack.Navigator>
+    <ChatTabStack.Navigator screenOptions={{ headerShown: false}}>
       <ChatTabStack.Screen
         name="ChatListScreen"
         component={ChatListScreen}
-        options={{ headerShown: false }}
       />
     </ChatTabStack.Navigator>
   );

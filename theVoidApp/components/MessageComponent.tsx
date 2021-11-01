@@ -1,10 +1,6 @@
 import * as React from "react";
 import { Text, TextProps } from "./Themed";
-import {
-  FlatList,
-  StyleSheet,
-  View,
-} from "react-native";
+import { StyleSheet, View } from "react-native";
 import { Message } from "../classes/Message";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { defPurple } from "../constants/Colors";
@@ -22,6 +18,17 @@ export function MessageComponent(props: MessageProps) {
     props.onOptionSelect(option);
   }
 
+
+  function renderOptions() {
+    return msg.options.map(option => {
+      return (
+        <Text key={option} style={styles.option} onPress={() => onOptionSelect(option)}>
+          {option}
+        </Text>
+      );
+    });
+  }
+
   return (
     <View
       style={[
@@ -33,22 +40,9 @@ export function MessageComponent(props: MessageProps) {
         <Text style={styles.text}>
           {(msg.content + "           ").padEnd(20)}
           {msg.options?.length ? (
-            <View style={styles.optionList}>
-              <FlatList
-                data={msg.options}
-                keyExtractor={(item) => item}
-                renderItem={({ item }) => (
-                  <Text
-                    style={styles.option}
-                    onPress={() => onOptionSelect(item)}
-                  >
-                    {item}
-                  </Text>
-                )}
-              />
-            </View>
+            <View style={styles.optionList}>{renderOptions()}</View>
           ) : (
-            ""
+            null
           )}
         </Text>
         <View style={styles.timeContainer}>

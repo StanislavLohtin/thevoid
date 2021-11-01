@@ -118,8 +118,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   content: {
-    backgroundColor: "transparent",
-    marginBottom: 40
+    backgroundColor: "transparent"
   },
   title: {
     fontSize: 18,
@@ -134,7 +133,7 @@ const styles = StyleSheet.create({
     top: -12,
   },
   messageList: {
-    // maxHeight: "calc(100vh - 140px)",
+    maxHeight: "calc(100vh - 140px)",
     backgroundColor: "transparent",
   },
   header: {
