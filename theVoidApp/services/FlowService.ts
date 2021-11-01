@@ -45,10 +45,6 @@ class _FlowService {
   private CLIENT_ID = "YXU0Q3phbXZMfGNoeFJaRGplYw==";
   private openedThreads: Map<string, WebSocket> = new Map<string, WebSocket>();
 
-  constructor() {
-    console.log("initing Flow AI");
-  }
-
   private getSocketUrl(chaId): Promise<string> {
     const options = {
       method: "GET",
@@ -63,6 +59,7 @@ class _FlowService {
       const response = await fetch("https://sdk.flow.ai/socket.info", options);
       if (!response.ok) {
         rej(response.status);
+        return;
       }
       type responseType = { status: string; payload: { endpoint: string } };
       const bodyObj: responseType = await response.json();

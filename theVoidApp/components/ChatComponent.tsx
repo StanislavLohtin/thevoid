@@ -19,7 +19,6 @@ type ChatProps = TextProps & {
 export function ChatComponent(props: ChatProps) {
   const chat = props.chat;
   const [lastMessage, setLastMessage] = useState(chat.lastMessage);
-  console.log("CHAT:", chat);
   const navigation = useNavigation();
   const otherUser = chat.otherUser;
 

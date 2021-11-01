@@ -1,15 +1,21 @@
 import * as React from "react";
-import { StyleSheet, Image, Button, Alert } from "react-native";
+import { StyleSheet, Image, Button } from "react-native";
 import { View, Text } from "../components/Themed";
 import UserService from "../services/UserService";
 import { logout } from "../components/Firebase/firebase";
 import { darkerPurple } from "../constants/Colors";
 import { useNavigation } from "@react-navigation/native";
 import IconButton from "../components/IconButton";
+import MindbodyService from "../services/MindbodyService";
+import { useEffect } from "react";
 
 export default function UserProfileScreen() {
   const user = UserService.currentUser;
   const navigation = useNavigation();
+
+  useEffect(() => {
+    MindbodyService.getCourses();
+  }, []);
 
   function onLogoutPress() {
     logout();
