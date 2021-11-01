@@ -2,6 +2,7 @@ import { v4 } from "uuid";
 import UserService from "./UserService";
 import { Chat } from "../classes/Chat";
 import MessageService from "./MessageService";
+import { FetchUtil } from "../utils/FetchUtil";
 
 enum FlowMessageType {
   send = "message.send",
@@ -31,9 +32,9 @@ type FlowIncomingMessage = {
             value: string;
           }[];
           media: {
-            type: string,
-            url: string
-          }
+            type: string;
+            url: string;
+          };
         };
       }[];
     }[];
@@ -45,7 +46,7 @@ class _FlowService {
   private CLIENT_ID = "YXU0Q3phbXZMfGNoeFJaRGplYw==";
   private openedThreads: Map<string, WebSocket> = new Map<string, WebSocket>();
 
-  private getSocketUrl(chaId): Promise<string> {
+  private async getSocketUrl(chaId): Promise<string> {
     const options = {
       method: "GET",
       headers: {
@@ -55,16 +56,10 @@ class _FlowService {
       },
     };
 
-    return new Promise(async (res, rej) => {
-      const response = await fetch("https://sdk.flow.ai/socket.info", options);
-      if (!response.ok) {
-        rej(response.status);
-        return;
-      }
-      type responseType = { status: string; payload: { endpoint: string } };
-      const bodyObj: responseType = await response.json();
-      res(bodyObj.payload.endpoint);
-    });
+    const fetchResult: { status: string; payload: { endpoint: string } } =
+      await FetchUtil.fetch("https://sdk.flow.ai/socket.info", options);
+
+    return fetchResult.payload.endpoint;
   }
 
   startPingPong(chatId: string): void {
@@ -129,7 +124,9 @@ class _FlowService {
         }
         const message = MessageService.buildMessage(chat, content);
         if (response.payload.quickReplies) {
-          message.messageDTO.options = response.payload.quickReplies.map(r => r.label).join(" | ");
+          message.messageDTO.options = response.payload.quickReplies
+            .map((r) => r.label)
+            .join(" | ");
         }
         if (response.payload.media) {
           message.messageDTO.media = response.payload.media.url;

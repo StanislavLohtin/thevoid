@@ -1,5 +1,5 @@
 import * as React from "react";
-import { StyleSheet, Image, Button } from "react-native";
+import { StyleSheet, Image, Button, ImageBackground } from "react-native";
 import { View, Text } from "../components/Themed";
 import UserService from "../services/UserService";
 import { logout } from "../components/Firebase/firebase";
@@ -8,13 +8,15 @@ import { useNavigation } from "@react-navigation/native";
 import IconButton from "../components/IconButton";
 import MindbodyService from "../services/MindbodyService";
 import { useEffect } from "react";
+import { Tab, TabView } from "react-native-elements";
 
 export default function UserProfileScreen() {
+  const [index, setIndex] = React.useState(0);
   const user = UserService.currentUser;
   const navigation = useNavigation();
 
   useEffect(() => {
-    MindbodyService.getCourses();
+    MindbodyService.getClientPurchases();
   }, []);
 
   function onLogoutPress() {
@@ -23,20 +25,70 @@ export default function UserProfileScreen() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <IconButton
-          style={styles.button}
-          iconName="chevron-left"
-          color={darkerPurple}
-          size={42}
-          onPress={() => navigation.goBack()}
-        />
-        <Image style={styles.userAva} source={{ uri: user.avaUrl }} />
-      </View>
-      <Text> {user.username} </Text>
-      <Text> {user.email} </Text>
-      <Text> "{user.status}" </Text>
-      <Button title={"logout"} onPress={onLogoutPress} />
+      <ImageBackground
+        style={styles.bg}
+        source={require("./../assets/images/profileBg.png")}
+      >
+          <IconButton
+            style={styles.backButton}
+            iconName="chevron-left"
+            color={darkerPurple}
+            size={42}
+            onPress={() => navigation.goBack()}
+          />
+          <Image style={styles.userAva} source={{ uri: user.avaUrl }} />
+          <Text style={styles.title}> {user.username} </Text>
+          <Tab value={index} onChange={setIndex} disableIndicator>
+            <Tab.Item
+              title="profile"
+              containerStyle={styles.tabItemBackground}
+              buttonStyle={[
+                styles.tabItem,
+                index === 0 ? styles.activeTab : null,
+              ]}
+              titleStyle={styles.tabItemTitle}
+            />
+            <Tab.Item
+              titleStyle={styles.tabItemTitle}
+              title="account"
+              containerStyle={styles.tabItemBackground}
+              buttonStyle={[
+                styles.tabItem,
+                index === 1 ? styles.activeTab : null,
+              ]}
+            />
+            <Tab.Item
+              title="schedule"
+              containerStyle={styles.tabItemBackground}
+              buttonStyle={[
+                styles.tabItem,
+                index === 2 ? styles.activeTab : null,
+              ]}
+              titleStyle={styles.tabItemTitle}
+            />
+          </Tab>
+
+          <TabView value={index} onChange={setIndex}>
+            <TabView.Item style={styles.tabViewItem}>
+              <View style={styles.tabContent}>
+                <Text style={styles.text}>Liability waver signed</Text>
+              </View>
+            </TabView.Item>
+            <TabView.Item style={styles.tabViewItem}>
+              <View style={styles.tabContent}>
+                <Text style={styles.text}>Contracts</Text>
+              </View>
+            </TabView.Item>
+            <TabView.Item style={styles.tabViewItem}>
+              <View style={styles.tabContent}>
+                <Text style={styles.text}>Upcoming visits</Text>
+                <Text style={styles.text}>Visit history</Text>
+              </View>
+            </TabView.Item>
+          </TabView>
+
+          <Button title={"logout"} onPress={onLogoutPress} color={"#6b4ffa"} />
+      </ImageBackground>
     </View>
   );
 }
@@ -44,49 +96,53 @@ export default function UserProfileScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: "column",
-    backgroundColor: "#1e1e20",
   },
   title: {
     fontSize: 20,
-    fontWeight: "bold",
+    margin: 10,
+    color: "white",
+    alignSelf: "center",
   },
-  button: {},
-  header: {
-    paddingTop: 50,
-    paddingBottom: 20,
+  bg: {
+    flex: 1,
+    flexDirection: "column",},
+  backButton: {
+    marginTop: 50,
+  },
+  tabItem: {
+    backgroundColor: "transparent",
+    borderWidth: 0,
+    borderRadius: 15,
+    padding: 0,
+  },
+  tabItemTitle: {
+    color: "white",
+    fontSize: 13,
+    padding: 0,
+  },
+  tabItemBackground: {
+    backgroundColor: "transparent",
+    padding: 0,
+  },
+  activeTab: {
+    backgroundColor: "#6b4ffa",
+  },
+  tabViewItem: {
     width: "100%",
-    backgroundColor: "#023750",
-    flexDirection: "row",
-    justifyContent: "space-between",
+    padding: 20,
   },
-  headerRight: {
-    backgroundColor: "#023750",
-    justifyContent: "space-between",
-    paddingRight: 15,
-  },
-  logo: {
-    marginLeft: 15,
-    minHeight: 20,
-    minWidth: 20,
-    width: 110,
-    height: 110,
-    borderRadius: 999,
-  },
-  searchInput: {
-    borderRadius: 10,
-    backgroundColor: "#243a44",
-    color: "#888a8f",
-    padding: 10,
-    fontSize: 20,
-    width: 240,
+  tabContent: {
+    backgroundColor: "transparent",
   },
   userAva: {
-    minHeight: 20,
-    minWidth: 20,
-    width: 50,
-    height: 50,
-    alignSelf: "flex-end",
+    width: 100,
+    height: 100,
+    alignSelf: "center",
     borderRadius: 999,
+    marginTop: -55,
+  },
+  text: {
+    color: "#72717f",
+    textTransform: "uppercase",
   },
 });
