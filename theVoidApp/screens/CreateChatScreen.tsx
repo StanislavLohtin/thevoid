@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useEffect } from "react";
-import { FlatList, StyleSheet, TextInput } from "react-native";
+import { FlatList, ImageBackground, StyleSheet, TextInput } from "react-native";
 import { Text, View } from "../components/Themed";
 import { useNavigation } from "@react-navigation/native";
 import UserService from "../services/UserService";
@@ -46,58 +46,61 @@ export default function CreateChatScreen() {
 
   function onTouchUser(user: UserPublic) {
     if (selectedUsers.has(user)) {
-      console.log("deselected user:", user.username);
       selectedUsers.delete(user);
       return;
     }
-    console.log("selected user:", user.username);
     selectedUsers.add(user);
   }
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <IconButton
-          style={styles.button}
-          iconName="chevron-left"
-          color={darkerPurple}
-          size={42}
-          onPress={() => navigation.goBack()}
-        />
-        <Text style={styles.title}> Create new chat/group </Text>
-        <IconButton
-          style={styles.button}
-          iconName="check"
-          color={darkerPurple}
-          size={35}
-          onPress={onCreateChat}
-        />
-      </View>
-      <View style={styles.content}>
-        <TextInput
-          style={styles.input}
-          onChangeText={setTitle}
-          value={title}
-          placeholder="Group/Course Title"
-          placeholderTextColor={"#888a8f"}
-          keyboardType="default"
-        ></TextInput>
-        <TextInput
-          style={styles.input}
-          onChangeText={setSearchText}
-          value={searchText}
-          placeholder="🔍 Search"
-          placeholderTextColor={"#888a8f"}
-          keyboardType="default"
-        ></TextInput>
-        <FlatList
-          data={users}
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={({ item }) => (
-            <UserInAListComponent user={item} onTouchUserFn={onTouchUser} />
-          )}
-        />
-      </View>
+      <ImageBackground
+        style={styles.bg}
+        source={require("./../assets/images/chatListBg.png")}
+      >
+        <View style={styles.header}>
+          <IconButton
+            style={styles.button}
+            iconName="chevron-left"
+            color={darkerPurple}
+            size={42}
+            onPress={() => navigation.goBack()}
+          />
+          <Text style={styles.title}> Create new chat/group </Text>
+          <IconButton
+            style={styles.button}
+            iconName="check"
+            color={darkerPurple}
+            size={35}
+            onPress={onCreateChat}
+          />
+        </View>
+        <View style={styles.content}>
+          <TextInput
+            style={styles.input}
+            onChangeText={setTitle}
+            value={title}
+            placeholder="Group/Course Title"
+            placeholderTextColor={"#888a8f"}
+            keyboardType="default"
+          ></TextInput>
+          <TextInput
+            style={styles.input}
+            onChangeText={setSearchText}
+            value={searchText}
+            placeholder="Search"
+            placeholderTextColor={"#888a8f"}
+            keyboardType="default"
+          ></TextInput>
+          <FlatList
+            data={users}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={({ item }) => (
+              <UserInAListComponent user={item} onTouchUserFn={onTouchUser} />
+            )}
+          />
+        </View>
+      </ImageBackground>
     </View>
   );
 }
@@ -105,8 +108,10 @@ export default function CreateChatScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  bg: {
+    flex: 1,
     flexDirection: "column",
-    backgroundColor: "#1e1e20",
   },
   content: {
     backgroundColor: "transparent",

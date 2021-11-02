@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import { UserPublic } from "../classes/UserPublic";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import {defPurple} from "../constants/Colors";
 
 type MemberProps = TextProps & {
   user: UserPublic;
@@ -37,7 +38,7 @@ export function UserInAListComponent(props: MemberProps) {
         {isSelected && (
           <MaterialCommunityIcons
             style={styles.selectionIcon}
-            name={"check"}
+            name={"check-circle-outline"}
             size={30}
             color={"white"}
           />
@@ -50,7 +51,7 @@ export function UserInAListComponent(props: MemberProps) {
 const styles = StyleSheet.create({
   container: {
     display: "flex",
-    backgroundColor: "#1e1e20",
+    backgroundColor: "transparent",
     flexDirection: "row",
     paddingLeft: 15,
     paddingRight: 15,
@@ -69,8 +70,6 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 16,
     marginTop: 15,
-    borderBottomColor: "rgba(200, 200, 200, 0.2)",
-    borderBottomWidth: 0.3,
     width: "100%",
   },
   text: {
@@ -78,6 +77,6 @@ const styles = StyleSheet.create({
     fontSize: 13,
   },
   selectionIcon: {
-    color: "grey",
+    color: defPurple,
   },
 });

@@ -123,6 +123,7 @@ const styles = StyleSheet.create({
   },
   tabItemBackground: {
     backgroundColor: "transparent",
+    borderRadius: 15,
     padding: 0,
   },
   activeTab: {
