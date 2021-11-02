@@ -1,5 +1,6 @@
 export class FetchUtil {
   static async fetch(url, options): Promise<any> {
+
     return new Promise(async (res, rej) => {
       try {
         const response = await fetch(url, options);

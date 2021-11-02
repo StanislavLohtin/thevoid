@@ -66,7 +66,7 @@ export function ChatComponent(props: ChatProps) {
 const styles = StyleSheet.create({
   container: {
     display: "flex",
-    backgroundColor: "#1e1e20",
+    backgroundColor: "transparent",
     flexDirection: "row",
     paddingLeft: 15,
     paddingRight: 15,
@@ -88,6 +88,7 @@ const styles = StyleSheet.create({
   text: {
     color: "grey",
     fontSize: 13,
+    whiteSpace: "nowrap"
   },
 });
 

@@ -16,7 +16,7 @@ export default function UserProfileScreen() {
   const navigation = useNavigation();
 
   useEffect(() => {
-    MindbodyService.getClientPurchases();
+    // MindbodyService.getClientPurchases();
   }, []);
 
   function onLogoutPress() {
@@ -29,65 +29,65 @@ export default function UserProfileScreen() {
         style={styles.bg}
         source={require("./../assets/images/profileBg.png")}
       >
-          <IconButton
-            style={styles.backButton}
-            iconName="chevron-left"
-            color={darkerPurple}
-            size={42}
-            onPress={() => navigation.goBack()}
+        <IconButton
+          style={styles.backButton}
+          iconName="chevron-left"
+          color={darkerPurple}
+          size={42}
+          onPress={() => navigation.goBack()}
+        />
+        <Image style={styles.userAva} source={{ uri: user.avaUrl }} />
+        <Text style={styles.title}> {user.username} </Text>
+        <Tab value={index} onChange={setIndex} disableIndicator>
+          <Tab.Item
+            title="profile"
+            containerStyle={styles.tabItemBackground}
+            buttonStyle={[
+              styles.tabItem,
+              index === 0 ? styles.activeTab : null,
+            ]}
+            titleStyle={styles.tabItemTitle}
           />
-          <Image style={styles.userAva} source={{ uri: user.avaUrl }} />
-          <Text style={styles.title}> {user.username} </Text>
-          <Tab value={index} onChange={setIndex} disableIndicator>
-            <Tab.Item
-              title="profile"
-              containerStyle={styles.tabItemBackground}
-              buttonStyle={[
-                styles.tabItem,
-                index === 0 ? styles.activeTab : null,
-              ]}
-              titleStyle={styles.tabItemTitle}
-            />
-            <Tab.Item
-              titleStyle={styles.tabItemTitle}
-              title="account"
-              containerStyle={styles.tabItemBackground}
-              buttonStyle={[
-                styles.tabItem,
-                index === 1 ? styles.activeTab : null,
-              ]}
-            />
-            <Tab.Item
-              title="schedule"
-              containerStyle={styles.tabItemBackground}
-              buttonStyle={[
-                styles.tabItem,
-                index === 2 ? styles.activeTab : null,
-              ]}
-              titleStyle={styles.tabItemTitle}
-            />
-          </Tab>
+          <Tab.Item
+            titleStyle={styles.tabItemTitle}
+            title="account"
+            containerStyle={styles.tabItemBackground}
+            buttonStyle={[
+              styles.tabItem,
+              index === 1 ? styles.activeTab : null,
+            ]}
+          />
+          <Tab.Item
+            title="schedule"
+            containerStyle={styles.tabItemBackground}
+            buttonStyle={[
+              styles.tabItem,
+              index === 2 ? styles.activeTab : null,
+            ]}
+            titleStyle={styles.tabItemTitle}
+          />
+        </Tab>
 
-          <TabView value={index} onChange={setIndex}>
-            <TabView.Item style={styles.tabViewItem}>
-              <View style={styles.tabContent}>
-                <Text style={styles.text}>Liability waver signed</Text>
-              </View>
-            </TabView.Item>
-            <TabView.Item style={styles.tabViewItem}>
-              <View style={styles.tabContent}>
-                <Text style={styles.text}>Contracts</Text>
-              </View>
-            </TabView.Item>
-            <TabView.Item style={styles.tabViewItem}>
-              <View style={styles.tabContent}>
-                <Text style={styles.text}>Upcoming visits</Text>
-                <Text style={styles.text}>Visit history</Text>
-              </View>
-            </TabView.Item>
-          </TabView>
+        <TabView value={index} onChange={setIndex}>
+          <TabView.Item style={styles.tabViewItem}>
+            <View style={styles.tabContent}>
+              <Text style={styles.text}>Liability waver signed</Text>
+            </View>
+          </TabView.Item>
+          <TabView.Item style={styles.tabViewItem}>
+            <View style={styles.tabContent}>
+              <Text style={styles.text}>Contracts</Text>
+            </View>
+          </TabView.Item>
+          <TabView.Item style={styles.tabViewItem}>
+            <View style={styles.tabContent}>
+              <Text style={styles.text}>Upcoming visits</Text>
+              <Text style={styles.text}>Visit history</Text>
+            </View>
+          </TabView.Item>
+        </TabView>
 
-          <Button title={"logout"} onPress={onLogoutPress} color={"#6b4ffa"} />
+        <Button title={"logout"} onPress={onLogoutPress} color={"#6b4ffa"} />
       </ImageBackground>
     </View>
   );
@@ -105,7 +105,8 @@ const styles = StyleSheet.create({
   },
   bg: {
     flex: 1,
-    flexDirection: "column",},
+    flexDirection: "column",
+  },
   backButton: {
     marginTop: 50,
   },

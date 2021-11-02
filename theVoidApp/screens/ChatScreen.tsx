@@ -1,6 +1,12 @@
 import * as React from "react";
 import { useEffect } from "react";
-import { FlatList, Image, StyleSheet, TextInput } from "react-native";
+import {
+  FlatList,
+  Image,
+  ImageBackground,
+  StyleSheet,
+  TextInput,
+} from "react-native";
 import { Text, View } from "../components/Themed";
 import { MessageComponent } from "../components/MessageComponent";
 import { useNavigation, useRoute } from "@react-navigation/native";
@@ -60,52 +66,61 @@ export default function ChatScreen() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <IconButton
-          style={styles.button}
-          iconName="chevron-left"
-          color={darkerPurple}
-          size={42}
-          onPress={() => navigation.goBack()}
-        />
-        <Image
-          style={styles.userAva}
-          source={
-            chat.otherUser?.avaUrl
-              ? { uri: chat.otherUser.avaUrl }
-              : require("./../assets/images/defaultAva.png")
-          }
-        />
-        <Text style={styles.title}> {chat.otherUser.username} </Text>
-      </View>
-      <View style={styles.content}>
-        <FlatList
-          style={styles.messageList}
-          data={messages}
-          inverted
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={({ item }) => (
-            <MessageComponent message={item} key={item.id} onOptionSelect={onOptionSelect}/>
-          )}
-        />
-        <View style={styles.inputRow}>
-          <TextInput
-            style={styles.input}
-            onChangeText={setText}
-            value={text}
-            placeholder="Enter text"
-            placeholderTextColor={"#888a8f"}
-            keyboardType="default"
-          ></TextInput>
+      <ImageBackground
+        style={styles.bg}
+        source={require("./../assets/images/chatBg.png")}
+      >
+        <View style={styles.header}>
           <IconButton
-            style={styles.sendButton}
-            iconName="menu-right"
+            style={styles.button}
+            iconName="chevron-left"
             color={darkerPurple}
-            size={50}
-            onPress={onSendPress}
+            size={42}
+            onPress={() => navigation.goBack()}
           />
+          <Image
+            style={styles.userAva}
+            source={
+              chat.otherUser?.avaUrl
+                ? { uri: chat.otherUser.avaUrl }
+                : require("./../assets/images/defaultAva.png")
+            }
+          />
+          <Text style={styles.title}> {chat.otherUser.username} </Text>
         </View>
-      </View>
+        <View style={styles.content}>
+          <FlatList
+            style={styles.messageList}
+            data={messages}
+            inverted
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={({ item }) => (
+              <MessageComponent
+                message={item}
+                key={item.id}
+                onOptionSelect={onOptionSelect}
+              />
+            )}
+          />
+          <View style={styles.inputRow}>
+            <TextInput
+              style={styles.input}
+              onChangeText={setText}
+              value={text}
+              placeholder="Enter text"
+              placeholderTextColor={"#888a8f"}
+              keyboardType="default"
+            ></TextInput>
+            <IconButton
+              style={styles.sendButton}
+              iconName="menu-right"
+              color={darkerPurple}
+              size={50}
+              onPress={onSendPress}
+            />
+          </View>
+        </View>
+      </ImageBackground>
     </View>
   );
 }
@@ -113,12 +128,14 @@ export default function ChatScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  bg: {
+    flex: 1,
     flexDirection: "column",
-    backgroundColor: "#1e1e20",
     justifyContent: "space-between",
   },
   content: {
-    backgroundColor: "transparent"
+    backgroundColor: "transparent",
   },
   title: {
     fontSize: 18,

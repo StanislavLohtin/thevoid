@@ -1,13 +1,13 @@
 import * as React from "react";
-import {StyleSheet, TextInput} from "react-native";
-import {Text, View} from "../components/Themed";
+import { ImageBackground, StyleSheet, TextInput } from "react-native";
+import { Text, View } from "../components/Themed";
 import UserService from "../services/UserService";
-import {MessageComponent} from "../components/MessageComponent";
+import { MessageComponent } from "../components/MessageComponent";
 
 export default function ExploreScreen() {
   const [text, onChangeText] = React.useState("");
   const messageViews = [];
- /* for (let message of UserService.getAllMessages()) {
+  /* for (let message of UserService.getAllMessages()) {
     messageViews.push(
       <MessageComponent message={message} key={message.id} />
     );
@@ -15,23 +15,27 @@ export default function ExploreScreen() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.title}> Explore The Void </Text>
-        <TextInput
-          style={styles.searchInput}
-          onChangeText={onChangeText}
-          value={text}
-          placeholder="🔍 Search"
-          placeholderTextColor={"#888a8f"}
-          keyboardType="default"
-        >
-        </TextInput>
-      </View>
-      <View style={styles.groups}>
-        <Text style={[styles.group, styles.activeGroup]}>ALL</Text>
-        <Text style={styles.group}>COMMUNITIES</Text>
-      </View>
-      <View style={styles.members}>{messageViews}</View>
+      <ImageBackground
+        style={styles.bg}
+        source={require("./../assets/images/exploreBg.png")}
+      >
+        <View style={styles.header}>
+          <Text style={styles.title}> Explore The Void </Text>
+          <TextInput
+            style={styles.searchInput}
+            onChangeText={onChangeText}
+            value={text}
+            placeholder="Search"
+            placeholderTextColor={"#888a8f"}
+            keyboardType="default"
+          ></TextInput>
+        </View>
+        <View style={styles.groups}>
+          <Text style={[styles.group, styles.activeGroup]}>ALL</Text>
+          <Text style={styles.group}>COMMUNITIES</Text>
+        </View>
+        <View style={styles.members}>{messageViews}</View>
+      </ImageBackground>
     </View>
   );
 }
@@ -39,8 +43,10 @@ export default function ExploreScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  bg: {
+    flex: 1,
     flexDirection: "column",
-    backgroundColor: "#1e1e20",
   },
   title: {
     fontSize: 34,
@@ -48,28 +54,27 @@ const styles = StyleSheet.create({
   },
   groups: {
     fontSize: 25,
-    backgroundColor: "#2d2233",
     flexDirection: "row",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
+    backgroundColor: "transparent",
   },
   activeGroup: {
-    backgroundColor: "#6b4ffa"
+    backgroundColor: "#6b4ffa",
   },
   group: {
-    backgroundColor: "#2c2232",
     width: "40%",
     borderRadius: 15,
     textAlign: "center",
     padding: 5,
     color: "#FFF",
     marginLeft: 20,
-    marginRight: 20
+    marginRight: 20,
   },
   header: {
     paddingTop: 50,
     paddingBottom: 20,
     width: "100%",
-    backgroundColor: "#3c2643",
+    backgroundColor: "transparent",
     justifyContent: "space-between",
   },
   members: {
@@ -83,5 +88,5 @@ const styles = StyleSheet.create({
     fontSize: 20,
     width: "95%",
     margin: 10,
-  }
+  },
 });
