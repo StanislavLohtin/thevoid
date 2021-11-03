@@ -41,6 +41,11 @@ export default function UserProfileScreen() {
     MindbodyService.getClientVisits().then((clientVisits) => {
       setVisits(clientVisits);
     });
+
+    MindbodyService.getClients().then((clientVisits) => {
+      // @ts-ignore
+      window.clients = clientVisits;
+    });
   }, []);
 
   function onLogoutPress() {
@@ -100,7 +105,7 @@ export default function UserProfileScreen() {
               {formulaNotes.length ? (
                 <FlatList
                   data={formulaNotes}
-                  renderItem={(o) => <Text>{o}</Text>}
+                  renderItem={({ item }) => <Text>{item.Note}</Text>}
                 />
               ) : (
                 <Text>No notes yet</Text>
@@ -114,7 +119,7 @@ export default function UserProfileScreen() {
               {contracts.length ? (
                 <FlatList
                   data={contracts}
-                  renderItem={(o) => <Text>{o}</Text>}
+                  renderItem={({ item }) => <Text>{item.ContractName}</Text>}
                 />
               ) : (
                 <Text>No contracts purchased</Text>
@@ -123,7 +128,7 @@ export default function UserProfileScreen() {
               {purchases.length ? (
                 <FlatList
                   data={purchases}
-                  renderItem={(o) => <Text>{o}</Text>}
+                  renderItem={({ item }) => <Text>{item.Description}</Text>}
                 />
               ) : (
                 <Text>No purchases yet</Text>
@@ -135,7 +140,10 @@ export default function UserProfileScreen() {
               <Text style={styles.subtitle}>Upcoming visits</Text>
               <Text style={styles.subtitle}>Visit history</Text>
               {visits.length ? (
-                <FlatList data={visits} renderItem={(o) => <Text>{o}</Text>} />
+                <FlatList
+                  data={visits}
+                  renderItem={({ item }) => <Text>{item.Name}</Text>}
+                />
               ) : (
                 <Text>No visits yet</Text>
               )}
@@ -166,6 +174,11 @@ const styles = StyleSheet.create({
   backButton: {
     marginTop: 50,
   },
+  tabBar: {
+    paddingLeft: 10,
+    paddingRight: 10,
+    height: 10,
+  },
   tabItem: {
     backgroundColor: "transparent",
     borderWidth: 0,
@@ -174,13 +187,14 @@ const styles = StyleSheet.create({
   },
   tabItemTitle: {
     color: "white",
-    fontSize: 13,
+    fontSize: 12,
     padding: 0,
   },
   tabItemBackground: {
     backgroundColor: "transparent",
     borderRadius: 15,
     padding: 0,
+    margin: 13,
   },
   activeTab: {
     backgroundColor: "#6b4ffa",

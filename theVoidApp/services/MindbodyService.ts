@@ -11,7 +11,7 @@ class _MindbodyService {
     "https://api.mindbodyonline.com/public/v6";
   private API_KEY = "91504ccb30ab411d95533a3535a18d5b";
   private SITE_ID = "-99";
-  private userId = "100015278";
+  private userId = "100015644";
   private token: string;
   private options: RequestInit;
 
@@ -19,14 +19,14 @@ class _MindbodyService {
     this.getToken();
   }
 
-  getClients(): Promise<string> {
+  getClients(): Promise<object> {
     return new Promise(async (res, rej) => {
       try {
-        const responseBody: { Classes: [] } = await FetchUtil.fetch(
-          `${this.BASE_URL}/client/clients`,
+        const responseBody: { Clients: [] } = await FetchUtil.fetch(
+          `${this.BASE_URL}/client/clients?limit=200&searchText=Vishnevy`,
           this.options
         );
-        res(responseBody.toString());
+        res(responseBody);
       } catch (e) {
         rej(e);
       }
@@ -70,7 +70,6 @@ class _MindbodyService {
             `${this.BASE_URL}/client/clientformulanotes?ClientId=${this.userId}`,
             this.options
           );
-        console.log(responseBody);
         res(responseBody.FormulaNotes);
       } catch (e) {
         rej(e);
@@ -87,7 +86,6 @@ class _MindbodyService {
             `${this.BASE_URL}/client/clientcontracts?ClientId=${this.userId}`,
             this.options
           );
-        console.log(responseBody);
         res(responseBody.Contracts);
       } catch (e) {
         rej(e);
@@ -104,7 +102,6 @@ class _MindbodyService {
             `${this.BASE_URL}/client/clientpurchases?ClientId=${this.userId}`,
             this.options
           );
-        console.log(responseBody);
         res(responseBody.Purchases);
       } catch (e) {
         rej(e);
@@ -120,7 +117,6 @@ class _MindbodyService {
           `${this.BASE_URL}/client/clientvisits?ClientId=${this.userId}`,
           this.options
         );
-        console.log(responseBody);
         res(responseBody.Visits);
       } catch (e) {
         rej(e);
