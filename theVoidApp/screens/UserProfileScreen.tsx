@@ -1,5 +1,11 @@
 import * as React from "react";
-import { StyleSheet, Image, Button, ImageBackground } from "react-native";
+import {
+  StyleSheet,
+  Image,
+  Button,
+  ImageBackground,
+  FlatList,
+} from "react-native";
 import { View, Text } from "../components/Themed";
 import UserService from "../services/UserService";
 import { logout } from "../components/Firebase/firebase";
@@ -12,11 +18,29 @@ import { Tab, TabView } from "react-native-elements";
 
 export default function UserProfileScreen() {
   const [index, setIndex] = React.useState(0);
+  const [formulaNotes, setFormulaNotes] = React.useState([]);
+  const [contracts, setContracts] = React.useState([]);
+  const [purchases, setPurchases] = React.useState([]);
+  const [visits, setVisits] = React.useState([]);
   const user = UserService.currentUser;
   const navigation = useNavigation();
 
   useEffect(() => {
-    // MindbodyService.getClientPurchases();
+    MindbodyService.getClientFormulaNotes().then((clientFormulaNotes) => {
+      setFormulaNotes(clientFormulaNotes);
+    });
+
+    MindbodyService.getClientContracts().then((clientContracts) => {
+      setContracts(clientContracts);
+    });
+
+    MindbodyService.getClientPurchases().then((clientPurchases) => {
+      setPurchases(clientPurchases);
+    });
+
+    MindbodyService.getClientVisits().then((clientVisits) => {
+      setVisits(clientVisits);
+    });
   }, []);
 
   function onLogoutPress() {
@@ -71,18 +95,50 @@ export default function UserProfileScreen() {
         <TabView value={index} onChange={setIndex}>
           <TabView.Item style={styles.tabViewItem}>
             <View style={styles.tabContent}>
-              <Text style={styles.text}>Liability waver signed</Text>
+              <Text style={styles.subtitle}>Liability waver signed</Text>
+              <Text style={styles.subtitle}>Formula notes</Text>
+              {formulaNotes.length ? (
+                <FlatList
+                  data={formulaNotes}
+                  renderItem={(o) => <Text>{o}</Text>}
+                />
+              ) : (
+                <Text>No notes yet</Text>
+              )}
+              <Text style={styles.subtitle}>Mindbody account</Text>
             </View>
           </TabView.Item>
           <TabView.Item style={styles.tabViewItem}>
             <View style={styles.tabContent}>
-              <Text style={styles.text}>Contracts</Text>
+              <Text style={styles.subtitle}>Contracts</Text>
+              {contracts.length ? (
+                <FlatList
+                  data={contracts}
+                  renderItem={(o) => <Text>{o}</Text>}
+                />
+              ) : (
+                <Text>No contracts purchased</Text>
+              )}
+              <Text style={styles.subtitle}>Purchases</Text>
+              {purchases.length ? (
+                <FlatList
+                  data={purchases}
+                  renderItem={(o) => <Text>{o}</Text>}
+                />
+              ) : (
+                <Text>No purchases yet</Text>
+              )}
             </View>
           </TabView.Item>
           <TabView.Item style={styles.tabViewItem}>
             <View style={styles.tabContent}>
-              <Text style={styles.text}>Upcoming visits</Text>
-              <Text style={styles.text}>Visit history</Text>
+              <Text style={styles.subtitle}>Upcoming visits</Text>
+              <Text style={styles.subtitle}>Visit history</Text>
+              {visits.length ? (
+                <FlatList data={visits} renderItem={(o) => <Text>{o}</Text>} />
+              ) : (
+                <Text>No visits yet</Text>
+              )}
             </View>
           </TabView.Item>
         </TabView>
@@ -143,8 +199,11 @@ const styles = StyleSheet.create({
     borderRadius: 999,
     marginTop: -55,
   },
-  text: {
+  subtitle: {
     color: "#72717f",
     textTransform: "uppercase",
+  },
+  text: {
+    color: "white",
   },
 });

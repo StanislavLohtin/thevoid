@@ -1,12 +1,50 @@
 import { FetchUtil } from "../utils/FetchUtil";
+import { FormulaNotesDTO } from "../classes/mindbody/FormulaNotesDTO";
+import { ContractDTO } from "../classes/mindbody/ContractDTO";
+import { PurchaseDTO } from "../classes/mindbody/PurchaseDTO";
+import {VisitDTO} from "../classes/mindbody/VisitDTO";
 
 class _MindbodyService {
-  private BASE_URL = "https://api.mindbodyonline.com/public/v6";
+  private BASE_URL =
+    // @ts-ignore
+    (window.chrome ? "https://cors-anywhere.herokuapp.com/" : "") +
+    "https://api.mindbodyonline.com/public/v6";
+  private API_KEY = "91504ccb30ab411d95533a3535a18d5b";
+  private SITE_ID = "-99";
+  private userId = "100015278";
   private token: string;
   private options: RequestInit;
 
   constructor() {
     this.getToken();
+  }
+
+  getClients(): Promise<string> {
+    return new Promise(async (res, rej) => {
+      try {
+        const responseBody: { Classes: [] } = await FetchUtil.fetch(
+          `${this.BASE_URL}/client/clients`,
+          this.options
+        );
+        res(responseBody.toString());
+      } catch (e) {
+        rej(e);
+      }
+    });
+  }
+
+  getClientInfo(): Promise<string> {
+    return new Promise(async (res, rej) => {
+      try {
+        const responseBody: { Classes: [] } = await FetchUtil.fetch(
+          `${this.BASE_URL}/client/clientcompleteinfo?ClientId=${this.userId}`,
+          this.options
+        );
+        res(responseBody.toString());
+      } catch (e) {
+        rej(e);
+      }
+    });
   }
 
   getCourses(): Promise<string> {
@@ -18,24 +56,73 @@ class _MindbodyService {
         );
         res(responseBody.toString());
       } catch (e) {
-        console.warn(e);
         rej(e);
       }
     });
   }
 
-  getClientPurchases(): Promise<string> {
+  getClientFormulaNotes(): Promise<FormulaNotesDTO[]> {
     console.log("options: ", this.options);
     return new Promise(async (res, rej) => {
       try {
-        const responseBody: { Purchases: [] } = await FetchUtil.fetch(
-          `${this.BASE_URL}/client/clientpurchases?ClientId=100000324`,
+        const responseBody: { FormulaNotes: FormulaNotesDTO[] } =
+          await FetchUtil.fetch(
+            `${this.BASE_URL}/client/clientformulanotes?ClientId=${this.userId}`,
+            this.options
+          );
+        console.log(responseBody);
+        res(responseBody.FormulaNotes);
+      } catch (e) {
+        rej(e);
+      }
+    });
+  }
+
+  getClientContracts(): Promise<ContractDTO[]> {
+    console.log("options: ", this.options);
+    return new Promise(async (res, rej) => {
+      try {
+        const responseBody: { Contracts: ContractDTO[] } =
+          await FetchUtil.fetch(
+            `${this.BASE_URL}/client/clientcontracts?ClientId=${this.userId}`,
+            this.options
+          );
+        console.log(responseBody);
+        res(responseBody.Contracts);
+      } catch (e) {
+        rej(e);
+      }
+    });
+  }
+
+  getClientPurchases(): Promise<PurchaseDTO[]> {
+    console.log("options: ", this.options);
+    return new Promise(async (res, rej) => {
+      try {
+        const responseBody: { Purchases: PurchaseDTO[] } =
+          await FetchUtil.fetch(
+            `${this.BASE_URL}/client/clientpurchases?ClientId=${this.userId}`,
+            this.options
+          );
+        console.log(responseBody);
+        res(responseBody.Purchases);
+      } catch (e) {
+        rej(e);
+      }
+    });
+  }
+
+  getClientVisits(): Promise<VisitDTO[]> {
+    console.log("options: ", this.options);
+    return new Promise(async (res, rej) => {
+      try {
+        const responseBody: { Visits: VisitDTO[] } = await FetchUtil.fetch(
+          `${this.BASE_URL}/client/clientvisits?ClientId=${this.userId}`,
           this.options
         );
         console.log(responseBody);
-        res(responseBody.toString());
+        res(responseBody.Visits);
       } catch (e) {
-        console.warn(e);
         rej(e);
       }
     });
@@ -63,9 +150,9 @@ class _MindbodyService {
     this.options = {
       method: "GET",
       headers: {
-        "Api-Key": "91504ccb30ab411d95533a3535a18d5b",
+        "Api-Key": this.API_KEY,
         authorization: this.token,
-        SiteId: "-99",
+        SiteId: this.SITE_ID,
       },
     };
   }
