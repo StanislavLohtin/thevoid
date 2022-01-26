@@ -52,7 +52,7 @@ export function ChatComponent(props: ChatProps) {
               ? ellipsis(
                   (lastMessage?.sentByCurrentUser() ? "You: " : "") +
                     lastMessage?.content
-                ) +
+                ).replaceAll("\n", "") +
                 " · " +
                 lastMessage?.createdAt.toLocaleTimeString()
               : "No messages yet."}
@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
   text: {
     color: "grey",
     fontSize: 13,
-    whiteSpace: "nowrap"
+    // whiteSpace: "nowrap"
   },
 });
 

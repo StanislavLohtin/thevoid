@@ -39,9 +39,9 @@ export default function ChatScreen() {
       });
     };
     ChatService.currentChatId = chat.id;
-    if (chat.type === ChatType.COURSE) {
+/*    if (chat.type === ChatType.COURSE) {
       FlowService.openSocketForChat(chat);
-    }
+    }*/
 
     fetchMessages();
     return () => {
@@ -150,7 +150,7 @@ const styles = StyleSheet.create({
     top: -12,
   },
   messageList: {
-    maxHeight: "calc(100vh - 140px)",
+    // maxHeight: "calc(100vh - 140px)",
     backgroundColor: "transparent",
   },
   header: {

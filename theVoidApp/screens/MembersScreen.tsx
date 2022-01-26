@@ -40,7 +40,7 @@ export default function MembersScreen() {
             style={styles.searchInput}
             onChangeText={onChangeText}
             value={text}
-            placeholder="🔍 Search"
+            placeholder="Search"
             placeholderTextColor={"#888a8f"}
             keyboardType="default"
           ></TextInput>

@@ -34,65 +34,22 @@ After deploying, view your app at thevoid-54561.web.app
 
 Need help? Take a look at the Hosting docs
 
+##Screens + calls:
 
-#api:
-
-* /users/id => chatIds, communityIds
-* /chats/id => userIds, messageIds 
-
-
-##data structure:
-ava - **storage get** [on login]
- * users[by id - on login]
-    * authid
-    * username
-    * email
-    * password
-    * created_at
-    * last_online
-    * status
-    * notes
-        * id list
-    * chats
-        * id list
-    * courses
-        * id list
- * chats
-    * info [by chat id - on get current_user]
-        * type
-        * users
-            * id - **storage get ava by id**
-            * name
-        * last message
-            * content
-            * created_at
-            * sender id
-            * status
-            * image
-    * messages [by chat id - on open chat]
-        * recent
-            * content
-            * created_at
-            * sender id
-            * status
-            * image
-        * archived
-            * content
-            * created_at
-            * sender id
-            * status
-            * image
- * courses [by id - on get participations]
-    * info
-        * name
-        * type
-        * description
-        * ava?
-        * style
-    * users
-        * status
-        * messages
-            * content
-            * created_at
- * notes [by id - onload user info]
-    * content
+* onLogin:
+  - __getUserInfo__ /users/{userId}  [authId == users.id]  
+  - __getUserInfoReadonly__ /users/{userId}/readonly [authId == users.id]  
+* ChatList: 
+  - __getChats__ /users/{userId}/chats
+* Chat
+  - __getChat__ /chats/{chatId} [authId in chat.users]
+  - __getMessages__ /chats/{chatId}/messages last 20 [authId in chat.users]
+  - __sendMessage__ callable function
+* CreateChat
+  - __createChat__ callable function
+* UserProfile
+  - __getMindbodyInfo__ callable function
+* Explore
+  - __getCourses__ /users/{userId}/chats
+* Members
+  - __getUsers__ /users/  [permission]

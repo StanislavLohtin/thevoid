@@ -26,7 +26,7 @@ export default function UserProfileScreen() {
   const navigation = useNavigation();
 
   useEffect(() => {
-    MindbodyService.getClientFormulaNotes().then((clientFormulaNotes) => {
+    /*MindbodyService.getClientFormulaNotes().then((clientFormulaNotes) => {
       setFormulaNotes(clientFormulaNotes);
     });
 
@@ -45,7 +45,7 @@ export default function UserProfileScreen() {
     MindbodyService.getClients().then((clientVisits) => {
       // @ts-ignore
       window.clients = clientVisits;
-    });
+    });*/
   }, []);
 
   function onLogoutPress() {

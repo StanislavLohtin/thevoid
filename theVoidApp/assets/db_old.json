@@ -1,17 +1,18 @@
 {
   "chats": {
     "chatId1": {
-      "type": 0,
-      "usersPublic": {
-        "Ojr2dobmnbMbpxEEf7y0Me8fae43": {
-          "avaUrl": "https://firebasestorage.googleapis.com/v0/b/thevoid-54561.appspot.com/o/avatars%2FOjr2dobmnbMbpxEEf7y0Me8fae43.png?alt=media&token=2fef62fd-a817-4a70-9219-3f532dce0817",
-          "username": "test@test.com",
-          "lastOnline": "1633819307424"
-        },
-        "8KOoXumeqAXwN5sCi4OOu0ZGHHD3": {
-          "avaUrl": "",
-          "username": "user2",
-          "lastOnline": "1633819307424"
+      "info": {
+        "lastMessageId": "-Mmo0wz7MO94hg87lIt7",
+        "type": 0,
+        "usersPublic": {
+          "Ojr2dobmnbMbpxEEf7y0Me8fae43": {
+            "avaUrl": "https://firebasestorage.googleapis.com/v0/b/thevoid-54561.appspot.com/o/avatars%2FOjr2dobmnbMbpxEEf7y0Me8fae43.png?alt=media&token=2fef62fd-a817-4a70-9219-3f532dce0817",
+            "username": "test@test.com"
+          },
+          "8KOoXumeqAXwN5sCi4OOu0ZGHHD3": {
+            "avaUrl": "",
+            "username": "user2"
+          }
         }
       },
       "messages": {
@@ -330,6 +331,9 @@
       }
     }
   },
+  "permissions": {
+    "Ojr2dobmnbMbpxEEf7y0Me8fae43": "mojet"
+  },
   "users": {
     "8KOoXumeqAXwN5sCi4OOu0ZGHHD3": {
       "chatIds": { "chatId1": "chatId1" },
@@ -337,37 +341,16 @@
       "email": "test2@test.com",
       "lastOnline": "1633819307424",
       "status": "Hello, I am using the Void!",
-      "username": "user2",
-      "permissions": {
-        "admin": "admin"
-      }
+      "username": "user2"
     },
     "Ojr2dobmnbMbpxEEf7y0Me8fae43": {
-      "ava": "binary1",
+      "avaUrl": "https://firebasestorage.googleapis.com/v0/b/thevoid-54561.appspot.com/o/avatars%2FOjr2dobmnbMbpxEEf7y0Me8fae43.png?alt=media&token=2fef62fd-a817-4a70-9219-3f532dce0817",
+      "chatIds": { "chatId1": "chatId1", "chatId2": "chatId2" },
+      "createdAt": "1633819081808",
+      "email": "test@test.com",
+      "lastOnline": "1633819081808",
       "status": "Hello, I am using the Void!",
-      "username": "user1",
-      "readonly": {
-        "createdAt": "1633819081808",
-        "lastOnline": "1633819081808",
-        "permissions": ["user"],
-        "chats": {
-          "chatId1": {
-            "lastMessage": "text",
-            "username": "user2",
-            "createdAt": "1633819081808",
-            "status": 1,
-            "ava": "binary",
-            "type": 0
-          },
-          "chatId2": {
-            "lastMessage": "text",
-            "username": "user2",
-            "createdAt": "1633819081808",
-            "status": 2,
-            "ava": "binary",
-            "type": 0
-        } }
-      }
+      "username": "test@test.com"
     }
   }
 }
