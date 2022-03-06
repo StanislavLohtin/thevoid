@@ -17,15 +17,16 @@ import { darkerPurple } from "../constants/Colors";
 import ChatService from "../services/ChatService";
 import FlowService from "../services/FlowService";
 import { ChatType } from "../classes/Chat";
+import {StackNavigationProp} from "@react-navigation/stack";
+import {RootStackParamList} from "../types";
 
 export default function ChatScreen() {
   const [text, setText] = React.useState("");
   const route = useRoute();
-  const navigation = useNavigation();
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const chat = UserService.currentUser.getChatById(
     (route.params as { id: string }).id
   );
-  let flatListRef;
 
   const [messages, setMessages] = React.useState(
     chat.lastMessage ? [chat.lastMessage] : []

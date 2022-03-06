@@ -1,6 +1,4 @@
-import {createStackNavigator} from '@react-navigation/stack';
 import * as React from 'react';
-import {RootStackParamList} from './types';
 import Routes from "./navigation/Routes";
 import {AuthUserProvider} from "./navigation/AuthUserProvider";
 
@@ -16,7 +14,7 @@ import {AuthUserProvider} from "./navigation/AuthUserProvider";
 
 // A root stack navigator is often used for displaying modals on top of all other content
 // Read more here: https://reactnavigation.org/docs/modal
-const Stack = createStackNavigator<RootStackParamList>();
+// const Stack = createStackNavigator<RootStackParamList>();
 
 /*function RootNavigator() {
   return (

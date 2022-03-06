@@ -11,6 +11,8 @@ import { Chat, ChatType } from "../classes/Chat";
 import { useEffect } from "react";
 import ChatService from "../services/ChatService";
 import { useState } from "react";
+import {RootStackParamList} from "../types";
+import {StackNavigationProp} from "@react-navigation/stack";
 
 type ChatProps = TextProps & {
   chat: Chat;
@@ -19,7 +21,7 @@ type ChatProps = TextProps & {
 export function ChatComponent(props: ChatProps) {
   const chat = props.chat;
   const [lastMessage, setLastMessage] = useState(chat.lastMessage);
-  const navigation = useNavigation();
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const otherUser = chat.otherUser;
 
   useEffect(() => {
@@ -52,7 +54,7 @@ export function ChatComponent(props: ChatProps) {
               ? ellipsis(
                   (lastMessage?.sentByCurrentUser() ? "You: " : "") +
                     lastMessage?.content
-                ).replaceAll("\n", "") +
+                ).replace(/\n/g, "") +
                 " · " +
                 lastMessage?.createdAt.toLocaleTimeString()
               : "No messages yet."}

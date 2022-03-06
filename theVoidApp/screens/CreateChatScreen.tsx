@@ -9,13 +9,15 @@ import { darkerPurple } from "../constants/Colors";
 import { UserInAListComponent } from "../components/UserInAListComponent";
 import { UserPublic } from "../classes/UserPublic";
 import ChatService from "../services/ChatService";
+import {StackNavigationProp} from "@react-navigation/stack";
+import {ChatListTabParamList} from "../types";
 
 export default function CreateChatScreen() {
   const [searchText, setSearchText] = React.useState("");
   const [title, setTitle] = React.useState("");
   const [selectedUsers] = React.useState(new Set<UserPublic>());
   const users = UserService.users;
-  const navigation = useNavigation();
+  const navigation = useNavigation<StackNavigationProp<ChatListTabParamList>>();
 
   useEffect(() => {}, []);
 

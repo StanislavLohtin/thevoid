@@ -6,17 +6,18 @@
 export type RootStackParamList = {
   Root: undefined;
   NotFound: undefined;
-  ChatScreen: undefined;
+  ChatScreen: {id: string};
   UserProfileScreen: undefined;
+  CreateChatScreen: undefined;
 };
 
 export type BottomTabParamList = {
-  Chat: undefined;
+  ChatList: undefined;
   Explore: undefined;
   Members: undefined;
 };
 
-export type ChatTabParamList = {
+export type ChatListTabParamList = {
   ChatListScreen: undefined;
 };
 

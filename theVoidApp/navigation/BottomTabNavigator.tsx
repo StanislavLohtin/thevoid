@@ -5,7 +5,7 @@
 
 import { Ionicons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { createStackNavigator} from "@react-navigation/stack";
+import { createStackNavigator } from "@react-navigation/stack";
 import * as React from "react";
 
 import Colors from "../constants/Colors";
@@ -15,7 +15,7 @@ import ExploreScreen from "../screens/ExploreScreen";
 import MembersScreen from "../screens/MembersScreen";
 import {
   BottomTabParamList,
-  ChatTabParamList,
+  ChatListTabParamList,
   ExploreTabParamList,
   MembersTabParamList,
 } from "../types";
@@ -29,14 +29,19 @@ export default function BottomTabNavigator() {
 
   return (
     <BottomTab.Navigator
-      initialRouteName="Chat"
-      tabBarOptions={{
-        activeTintColor: Colors[colorScheme].tint,
-        style: styles.container,
+      initialRouteName="ChatList"
+      screenOptions={{
+        tabBarActiveTintColor: Colors[colorScheme].tint,
+        tabBarStyle: [
+          {
+            display: "flex",
+          },
+          null,
+        ],
       }}
     >
       <BottomTab.Screen
-        name="Chat"
+        name="ChatList"
         component={ChatTabNavigator}
         options={{
           tabBarIcon: ({ color }) => (
@@ -91,16 +96,13 @@ function TabBarIcon(props: {
 
 // Each tab has its own navigation stack, you can read more about this pattern here:
 // https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
-const ChatTabStack = createStackNavigator<ChatTabParamList>();
+const ChatListTabStack = createStackNavigator<ChatListTabParamList>();
 
 function ChatTabNavigator() {
   return (
-    <ChatTabStack.Navigator screenOptions={{ headerShown: false}}>
-      <ChatTabStack.Screen
-        name="ChatListScreen"
-        component={ChatListScreen}
-      />
-    </ChatTabStack.Navigator>
+    <ChatListTabStack.Navigator screenOptions={{ headerShown: false }}>
+      <ChatListTabStack.Screen name="ChatListScreen" component={ChatListScreen} />
+    </ChatListTabStack.Navigator>
   );
 }
 

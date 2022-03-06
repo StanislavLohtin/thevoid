@@ -15,14 +15,15 @@ import { useNavigation } from "@react-navigation/native";
 import ChatService from "../services/ChatService";
 import { Chat } from "../classes/Chat";
 import IconButton from "../components/IconButton";
-import { FetchUtil } from "../utils/FetchUtil";
 import FirebaseService from "../services/FirebaseService";
+import {StackNavigationProp} from "@react-navigation/stack";
+import {RootStackParamList} from "../types";
 
 export default function ChatListScreen() {
   const [text, onChangeText] = useState("");
   const [chats, setChats] = useState([]);
   const [currentUser, setCurrentUser] = useState(null);
-  const navigation = useNavigation();
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
   const updateChatList = (updatedChats: Chat[]) => {
     console.log("setting chats:", updatedChats);
@@ -98,7 +99,7 @@ export default function ChatListScreen() {
               placeholder="Search"
               placeholderTextColor={"#888a8f"}
               keyboardType="default"
-            ></TextInput>
+            />
           </View>
         </View>
         <FlatList
