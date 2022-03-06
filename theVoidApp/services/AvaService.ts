@@ -1,4 +1,4 @@
-import firebase from "firebase";
+import firebase from "firebase/compat";
 import FirebaseService from "./FirebaseService";
 
 class _AvaService {

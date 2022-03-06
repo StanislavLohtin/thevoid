@@ -1,6 +1,5 @@
-import firebase from "firebase";
 import "firebase/auth";
-
+import firebase from "firebase/compat";
 import firebaseConfig from "./firebaseConfig";
 import UserService from "../../services/UserService";
 import FirebaseService, { APP_NAME } from "../../services/FirebaseService";

@@ -1,8 +1,8 @@
 import {createStackNavigator} from '@react-navigation/stack';
 import * as React from 'react';
-import {RootStackParamList} from '../types';
-import Routes from "./Routes";
-import {AuthUserProvider} from "./AuthUserProvider";
+import {RootStackParamList} from './types';
+import Routes from "./navigation/Routes";
+import {AuthUserProvider} from "./navigation/AuthUserProvider";
 
 /*export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (

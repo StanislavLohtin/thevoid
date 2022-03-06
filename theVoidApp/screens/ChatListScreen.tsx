@@ -4,7 +4,8 @@ import {
   Image,
   TextInput,
   FlatList,
-  TouchableWithoutFeedback, ImageBackground,
+  TouchableWithoutFeedback,
+  ImageBackground,
 } from "react-native";
 import { View } from "../components/Themed";
 import { ChatComponent } from "../components/ChatComponent";
@@ -14,6 +15,8 @@ import { useNavigation } from "@react-navigation/native";
 import ChatService from "../services/ChatService";
 import { Chat } from "../classes/Chat";
 import IconButton from "../components/IconButton";
+import { FetchUtil } from "../utils/FetchUtil";
+import FirebaseService from "../services/FirebaseService";
 
 export default function ChatListScreen() {
   const [text, onChangeText] = useState("");
@@ -40,54 +43,69 @@ export default function ChatListScreen() {
     navigation.navigate("UserProfileScreen");
   }
 
+  async function onCreateChatPress() {
+    const BASE_URL =
+      // @ts-ignore
+      // (window.chrome ? "https://cors-anywhere.herokuapp.com/" : "") +
+      "https://us-central1-the-void-f1bcc.cloudfunctions.net/helloWorld";
+    console.log("fetching3");
+    // const result = await FetchUtil.fetch(BASE_URL, {method: "GET"});
+
+    const addMessage = FirebaseService.functions.httpsCallable("helloWorld");
+    const result = await addMessage({ text: "messageText" });
+    const sanitizedMessage = result.data.text;
+    console.log(sanitizedMessage);
+    return sanitizedMessage;
+  }
+
   return (
     <View style={styles.container}>
       <ImageBackground
         style={styles.bg}
         source={require("./../assets/images/chatListBg.png")}
       >
-      <View style={styles.header}>
-        <Image
-          style={styles.logo}
-          source={require("./../assets/images/voidColorWhite.png")}
-        />
-        <View style={styles.headerRight}>
-          <View style={styles.headerTopRow}>
-            <TouchableWithoutFeedback onPress={onAvatarPress}>
-              <Image
-                style={styles.userAva}
-                source={
-                  currentUser?.avaUrl
-                    ? { uri: currentUser.avaUrl }
-                    : require("./../assets/images/defaultAva.png")
-                }
-              />
-            </TouchableWithoutFeedback>
-            {UserService.currentUser?.isAdmin && (
-              <IconButton
-                style={styles.createChatButton}
-                iconName="square-edit-outline"
-                color={"white"}
-                size={25}
-                onPress={() => navigation.navigate("CreateChatScreen")}
-              />
-            )}
+        <View style={styles.header}>
+          <Image
+            style={styles.logo}
+            source={require("./../assets/images/voidColorWhite.png")}
+          />
+          <View style={styles.headerRight}>
+            <View style={styles.headerTopRow}>
+              <TouchableWithoutFeedback onPress={onAvatarPress}>
+                <Image
+                  style={styles.userAva}
+                  source={
+                    currentUser?.avaUrl
+                      ? { uri: currentUser.avaUrl }
+                      : require("./../assets/images/defaultAva.png")
+                  }
+                />
+              </TouchableWithoutFeedback>
+              {!UserService.currentUser?.isAdmin && (
+                <IconButton
+                  style={styles.createChatButton}
+                  iconName="square-edit-outline"
+                  color={"white"}
+                  size={25}
+                  onPress={onCreateChatPress}
+                />
+              )}
+            </View>
+            <TextInput
+              style={styles.searchInput}
+              onChangeText={onChangeText}
+              value={text}
+              placeholder="Search"
+              placeholderTextColor={"#888a8f"}
+              keyboardType="default"
+            ></TextInput>
           </View>
-          <TextInput
-            style={styles.searchInput}
-            onChangeText={onChangeText}
-            value={text}
-            placeholder="Search"
-            placeholderTextColor={"#888a8f"}
-            keyboardType="default"
-          ></TextInput>
         </View>
-      </View>
-      <FlatList
-        data={chats}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => <ChatComponent chat={item} />}
-      />
+        <FlatList
+          data={chats}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => <ChatComponent chat={item} />}
+        />
       </ImageBackground>
     </View>
   );
