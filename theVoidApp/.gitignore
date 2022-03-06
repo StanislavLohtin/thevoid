@@ -73,3 +73,6 @@ web-build/
 # @end expo-cli
 
 config.ts
+
+firebase-debug.log
+package-lock.json
