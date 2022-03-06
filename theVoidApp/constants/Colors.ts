@@ -1,5 +1,4 @@
 const tintColorLight = '#6c50fa';
-const tintColorDark = '#fff';
 
 export const defPurple = "#6c51f8";
 export const darkerPurple = "#6e54f0";
@@ -7,17 +6,17 @@ export const darkerPurple = "#6e54f0";
 export default {
   light: {
     text: '#000',
-    background: '#fff',
+    background: '#f00',
     tint: tintColorLight,
     tabIconDefault: '#ccc',
     tabIconSelected: tintColorLight,
   },
   dark: {
-    text: '#fff',
+    text: '#00f',
     background: '#000',
-    tint: tintColorDark,
+    tint: defPurple,
     tabIconDefault: '#ccc',
-    tabIconSelected: tintColorDark,
+    tabIconSelected: defPurple,
   },
 };
 

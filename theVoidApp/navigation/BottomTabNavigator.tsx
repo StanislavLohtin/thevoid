@@ -32,12 +32,8 @@ export default function BottomTabNavigator() {
       initialRouteName="ChatList"
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme].tint,
-        tabBarStyle: [
-          {
-            display: "flex",
-          },
-          null,
-        ],
+        headerShown: false,
+        tabBarStyle: styles.container
       }}
     >
       <BottomTab.Screen
@@ -80,7 +76,7 @@ const styles = StyleSheet.create({
   container: {
     color: "#686f76",
     backgroundColor: "#2e2e30",
-    paddingTop: 8,
+    paddingTop: 0,
     borderTopWidth: 0,
   },
 });
@@ -101,7 +97,10 @@ const ChatListTabStack = createStackNavigator<ChatListTabParamList>();
 function ChatTabNavigator() {
   return (
     <ChatListTabStack.Navigator screenOptions={{ headerShown: false }}>
-      <ChatListTabStack.Screen name="ChatListScreen" component={ChatListScreen} />
+      <ChatListTabStack.Screen
+        name="ChatListScreen"
+        component={ChatListScreen}
+      />
     </ChatListTabStack.Navigator>
   );
 }
