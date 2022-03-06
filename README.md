@@ -4,6 +4,7 @@
 * `expo start`
 * `expo start -c`
 * clear cache: `rm -rf /tmp/metro-*`
+* fix dependencies `expo doctor --fix-dependencies`
 
 
 <!-- The core Firebase JS SDK is always required and must be listed first -->
