@@ -89,243 +89,239 @@
         "lastMessageId": "-MmZezA3lqZs2SP9tGuZ",
         "title": "course1 title",
         "type": 0,
-        "usersPublic": {
-          "Ojr2dobmnbMbpxEEf7y0Me8fae43": {
-            "avaUrl": "https://firebasestorage.googleapis.com/v0/b/thevoid-54561.appspot.com/o/avatars%2FOjr2dobmnbMbpxEEf7y0Me8fae43.png?alt=media&token=2fef62fd-a817-4a70-9219-3f532dce0817",
-            "username": "user1"
-          },
-          "8KOoXumeqAXwN5sCi4OOu0ZGHHD3": {
-            "avaUrl": "",
-            "username": "user2"
-          }
-        }
-      },
-      "messages": {
-        "recent": {
-          "-MlvGPoNVM4d7DT52O22": {
-            "content": "a3",
-            "createdAt": "1634155736599",
-            "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
-            "status": "1",
-            "type": "0"
-          },
-          "-MlvGPoNVM4d7DT52OVz": {
-            "content": "a2",
-            "createdAt": "1634155735599",
-            "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
-            "status": "1",
-            "type": "0"
-          },
-          "-MlvGx6hsVF0Bj9rdvOP": {
-            "content": "a4",
-            "createdAt": "1634155876103",
-            "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
-            "status": "1",
-            "type": "0"
-          },
-          "-MlvJMXWJLw3nrM145g2": {
-            "content": "b1",
-            "createdAt": "1634156509590",
-            "sender": "8KOoXumeqAXwN5sCi4OOu0ZGHHD3",
-            "status": "1",
-            "type": "0"
-          },
-          "-MlvJMXWJLw3nrM145gE": {
-            "content": "a5",
-            "createdAt": "1634156508590",
-            "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
-            "status": "1",
-            "type": "0"
-          },
-          "-MlvXo2s8sYaUT6uR8E1": {
-            "content": "q1",
-            "createdAt": "1634160295384",
-            "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
-            "status": "1",
-            "type": "0"
-          },
-          "-MlvXoQNr7TO2JsGAVnf": {
-            "content": "q2",
-            "createdAt": "1634160296887",
-            "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
-            "status": "1",
-            "type": "0"
-          },
-          "-MlvXogiz4nqSjetfIgr": {
-            "content": "q3",
-            "createdAt": "1634160297998",
-            "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
-            "status": "1",
-            "type": "0"
-          },
-          "-MlvXowNwFs_pttH0I98": {
-            "content": "q4",
-            "createdAt": "1634160299001",
-            "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
-            "status": "1",
-            "type": "0"
-          },
-          "-MlvXpM8fBE4wbCzTLzI": {
-            "content": "q5",
-            "createdAt": "1634160300713",
-            "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
-            "status": "1",
-            "type": "0"
-          },
-          "-MlvXpkUQKNHgC0whve7": {
-            "content": "q6",
-            "createdAt": "1634160302336",
-            "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
-            "status": "2",
-            "type": "0"
-          },
-          "-MlvXqfCsrsImYeHwkbJ": {
-            "content": "q7",
-            "createdAt": "1634160306094",
-            "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
-            "status": "3",
-            "type": "0"
-          },
-          "-MlvXrSb2GxwqbW03VNG": {
-            "content": "q8",
-            "createdAt": "1634160309319",
-            "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
-            "status": "1",
-            "type": "0"
-          },
-          "-Mlvrc2RR3bGMnLBiBKU": {
-            "content": "s4",
-            "createdAt": "1634165751156",
-            "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
-            "status": "1",
-            "type": "0"
-          },
-          "-Mlvtv5KdwUUje4fLi8L": {
-            "content": "you mate how ur doing?",
-            "createdAt": "1634166353446",
-            "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
-            "status": "1",
-            "type": "0"
-          },
-          "-MlvuPIKYKUCdgbszFxx": {
-            "content": "I told u not to ignore me, you worthless piece of meat. I hope u die!",
-            "createdAt": "1634166481250",
-            "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
-            "status": "1",
-            "type": "0"
-          },
-          "-MlvxBc-NQBV2JhF78EY": {
-            "content": "Omfg",
-            "createdAt": "1634167211750",
-            "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
-            "status": "1",
-            "type": "0"
-          },
-          "-Mm-qNRgSULpy0qdYGnk": {
-            "content": "yo, i am sorry!",
-            "createdAt": "1634249310697",
-            "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
-            "status": "1",
-            "type": "0"
-          },
-          "-MmCsOwZ1uDdrui3eHkm": {
-            "content": "stop ignoring me, i said i am sorry!",
-            "createdAt": "1634467945165",
-            "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
-            "status": "1",
-            "type": "0"
-          },
-          "-MmCsjeaMDzdc9iI-bVg": {
-            "content": "do u think you are better than me?",
-            "createdAt": "1634468034126",
-            "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
-            "status": "1",
-            "type": "0"
-          },
-          "-MmCvKeNAhA-KI6DeIf2": {
-            "content": "b2",
-            "createdAt": "1634468714042",
-            "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
-            "status": "1",
-            "type": "0"
-          },
-          "-MmCvKeNAhA-KI6DeIfw": {
-            "content": "I thought so!",
-            "createdAt": "1634468714042",
-            "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
-            "status": "1",
-            "type": "0"
-          },
-          "-MmZak2xwwVnDCkhs9Nm": {
-            "content": "really?",
-            "createdAt": "1634849194145",
-            "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
-            "status": "1",
-            "type": "0"
-          },
-          "-MmZaoM9odtoLR-2VEhF": {
-            "content": "does not seem to work",
-            "createdAt": "1634849211757",
-            "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
-            "status": "1",
-            "type": "0"
-          },
-          "-MmZd7AGnehAM3q8B_o3": {
-            "content": "b3",
-            "createdAt": "1634849819295",
-            "sender": "8KOoXumeqAXwN5sCi4OOu0ZGHHD3",
-            "status": "2",
-            "type": "0"
-          },
-          "-MmZd7AGnehAM3q8B_oi": {
-            "content": "works now?",
-            "createdAt": "1634849817195",
-            "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
-            "status": "1",
-            "type": "0"
-          },
-          "-MmZezA3lqZs2SP9tCuK": {
-            "content": "does it or does it not?",
-            "createdAt": "1634850304616",
-            "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
-            "status": "1",
-            "type": "0"
-          },
-          "-MmZezA3lqZs2SP9tCuZ": {
-            "content": "b4",
-            "createdAt": "1634850324616",
-            "sender": "8KOoXumeqAXwN5sCi4OOu0ZGHHD3",
-            "status": "1",
-            "type": "0"
-          },
-          "-MmZezA3lqZs2SP9tDuZ": {
-            "content": "b5",
-            "createdAt": "1634850328616",
-            "sender": "8KOoXumeqAXwN5sCi4OOu0ZGHHD3",
-            "status": "1",
-            "type": "0"
-          },
-          "-MmZezA3lqZs2SP9tEuZ": {
-            "content": "b6",
-            "createdAt": "1634850338616",
-            "sender": "8KOoXumeqAXwN5sCi4OOu0ZGHHD3",
-            "status": "1",
-            "type": "0"
-          },
-          "-MmZezA3lqZs2SP9tFuZ": {
-            "content": "b7",
-            "createdAt": "1634850348616",
-            "sender": "8KOoXumeqAXwN5sCi4OOu0ZGHHD3",
-            "status": "1",
-            "type": "0"
-          },
-          "-MmZezA3lqZs2SP9tGuZ": {
-            "content": "b8 yoyo biatch!",
-            "createdAt": "1634850748616",
-            "sender": "8KOoXumeqAXwN5sCi4OOu0ZGHHD3",
-            "status": "1",
-            "type": "0"
-          }
+        "createdBy": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
+        "createdAt": "1633819307333",
+        "usersPublic": [
+          "Ojr2dobmnbMbpxEEf7y0Me8fae43",
+          "8KOoXumeqAXwN5sCi4OOu0ZGHHD3"
+        ]
+      }
+    },
+    "messages": {
+      "recent": {
+        "-MlvGPoNVM4d7DT52O22": {
+          "content": "a3",
+          "createdAt": "1634155736599",
+          "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
+          "status": "1",
+          "type": "0"
+        },
+        "-MlvGPoNVM4d7DT52OVz": {
+          "content": "a2",
+          "createdAt": "1634155735599",
+          "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
+          "status": "1",
+          "type": "0"
+        },
+        "-MlvGx6hsVF0Bj9rdvOP": {
+          "content": "a4",
+          "createdAt": "1634155876103",
+          "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
+          "status": "1",
+          "type": "0"
+        },
+        "-MlvJMXWJLw3nrM145g2": {
+          "content": "b1",
+          "createdAt": "1634156509590",
+          "sender": "8KOoXumeqAXwN5sCi4OOu0ZGHHD3",
+          "status": "1",
+          "type": "0"
+        },
+        "-MlvJMXWJLw3nrM145gE": {
+          "content": "a5",
+          "createdAt": "1634156508590",
+          "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
+          "status": "1",
+          "type": "0"
+        },
+        "-MlvXo2s8sYaUT6uR8E1": {
+          "content": "q1",
+          "createdAt": "1634160295384",
+          "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
+          "status": "1",
+          "type": "0"
+        },
+        "-MlvXoQNr7TO2JsGAVnf": {
+          "content": "q2",
+          "createdAt": "1634160296887",
+          "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
+          "status": "1",
+          "type": "0"
+        },
+        "-MlvXogiz4nqSjetfIgr": {
+          "content": "q3",
+          "createdAt": "1634160297998",
+          "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
+          "status": "1",
+          "type": "0"
+        },
+        "-MlvXowNwFs_pttH0I98": {
+          "content": "q4",
+          "createdAt": "1634160299001",
+          "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
+          "status": "1",
+          "type": "0"
+        },
+        "-MlvXpM8fBE4wbCzTLzI": {
+          "content": "q5",
+          "createdAt": "1634160300713",
+          "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
+          "status": "1",
+          "type": "0"
+        },
+        "-MlvXpkUQKNHgC0whve7": {
+          "content": "q6",
+          "createdAt": "1634160302336",
+          "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
+          "status": "2",
+          "type": "0"
+        },
+        "-MlvXqfCsrsImYeHwkbJ": {
+          "content": "q7",
+          "createdAt": "1634160306094",
+          "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
+          "status": "3",
+          "type": "0"
+        },
+        "-MlvXrSb2GxwqbW03VNG": {
+          "content": "q8",
+          "createdAt": "1634160309319",
+          "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
+          "status": "1",
+          "type": "0"
+        },
+        "-Mlvrc2RR3bGMnLBiBKU": {
+          "content": "s4",
+          "createdAt": "1634165751156",
+          "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
+          "status": "1",
+          "type": "0"
+        },
+        "-Mlvtv5KdwUUje4fLi8L": {
+          "content": "you mate how ur doing?",
+          "createdAt": "1634166353446",
+          "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
+          "status": "1",
+          "type": "0"
+        },
+        "-MlvuPIKYKUCdgbszFxx": {
+          "content": "I told u not to ignore me, you worthless piece of meat. I hope u die!",
+          "createdAt": "1634166481250",
+          "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
+          "status": "1",
+          "type": "0"
+        },
+        "-MlvxBc-NQBV2JhF78EY": {
+          "content": "Omfg",
+          "createdAt": "1634167211750",
+          "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
+          "status": "1",
+          "type": "0"
+        },
+        "-Mm-qNRgSULpy0qdYGnk": {
+          "content": "yo, i am sorry!",
+          "createdAt": "1634249310697",
+          "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
+          "status": "1",
+          "type": "0"
+        },
+        "-MmCsOwZ1uDdrui3eHkm": {
+          "content": "stop ignoring me, i said i am sorry!",
+          "createdAt": "1634467945165",
+          "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
+          "status": "1",
+          "type": "0"
+        },
+        "-MmCsjeaMDzdc9iI-bVg": {
+          "content": "do u think you are better than me?",
+          "createdAt": "1634468034126",
+          "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
+          "status": "1",
+          "type": "0"
+        },
+        "-MmCvKeNAhA-KI6DeIf2": {
+          "content": "b2",
+          "createdAt": "1634468714042",
+          "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
+          "status": "1",
+          "type": "0"
+        },
+        "-MmCvKeNAhA-KI6DeIfw": {
+          "content": "I thought so!",
+          "createdAt": "1634468714042",
+          "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
+          "status": "1",
+          "type": "0"
+        },
+        "-MmZak2xwwVnDCkhs9Nm": {
+          "content": "really?",
+          "createdAt": "1634849194145",
+          "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
+          "status": "1",
+          "type": "0"
+        },
+        "-MmZaoM9odtoLR-2VEhF": {
+          "content": "does not seem to work",
+          "createdAt": "1634849211757",
+          "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
+          "status": "1",
+          "type": "0"
+        },
+        "-MmZd7AGnehAM3q8B_o3": {
+          "content": "b3",
+          "createdAt": "1634849819295",
+          "sender": "8KOoXumeqAXwN5sCi4OOu0ZGHHD3",
+          "status": "2",
+          "type": "0"
+        },
+        "-MmZd7AGnehAM3q8B_oi": {
+          "content": "works now?",
+          "createdAt": "1634849817195",
+          "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
+          "status": "1",
+          "type": "0"
+        },
+        "-MmZezA3lqZs2SP9tCuK": {
+          "content": "does it or does it not?",
+          "createdAt": "1634850304616",
+          "sender": "Ojr2dobmnbMbpxEEf7y0Me8fae43",
+          "status": "1",
+          "type": "0"
+        },
+        "-MmZezA3lqZs2SP9tCuZ": {
+          "content": "b4",
+          "createdAt": "1634850324616",
+          "sender": "8KOoXumeqAXwN5sCi4OOu0ZGHHD3",
+          "status": "1",
+          "type": "0"
+        },
+        "-MmZezA3lqZs2SP9tDuZ": {
+          "content": "b5",
+          "createdAt": "1634850328616",
+          "sender": "8KOoXumeqAXwN5sCi4OOu0ZGHHD3",
+          "status": "1",
+          "type": "0"
+        },
+        "-MmZezA3lqZs2SP9tEuZ": {
+          "content": "b6",
+          "createdAt": "1634850338616",
+          "sender": "8KOoXumeqAXwN5sCi4OOu0ZGHHD3",
+          "status": "1",
+          "type": "0"
+        },
+        "-MmZezA3lqZs2SP9tFuZ": {
+          "content": "b7",
+          "createdAt": "1634850348616",
+          "sender": "8KOoXumeqAXwN5sCi4OOu0ZGHHD3",
+          "status": "1",
+          "type": "0"
+        },
+        "-MmZezA3lqZs2SP9tGuZ": {
+          "content": "b8 yoyo biatch!",
+          "createdAt": "1634850748616",
+          "sender": "8KOoXumeqAXwN5sCi4OOu0ZGHHD3",
+          "status": "1",
+          "type": "0"
         }
       }
     }
@@ -343,13 +339,13 @@
     },
     "Ojr2dobmnbMbpxEEf7y0Me8fae43": {
       "private": {
-        "createdAt": "1633819081808",
-        "mindbodyId": "mindbodyId1",
-        "email": "test2@test.com",
-        "chats": [
-          "chatId1",
-          "chatId2"
-        ]
+        "data": {
+          "permissions": 2,
+          "createdAt": "1633819081808",
+          "mindbodyId": "mindbodyId1",
+          "email": "admin@test.com",
+          "chats": ["chatId1", "chatId2"]
+        }
       },
       "public": {
         "lastOnline": "1633819307424",

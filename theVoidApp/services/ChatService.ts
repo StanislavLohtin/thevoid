@@ -28,14 +28,14 @@ class _ChatService {
 
     for (const chatId of user.chatIds) {
       const newPromise = new Promise((res, rej) => {
-        FirebaseService.get(`chats/${chatId}/info`).then(
+        FirebaseService.get(`chats/${chatId}`).then(
           (chatDto) => {
-            let chat = new Chat(chatId, chatDto.val() as ChatInfoDTO);
+            let chat = new Chat(chatId, chatDto as ChatInfoDTO);
             user.chats.push(chat);
             MessageService.fetchMessageById(chatId, chat.lastMessageId).then(
               (message) => {
                 chat.lastMessage = message;
-                res();
+                res(message);
               },
               (reason) => {
                 rej(reason);

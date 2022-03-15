@@ -1,14 +1,20 @@
 import AvaService from "../services/AvaService";
+import { UserPublicDTO } from "./UserPublicDTO";
+import { TypeUtil } from "../utils/TypeUtil";
 
 export class UserPublic {
   id: string;
   username: string;
   avaUrl: string;
+  lastOnline: Date;
+  status: string;
 
-  constructor(uid: string, username: string, avaUrl: string) {
+  constructor(uid: string, userPublicDTO: UserPublicDTO) {
     this.id = uid;
-    this.username = username;
-    this.avaUrl = avaUrl;
+    this.username = userPublicDTO.public.username;
+    this.avaUrl = userPublicDTO.public.avaUrl;
+    this.lastOnline = TypeUtil.getDate(userPublicDTO.public.lastOnline);
+    this.status = userPublicDTO.public.status;
   }
 
   public updateAvaUrl(): Promise<string> {

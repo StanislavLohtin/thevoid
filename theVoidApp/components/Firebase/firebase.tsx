@@ -11,7 +11,7 @@ export const auth = firebase.auth(FirebaseService.app);
 export const loginWithEmail = async (email, password) => {
   console.warn("loginWithEmail");
   await auth.signInWithEmailAndPassword(email, password);
-  UserService.getUser(auth.currentUser.uid);
+  UserService.fetchCurrentUser(auth.currentUser.uid);
 };
 
 export const registerWithEmail = async (email, password, username) => {
@@ -26,7 +26,7 @@ export const passwordReset = (email) => auth.sendPasswordResetEmail(email);
 
 auth.onAuthStateChanged(async function (user) {
   if (user) {
-    UserService.getUser(user.uid);
+    UserService.fetchCurrentUser(user.uid);
   } else {
     UserService.resetAll();
   }

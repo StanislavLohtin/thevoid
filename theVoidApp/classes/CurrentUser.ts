@@ -1,28 +1,38 @@
-import { CurrentUserDTO } from "./CurrentUserDTO";
+import { UserPrivateDTO } from "./UserPrivateDTO";
 import { UserPublic } from "./UserPublic";
 import { Chat } from "./Chat";
+import { FirebaseTime } from "./FirebaseTime";
+import { TypeUtil } from "../utils/TypeUtil";
+import { UserPublicDTO } from "./UserPublicDTO";
+
+export enum Permissions {
+  USER,
+  MODERATOR,
+  ADMIN,
+  SUPER_ADMIN,
+}
 
 export class CurrentUser extends UserPublic {
-  username: string;
   email: string;
   createdAt: Date;
-  lastOnline: Date;
-  status: string;
   chatIds?: string[];
   chats?: Chat[];
   isAdmin: boolean;
+  permissions: Permissions;
 
-  constructor(uid: string, userDTO: CurrentUserDTO, isAdmin: boolean) {
-    super(uid, userDTO.username, userDTO.avaUrl);
+  constructor(
+    uid: string,
+    userPublicDTO: UserPublicDTO,
+    userPrivateDTO: UserPrivateDTO
+  ) {
+    super(uid, userPublicDTO);
 
-    this.username = userDTO.username;
-    this.email = userDTO.email;
-    this.status = userDTO.status;
-    this.createdAt = new Date(Number(userDTO.createdAt));
-    this.lastOnline = new Date(Number(userDTO.lastOnline));
-    this.chatIds = userDTO.chatIds ? Object.values(userDTO.chatIds) : [];
+    this.email = userPrivateDTO.email;
+    this.createdAt = TypeUtil.getDate(userPrivateDTO.createdAt);
+    this.chatIds = userPrivateDTO.chats;
     this.chats = [];
-    this.isAdmin = isAdmin;
+    this.permissions = userPrivateDTO.permissions;
+    this.isAdmin = this.permissions >= Permissions.ADMIN;
 
     console.log("CurrentUser ", this);
   }

@@ -17,12 +17,12 @@ class _MessageService {
       return Promise.resolve(messageWithId);
     }
     return new Promise<Message>((resolve, reject) => {
-      FirebaseService.get(`chats/${chatId}/messages/recent/${id}`).then(
+      FirebaseService.get(`chats/${chatId}/messages/${id}`).then(
         (messageDto) => {
           if (this.getMessageById(id) !== undefined) {
             return;
           }
-          let newMessage = new Message(id, messageDto.val());
+          let newMessage = new Message(id, messageDto as MessageDTO);
           this.messages.add(newMessage);
           resolve(newMessage);
         },

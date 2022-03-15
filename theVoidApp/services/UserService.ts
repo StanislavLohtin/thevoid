@@ -1,9 +1,10 @@
 import { CurrentUser } from "../classes/CurrentUser";
-import { CurrentUserDTO } from "../classes/CurrentUserDTO";
+import { UserPrivateDTO } from "../classes/UserPrivateDTO";
 import FirebaseService from "./FirebaseService";
 import { UserPublic } from "../classes/UserPublic";
 import MessageService from "./MessageService";
 import { Message } from "../classes/Message";
+import { UserPublicDTO } from "../classes/UserPublicDTO";
 
 class _UserService {
   currentUser: CurrentUser;
@@ -12,8 +13,8 @@ class _UserService {
   currentUserPromiseReject: (string) => void;
 
   public createUser(uid: string, email: string, username: string) {
-    const now = Date.now().toString();
-    const newUser: CurrentUserDTO = {
+    /*const now = Date.now().toString();
+    const newUser: UserPrivateDTO = {
       email: email,
       username: username,
       createdAt: now,
@@ -30,20 +31,20 @@ class _UserService {
         console.warn("currentUserPromiseReject");
         this.currentUserPromiseReject(reason);
       }
-    );
+    );*/
   }
 
   private initCurrentUser(
     uid: string,
-    newUser: CurrentUserDTO,
-    isAdmin: boolean
+    userPublicDTO: UserPublicDTO,
+    userPrivateDTO: UserPrivateDTO
   ) {
-    this.currentUser = new CurrentUser(uid, newUser, isAdmin);
+    this.currentUser = new CurrentUser(uid, userPublicDTO, userPrivateDTO);
     this.users.push(this.currentUser);
-    if (isAdmin) {
-      this.loadAllUsers().then(() => {
-        this.currentUserPromiseResolve(this.currentUser);
-      });
+    if (this.currentUser.isAdmin) {
+      // this.loadAllUsers().then(() => {
+      this.currentUserPromiseResolve(this.currentUser);
+      // });
     } else {
       this.currentUserPromiseResolve(this.currentUser);
     }
@@ -70,13 +71,16 @@ class _UserService {
     });
   }
 
-  public async getUser(uid: string) {
-    const user = await FirebaseService.get("users", uid);
-    // const isAdmin = await FirebaseService.get("/permissions/" + uid);
+  public async fetchCurrentUser(uid: string) {
+    let [userPublic, userPrivate] = await Promise.all([
+      FirebaseService.get("users", uid),
+      FirebaseService.get("users", uid, "private", "data"),
+    ]);
+
     this.initCurrentUser(
       uid,
-      user as CurrentUserDTO,
-      true
+      userPublic as UserPublicDTO,
+      userPrivate as UserPrivateDTO
     );
   }
 
@@ -115,7 +119,7 @@ class _UserService {
   }
 
   private loadAllUsers(): Promise<boolean> {
-    return new Promise<boolean>(async (res, rej) => {
+    /*return new Promise<boolean>(async (res, rej) => {
       const allUsers = await FirebaseService.get("/users/");
       try {
         for (const [userId, userData] of Object.entries(allUsers.val())) {
@@ -131,7 +135,8 @@ class _UserService {
       } catch (e) {
         rej(false);
       }
-    });
+    });*/
+    return null;
   }
 }
 

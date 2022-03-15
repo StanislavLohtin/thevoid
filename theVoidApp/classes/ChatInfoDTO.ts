@@ -1,10 +1,14 @@
-import {UserPublicDTO} from "./UserPublicDTO";
+import {FirebaseTime} from "./FirebaseTime";
 
 export interface ChatInfoDTO {
-	type: string;
-	lastMessageId?: string;
-	description?: string;
-	title?: string;
-	chatImage?: string;
-	usersPublic: Map<string, UserPublicDTO>;
+  info: {
+    type: number;
+    lastMessageId?: string;
+    description?: string;
+    createdBy: string;
+    createdAt: FirebaseTime;
+    title?: string;
+    chatImage?: string;
+    userIds: string[];
+  };
 }

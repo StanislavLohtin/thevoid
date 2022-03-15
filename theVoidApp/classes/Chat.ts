@@ -13,6 +13,7 @@ export class Chat {
   id: string;
   type: number;
   lastMessageId: string;
+  otherUserIds: string[] = [];
   usersPublic: UserPublic[] = [];
   messages: Message[] = [];
   title?: string;
@@ -24,18 +25,18 @@ export class Chat {
   constructor(id: string, chatDTO: ChatInfoDTO) {
     const currentUser = UserService.currentUser;
     this.id = id;
-    this.type = Number(chatDTO.type);
-    this.lastMessageId = chatDTO.lastMessageId;
-    this.title = chatDTO.title;
-    this.description = chatDTO.description;
-    this.chatImage = chatDTO.chatImage;
-    for (const [userId, user] of Object.entries(chatDTO.usersPublic)) {
+    this.type = Number(chatDTO.info.type);
+    this.lastMessageId = chatDTO.info.lastMessageId;
+    this.title = chatDTO.info.title;
+    this.description = chatDTO.info.description;
+    this.chatImage = chatDTO.info.chatImage;
+    for (const userId of chatDTO.info.userIds) {
       if (userId === UserService.currentUser.id) {
         continue;
       }
-      let newUser = new UserPublic(userId, user.username, user.avaUrl);
-      this.usersPublic.push(newUser);
-      UserService.addUserToListIfNotIn(newUser);
+      // let newUser = new UserPublic(userId, user.username, user.avaUrl, user.);
+      this.otherUserIds.push(userId);
+      // UserService.addUserToListIfNotIn(newUser);
     }
 
     this.otherUser = this.usersPublic.find(
