@@ -71,14 +71,13 @@ class _UserService {
   }
 
   public async getUser(uid: string) {
-    return;
-    /*const user = await FirebaseService.get("/users/" + uid);
-    const isAdmin = await FirebaseService.get("/permissions/" + uid);
+    const user = await FirebaseService.get("users", uid);
+    // const isAdmin = await FirebaseService.get("/permissions/" + uid);
     this.initCurrentUser(
       uid,
-      user.val() as CurrentUserDTO,
-      isAdmin.val() === "mojet"
-    );*/
+      user as CurrentUserDTO,
+      true
+    );
   }
 
   public getById(id: string): UserPublic {

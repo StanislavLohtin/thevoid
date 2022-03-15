@@ -18,6 +18,7 @@ import IconButton from "../components/IconButton";
 import FirebaseService from "../services/FirebaseService";
 import {StackNavigationProp} from "@react-navigation/stack";
 import {RootStackParamList} from "../types";
+import { httpsCallable } from "firebase/functions";
 
 export default function ChatListScreen() {
   const [text, onChangeText] = useState("");
@@ -52,11 +53,17 @@ export default function ChatListScreen() {
     console.log("fetching3");
     // const result = await FetchUtil.fetch(BASE_URL, {method: "GET"});
 
-    const addMessage = FirebaseService.functions.httpsCallable("helloWorld");
-    const result = await addMessage({ text: "messageText" });
-    const sanitizedMessage = result.data.text;
-    console.log(sanitizedMessage);
-    return sanitizedMessage;
+    const addMessage = httpsCallable(FirebaseService.functions, "helloWorld");
+    // const result = await addMessage({ text: "messageText" });
+    // const sanitizedMessage = result.data.text;
+    addMessage({ text: "sending to server1" })
+        .then((result: any) => {
+          const data = result.data;
+          const sanitizedMessage = data.text;
+          console.log("received from server:");
+          console.log(sanitizedMessage);
+        });
+    // return sanitizedMessage;
   }
 
   return (

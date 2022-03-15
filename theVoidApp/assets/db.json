@@ -84,7 +84,7 @@
     },
     "chatId2": {
       "info": {
-        "chatImage": "",
+        "chatImageUrl": "",
         "description": "course1 descr",
         "lastMessageId": "-MmZezA3lqZs2SP9tGuZ",
         "title": "course1 title",
@@ -335,38 +335,27 @@
       "chatIds": { "chatId1": "chatId1" },
       "createdAt": "1633819307424",
       "email": "test2@test.com",
-      "lastOnline": "1633819307424",
-      "status": "Hello, I am using the Void!",
-      "username": "user2",
-      "permissions": {
-        "admin": "admin"
+      "public": {
+        "lastOnline": "1633819307424",
+        "status": "Hello, I am using the Void!",
+        "username": "user2"
       }
     },
     "Ojr2dobmnbMbpxEEf7y0Me8fae43": {
-      "ava": "binary1",
-      "status": "Hello, I am using the Void!",
-      "username": "user1",
-      "readonly": {
+      "private": {
         "createdAt": "1633819081808",
-        "lastOnline": "1633819081808",
-        "permissions": ["user"],
-        "chats": {
-          "chatId1": {
-            "lastMessage": "text",
-            "username": "user2",
-            "createdAt": "1633819081808",
-            "status": 1,
-            "ava": "binary",
-            "type": 0
-          },
-          "chatId2": {
-            "lastMessage": "text",
-            "username": "user2",
-            "createdAt": "1633819081808",
-            "status": 2,
-            "ava": "binary",
-            "type": 0
-        } }
+        "mindbodyId": "mindbodyId1",
+        "email": "test2@test.com",
+        "chats": [
+          "chatId1",
+          "chatId2"
+        ]
+      },
+      "public": {
+        "lastOnline": "1633819307424",
+        "status": "Hello, I am using the Void too!",
+        "username": "user1",
+        "avaUrl": "binary1"
       }
     }
   }

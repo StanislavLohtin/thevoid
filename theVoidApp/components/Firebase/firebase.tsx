@@ -6,10 +6,6 @@ import FirebaseService, { APP_NAME } from "../../services/FirebaseService";
 
 // Initialize Firebase App
 
-if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig, APP_NAME);
-}
-
 export const auth = firebase.auth(FirebaseService.app);
 
 export const loginWithEmail = async (email, password) => {
