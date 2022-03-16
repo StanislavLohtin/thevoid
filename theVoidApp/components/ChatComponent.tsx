@@ -9,10 +9,9 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { Chat, ChatType } from "../classes/Chat";
 import { useEffect } from "react";
-import ChatService from "../services/ChatService";
 import { useState } from "react";
-import {RootStackParamList} from "../types";
-import {StackNavigationProp} from "@react-navigation/stack";
+import { RootStackParamList } from "../types";
+import { StackNavigationProp } from "@react-navigation/stack";
 
 type ChatProps = TextProps & {
   chat: Chat;
@@ -25,7 +24,7 @@ export function ChatComponent(props: ChatProps) {
   const otherUser = chat.otherUser;
 
   useEffect(() => {
-    ChatService.watchLastMessageOfAChat(chat.id, setLastMessage, navigation);
+    // ChatService.watchLastMessageOfAChat(chat.id, setLastMessage, navigation);
   });
 
   function onChatClick() {

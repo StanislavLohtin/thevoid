@@ -84,6 +84,17 @@ class _UserService {
     );
   }
 
+  public async fetchUser(uid: string): Promise<UserPublic> {
+    const userById = this.getById(uid);
+    if (userById !== null) {
+      return Promise.resolve(userById);
+    }
+    let userPublic = await FirebaseService.get("users", uid);
+    const newUser = new UserPublic(uid, userPublic as UserPublicDTO);
+    this.users.push(newUser);
+    return newUser;
+  }
+
   public getById(id: string): UserPublic {
     for (let user of this.users) {
       if (user.id === id) {

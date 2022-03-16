@@ -14,7 +14,7 @@ export class Chat {
   type: number;
   lastMessageId: string;
   otherUserIds: string[] = [];
-  usersPublic: UserPublic[] = [];
+  otherUsers: UserPublic[] = [];
   messages: Message[] = [];
   title?: string;
   description?: string;
@@ -38,10 +38,6 @@ export class Chat {
       this.otherUserIds.push(userId);
       // UserService.addUserToListIfNotIn(newUser);
     }
-
-    this.otherUser = this.usersPublic.find(
-      (user) => user.id !== currentUser.id
-    );
 
     console.log("Creating chat: ", this.id);
   }

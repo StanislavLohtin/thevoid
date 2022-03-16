@@ -32,15 +32,39 @@ class _ChatService {
           (chatDto) => {
             let chat = new Chat(chatId, chatDto as ChatInfoDTO);
             user.chats.push(chat);
-            MessageService.fetchMessageById(chatId, chat.lastMessageId).then(
+            const messagePromise = MessageService.fetchMessageById(
+              chatId,
+              chat.lastMessageId
+            );
+            messagePromise.then(
               (message) => {
                 chat.lastMessage = message;
-                res(message);
               },
               (reason) => {
                 rej(reason);
               }
             );
+            let firstUserPromise;
+            for (const otherUserId of chat.otherUserIds) {
+              const fetchUserPromise = UserService.fetchUser(otherUserId);
+              if (!firstUserPromise) {
+                firstUserPromise = fetchUserPromise;
+              }
+              fetchUserPromise.then(
+                (newUser) => {
+                  chat.otherUsers.push(newUser);
+                  if (!chat.otherUser) {
+                    chat.otherUser = newUser;
+                  }
+                },
+                (reason) => {
+                  rej(reason);
+                }
+              );
+            }
+            Promise.all([messagePromise, firstUserPromise]).then(() => {
+              res(true);
+            });
           },
           (reason) => {
             console.warn(reason);
@@ -90,12 +114,13 @@ class _ChatService {
     );
   }
 
-  async createChat(chatInfo: ChatInfoDTO): Promise<boolean> {
-    const currentUserInChat = chatInfo.usersPublic.get(
+  async createChat(chatInfoDTO: ChatInfoDTO): Promise<boolean> {
+    return null;
+    /*const currentUserInChat = chatInfoDTO.info.userIds.get(
       UserService.currentUser.id
     );
     if (currentUserInChat) {
-      chatInfo.usersPublic = chatInfo.usersPublic.set(
+      chatInfoDTO.info.userIds = chatInfoDTO.info.userIds.set(
         UserService.currentUser.id,
         {
           avaUrl: currentUserInChat.avaUrl,
@@ -105,11 +130,11 @@ class _ChatService {
     }
 
     const usersPublicObjectInsteadOfMap = {};
-    for (const [userId, user] of chatInfo.usersPublic) {
+    for (const [userId, user] of chatInfoDTO.usersPublic) {
       usersPublicObjectInsteadOfMap[userId] = user;
     }
 
-    const chatInfoDTOUpload: ChatInfoDTOUpload = { ...chatInfo };
+    const chatInfoDTOUpload: ChatInfoDTOUpload = { ...chatInfoDTO };
     chatInfoDTOUpload.usersPublic = usersPublicObjectInsteadOfMap;
 
     const id = await FirebaseService.push(`chats/`, {
@@ -121,14 +146,14 @@ class _ChatService {
       return false;
     }
     if (currentUserInChat) {
-      UserService.currentUser.chats.push(new Chat(id.key, chatInfo));
+      UserService.currentUser.chats.push(new Chat(id.key, chatInfoDTO));
     }
 
-    for (const userId of chatInfo.usersPublic.keys()) {
+    for (const userId of chatInfoDTO.usersPublic.keys()) {
       await FirebaseService.set(`users/${userId}/chatIds/${id.key}`, id.key);
     }
 
-    return true;
+    return true;*/
   }
 
   static sortByDate(chats: Chat[]): Chat[] {
