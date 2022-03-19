@@ -86,12 +86,12 @@ class _FlowService {
 
   private connectToSocket(chatId: string, url: string): void {
     const webSocket = new WebSocket(url);
-    webSocket.onopen = (e) => {
+    /*webSocket.onopen = (e) => {
       this.onOpen(e, chatId);
-    };
-    webSocket.onmessage = (e) => {
+    };*/
+    /*webSocket.onmessage = (e) => {
       this.onMessage(e, chatId);
-    };
+    };*/
     webSocket.onerror = this.onError;
     webSocket.onclose = (e) => {
       this.onClose(e, chatId);
@@ -102,6 +102,7 @@ class _FlowService {
   private onOpen(event: any, chatId: string): void {
     this.startPingPong(chatId);
   }
+/*
 
   private async onMessage(event: any, chatId: string): Promise<void> {
     const body: FlowIncomingMessage = JSON.parse(event.data);
@@ -137,6 +138,7 @@ class _FlowService {
       }
     }
   }
+*/
 
   private onError(event: any): void {
     console.warn(JSON.stringify(event.data));
@@ -162,5 +164,5 @@ class _FlowService {
   }
 }
 
-const FlowService = new _FlowService();
-export default FlowService;
+// const FlowService = new _FlowService();
+// export default FlowService;

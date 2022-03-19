@@ -1,5 +1,5 @@
 import FirebaseService from "./FirebaseService";
-import { Message } from "../classes/Message";
+import {Message, MessageStatus} from "../classes/Message";
 import { MessageDTO } from "../classes/MessageDTO";
 import { Chat } from "../classes/Chat";
 import UserService from "./UserService";
@@ -36,14 +36,15 @@ class _MessageService {
 
   public fetchRecentMessagesFromChat(chat: Chat, callback: () => void): void {
     FirebaseService.startOnChangeListener(
-      `chats/${chat.id}/messages/recent`,
-      (data) => {
-        if (!data) {
+      `chats/${chat.id}/messages/`,
+      (qdsList) => {
+        console.log(qdsList);
+        if (!qdsList) {
           callback();
           return;
         }
-        for (const [key, value] of Object.entries(data)) {
-          let newMessage = new Message(key, value as MessageDTO);
+        for (const qds of qdsList) {
+          let newMessage = new Message(qds.id, qds.data() as MessageDTO);
           chat.addMessageIfNotInList(newMessage);
           this.addMessageIfNotInList(newMessage);
         }
@@ -56,26 +57,24 @@ class _MessageService {
 
   public buildMessage(chat: Chat, text: string): Message {
     return new Message("pending", {
-      createdAt: Date.now().toString(),
+      createdAt: null, // Date.now().toString(),
       content: text,
       sender: UserService.currentUser.id,
-      status: "0",
-      type: "0",
+      status: MessageStatus.CREATED,
+      type: 0,
     });
   }
 
-  public sendMessage(chat: Chat, message: Message): Promise<Message> {
-    message.messageDTO.status = "1";
-    return FirebaseService.push(
-      `chats/${chat.id}/messages/recent`,
+  public sendMessage(chat: Chat, message: Message) {
+    return FirebaseService.add(
+      `chats/${chat.id}/messages/`,
       message.messageDTO
-    ).then((id) => {
-      if (!id.key) {
+    ).then((doc) => {
+      if (!doc.id) {
         throw new Error("create failed");
       }
-      message.id = id.key;
-      _MessageService.updateLastMessageId(chat.id, message.id);
-      return message;
+      message.id = doc.id;
+      // _MessageService.updateLastMessageId(chat.id, message.id);
     });
   }
 
@@ -101,7 +100,9 @@ class _MessageService {
   }
 
   private addMessageIfNotInList(newMessage: Message): void {
-    if ([...this.messages].find((message) => message.id === newMessage.id)) {
+    const foundMessage = [...this.messages].find((message) => message.id === newMessage.id);
+    if (foundMessage) {
+      foundMessage.status = newMessage.status;
       return;
     }
     this.messages.add(newMessage);

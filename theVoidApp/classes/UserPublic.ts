@@ -11,10 +11,10 @@ export class UserPublic {
 
   constructor(uid: string, userPublicDTO: UserPublicDTO) {
     this.id = uid;
-    this.username = userPublicDTO.public.username;
-    this.avaUrl = userPublicDTO.public.avaUrl;
-    this.lastOnline = TypeUtil.getDate(userPublicDTO.public.lastOnline);
-    this.status = userPublicDTO.public.status;
+    this.username = userPublicDTO.username;
+    this.avaUrl = userPublicDTO.avaUrl;
+    this.lastOnline = TypeUtil.getDate(userPublicDTO.lastOnline);
+    this.status = userPublicDTO.status;
   }
 
   public updateAvaUrl(): Promise<string> {

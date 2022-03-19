@@ -6,6 +6,8 @@
 * clear cache: `rm -rf /tmp/metro-*`
 * fix dependencies `expo doctor --fix-dependencies`
 
+### deploying functions: 
+`firebase deploy --only functions`
 
 <!-- The core Firebase JS SDK is always required and must be listed first -->
 <script src="/__/firebase/8.10.0/firebase-app.js"></script>
@@ -45,9 +47,9 @@ Need help? Take a look at the Hosting docs
 * Chat
   - __getChat__ /chats/{chatId} [authId in chat.users]
   - __getMessages__ /chats/{chatId}/messages last 20 [authId in chat.users]
-  - __sendMessage__ callable function
+  - __sendMessage__ /chats/{chatId}/messages triggers function
 * CreateChat
-  - __createChat__ callable function
+  - __createChat__  /chats/ triggers function
 * UserProfile
   - __getMindbodyInfo__ callable function
 * Explore

@@ -21,6 +21,7 @@ import {RootStackParamList} from "../types";
 import { httpsCallable } from "firebase/functions";
 
 export default function ChatListScreen() {
+  console.log("entering ChatListScreen")
   const [text, onChangeText] = useState("");
   const [chats, setChats] = useState([]);
   const [currentUser, setCurrentUser] = useState(null);
@@ -46,11 +47,11 @@ export default function ChatListScreen() {
   }
 
   async function onCreateChatPress() {
-    const BASE_URL =
+    /*const BASE_URL =
       // @ts-ignore
       // (window.chrome ? "https://cors-anywhere.herokuapp.com/" : "") +
       "https://us-central1-the-void-f1bcc.cloudfunctions.net/helloWorld";
-    console.log("fetching3");
+    console.log("fetching3");*/
     // const result = await FetchUtil.fetch(BASE_URL, {method: "GET"});
 
     const addMessage = httpsCallable(FirebaseService.functions, "helloWorld");
@@ -63,7 +64,6 @@ export default function ChatListScreen() {
           console.log("received from server:");
           console.log(sanitizedMessage);
         });
-    // return sanitizedMessage;
   }
 
   return (
@@ -89,7 +89,7 @@ export default function ChatListScreen() {
                   }
                 />
               </TouchableWithoutFeedback>
-              {!UserService.currentUser?.isAdmin && (
+              {UserService.currentUser?.isAdmin && (
                 <IconButton
                   style={styles.createChatButton}
                   iconName="square-edit-outline"

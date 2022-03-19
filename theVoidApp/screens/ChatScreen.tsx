@@ -15,12 +15,12 @@ import MessageService from "../services/MessageService";
 import IconButton from "../components/IconButton";
 import { darkerPurple } from "../constants/Colors";
 import ChatService from "../services/ChatService";
-import FlowService from "../services/FlowService";
-import { ChatType } from "../classes/Chat";
 import {StackNavigationProp} from "@react-navigation/stack";
 import {RootStackParamList} from "../types";
+import FirebaseService from "../services/FirebaseService";
 
 export default function ChatScreen() {
+  console.log("entering ChatScreen")
   const [text, setText] = React.useState("");
   const route = useRoute();
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
@@ -47,6 +47,7 @@ export default function ChatScreen() {
     fetchMessages();
     return () => {
       ChatService.currentChatId = undefined;
+      FirebaseService.stopOnChangeListener();
     };
   }, []);
 
@@ -55,9 +56,9 @@ export default function ChatScreen() {
     // chat.messages.push(newMessage);
     // setMessages(chat.messages);
     setText("");
-    if (chat.type === ChatType.COURSE) {
+    /*if (chat.type === ChatType.COURSE) {
       FlowService.sendMessage(chat, text);
-    }
+    }*/
     MessageService.sendMessage(chat, newMessage);
   }
 

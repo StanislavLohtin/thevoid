@@ -2,6 +2,7 @@ import { MessageDTO } from "./MessageDTO";
 import UserService from "../services/UserService";
 import { UserPublic } from "./UserPublic";
 import { darkerPurple } from "../constants/Colors";
+import {TypeUtil} from "../utils/TypeUtil";
 
 export enum MessageType {
   TEXT,
@@ -23,6 +24,7 @@ export class Message {
   content: string;
   type: number;
   createdAt: Date;
+  senderId: string;
   sender: UserPublic;
   status: number;
   options?: string[] = [];
@@ -35,8 +37,9 @@ export class Message {
     this.messageDTO = messageDTO;
     this.content = messageDTO.content;
     this.type = Number(messageDTO.type);
-    this.createdAt = new Date(Number(messageDTO.createdAt));
-    this.sender = UserService.getById(messageDTO.sender);
+    this.createdAt = TypeUtil.getDate(messageDTO.createdAt);
+    this.senderId = messageDTO.sender;
+    this.sender = UserService.getById(this.senderId);
     this.status = Number(messageDTO.status);
     if (messageDTO.options) {
       this.options = messageDTO.options.split(" | ");
@@ -51,6 +54,9 @@ export class Message {
   }
 
   sentByCurrentUser(): boolean {
+    if (!this.sender) {
+      this.sender = UserService.getById(this.senderId);
+    }
     return this.sender.id === UserService.currentUser.id;
   }
 

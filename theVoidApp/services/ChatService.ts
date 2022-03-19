@@ -6,7 +6,6 @@ import MessageService from "./MessageService";
 import UserService from "./UserService";
 import { Alert } from "react-native";
 import { Message } from "../classes/Message";
-import { ChatInfoDTOUpload } from "../classes/ChatInfoDTOUpload";
 
 class _ChatService {
   private _currentChatId: string;
@@ -28,49 +27,7 @@ class _ChatService {
 
     for (const chatId of user.chatIds) {
       const newPromise = new Promise((res, rej) => {
-        FirebaseService.get(`chats/${chatId}`).then(
-          (chatDto) => {
-            let chat = new Chat(chatId, chatDto as ChatInfoDTO);
-            user.chats.push(chat);
-            const messagePromise = MessageService.fetchMessageById(
-              chatId,
-              chat.lastMessageId
-            );
-            messagePromise.then(
-              (message) => {
-                chat.lastMessage = message;
-              },
-              (reason) => {
-                rej(reason);
-              }
-            );
-            let firstUserPromise;
-            for (const otherUserId of chat.otherUserIds) {
-              const fetchUserPromise = UserService.fetchUser(otherUserId);
-              if (!firstUserPromise) {
-                firstUserPromise = fetchUserPromise;
-              }
-              fetchUserPromise.then(
-                (newUser) => {
-                  chat.otherUsers.push(newUser);
-                  if (!chat.otherUser) {
-                    chat.otherUser = newUser;
-                  }
-                },
-                (reason) => {
-                  rej(reason);
-                }
-              );
-            }
-            Promise.all([messagePromise, firstUserPromise]).then(() => {
-              res(true);
-            });
-          },
-          (reason) => {
-            console.warn(reason);
-            rej(reason);
-          }
-        );
+        this.fetchChatInfo(chatId, user, res, rej);
       });
       promises.push(newPromise);
     }
@@ -81,38 +38,89 @@ class _ChatService {
     });
   }
 
-  watchLastMessageOfAChat(
+  private fetchChatInfo(
     chatId: string,
-    setLastMessage: (Message) => void,
-    navigation
-  ) {
-    if (this.watchingChats.includes(chatId)) {
-      return;
-    }
-    this.watchingChats.push(chatId);
-    const chat = UserService.currentUser.getChatById(chatId);
-    FirebaseService.startOnChangeListener(
-      `chats/${chatId}/info/lastMessageId`,
-      (newMessageId) => {
-        if (!newMessageId || chat.lastMessageId === newMessageId) {
-          return;
-        }
-        console.log("newMessageId", newMessageId);
-        MessageService.fetchMessageById(chatId, newMessageId).then(
+    user: CurrentUser,
+    res: (value: unknown) => void,
+    rej: (reason?: any) => void
+  ): void {
+    FirebaseService.get(`chats/${chatId}`).then(
+      (chatDto) => {
+        let chat = new Chat(chatId, chatDto as ChatInfoDTO);
+        user.chats.push(chat);
+        const messagePromise = MessageService.fetchMessageById(
+          chatId,
+          chat.lastMessageId
+        );
+        messagePromise.then(
           (message) => {
-            let newMessage = UserService.updateLastMessageOfChat(
-              chatId,
-              message
-            );
-            setLastMessage(newMessage);
-            if (this.currentChatId !== chatId) {
-              this.alertNewMessage(newMessage, chatId, navigation);
-            }
+            chat.lastMessage = message;
+          },
+          (reason) => {
+            rej(reason);
           }
         );
+        let firstUserPromise;
+        for (const otherUserId of chat.otherUserIds) {
+          const fetchUserPromise = UserService.fetchUser(otherUserId);
+          if (!firstUserPromise) {
+            firstUserPromise = fetchUserPromise;
+          }
+          fetchUserPromise.then(
+            (newUser) => {
+              chat.otherUsers.push(newUser);
+              if (!chat.otherUser) {
+                chat.otherUser = newUser;
+              }
+            },
+            (reason) => {
+              rej(reason);
+            }
+          );
+        }
+        Promise.all([messagePromise, firstUserPromise]).then(() => {
+          res(true);
+        });
+      },
+      (reason) => {
+        console.warn(reason);
+        rej(reason);
       }
     );
   }
+
+  /*watchLastMessageOfAChat(
+        chatId: string,
+        setLastMessage: (Message) => void,
+        navigation
+      ) {
+        if (this.watchingChats.includes(chatId)) {
+          return;
+        }
+        this.watchingChats.push(chatId);
+        const chat = UserService.currentUser.getChatById(chatId);
+        FirebaseService.startOnChangeListener(
+          `chats/${chatId}/info/lastMessageId`,
+          (newMessageId) => {
+            if (!newMessageId || chat.lastMessageId === newMessageId) {
+              return;
+            }
+            console.log("newMessageId", newMessageId);
+            MessageService.fetchMessageById(chatId, newMessageId).then(
+              (message) => {
+                let newMessage = UserService.updateLastMessageOfChat(
+                  chatId,
+                  message
+                );
+                setLastMessage(newMessage);
+                if (this.currentChatId !== chatId) {
+                  this.alertNewMessage(newMessage, chatId, navigation);
+                }
+              }
+            );
+          }
+        );
+      }*/
 
   async createChat(chatInfoDTO: ChatInfoDTO): Promise<boolean> {
     return null;
