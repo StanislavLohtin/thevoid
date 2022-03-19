@@ -48,5 +48,6 @@ export class Chat {
       return;
     }
     this.messages.push(newMessage);
+    this.lastMessage = newMessage;
   }
 }

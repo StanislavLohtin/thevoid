@@ -6,7 +6,7 @@ import {
   TouchableWithoutFeedback,
   View,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useIsFocused } from "@react-navigation/native";
 import { Chat, ChatType } from "../classes/Chat";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -23,9 +23,12 @@ export function ChatComponent(props: ChatProps) {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const otherUser = chat.otherUser;
 
+  const isFocused = useIsFocused();
+
   useEffect(() => {
-    // ChatService.watchLastMessageOfAChat(chat.id, setLastMessage, navigation);
-  });
+    console.log("isFocused!", chat);
+    setLastMessage(chat.lastMessage);
+  }, [isFocused]);
 
   function onChatClick() {
     navigation.navigate("ChatScreen", { id: chat.id });
