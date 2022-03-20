@@ -42,10 +42,12 @@ export default function UserProfileScreen() {
       setVisits(clientVisits);
     });
 
-    MindbodyService.getClients().then((clientVisits) => {
+    MindbodyService.getClients();.then((clientVisits) => {
       // @ts-ignore
       window.clients = clientVisits;
     });*/
+    console.log("calling getMindbodyInfo!!");
+    MindbodyService.getMindbodyInfo();
   }, []);
 
   function onLogoutPress() {

@@ -2,7 +2,13 @@ import { FetchUtil } from "../utils/FetchUtil";
 import { FormulaNotesDTO } from "../classes/mindbody/FormulaNotesDTO";
 import { ContractDTO } from "../classes/mindbody/ContractDTO";
 import { PurchaseDTO } from "../classes/mindbody/PurchaseDTO";
-import {VisitDTO} from "../classes/mindbody/VisitDTO";
+import { VisitDTO } from "../classes/mindbody/VisitDTO";
+import {
+  getFunctions,
+  connectFunctionsEmulator,
+  httpsCallable,
+} from "firebase/functions";
+import FirebaseService from "./FirebaseService";
 
 class _MindbodyService {
   private BASE_URL =
@@ -14,9 +20,21 @@ class _MindbodyService {
   private userId = "100015644";
   private token: string;
   private options: RequestInit;
+  private readonly functions;
 
   constructor() {
-    this.getToken();
+    // this.getToken();
+
+    this.functions = getFunctions(FirebaseService.app);
+    connectFunctionsEmulator(this.functions, "localhost", 5001);
+  }
+
+  getMindbodyInfo() {
+    const addMessage = httpsCallable(this.functions, "getMindbodyInfo");
+    addMessage({ text: "sending to server!!" }).then((result: any) => {
+      const data = result.data;
+      console.log("received from server:", data);
+    });
   }
 
   getClients(): Promise<object> {
