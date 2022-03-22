@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { StyleSheet } from 'react-native';
 import * as Yup from 'yup';
 
-import Colors from '../utils/colors';
 import SafeView from '../components/SafeView';
 import Form from '../components/Forms/Form';
 import FormField from '../components/Forms/FormField';
@@ -11,11 +10,15 @@ import IconButton from '../components/IconButton';
 import FormErrorMessage from '../components/Forms/FormErrorMessage';
 import { registerWithEmail } from '../components/Firebase/firebase';
 import useStatusBar from '../hooks/useStatusBar';
+import Colors from "../constants/Colors";
 
 const validationSchema = Yup.object().shape({
-  name: Yup.string()
+  firstname: Yup.string()
     .required()
-    .label('Name'),
+    .label('First Name'),
+  lastname: Yup.string()
+    .required()
+    .label('Last Name'),
   email: Yup.string()
     .required('Please enter a valid email')
     .email()
@@ -61,9 +64,9 @@ export default function RegisterScreen({ navigation }) {
   }
 
   async function handleOnSignUp(values, actions?) {
-    const { email, password, name } = values;
+    const { email, password, firstname, lastname } = values;
     try {
-      await registerWithEmail(email, password, name);
+      await registerWithEmail(email, password, firstname, lastname);
     } catch (error) {
       setRegisterError(error.message);
     }
@@ -73,7 +76,8 @@ export default function RegisterScreen({ navigation }) {
     <SafeView style={styles.container}>
       <Form
         initialValues={{
-          name: '',
+          firstname: '',
+          lastname: '',
           email: '',
           password: '',
           confirmPassword: ''
@@ -82,9 +86,15 @@ export default function RegisterScreen({ navigation }) {
         onSubmit={values => handleOnSignUp(values)}
       >
         <FormField
-          name="name"
+          name="firstname"
           leftIcon="account"
-          placeholder="Enter name"
+          placeholder="First name"
+          autoFocus={true}
+        />
+        <FormField
+          name="lastname"
+          leftIcon="account"
+          placeholder="Last name"
           autoFocus={true}
         />
         <FormField
@@ -123,7 +133,7 @@ export default function RegisterScreen({ navigation }) {
       <IconButton
         style={styles.backButton}
         iconName="keyboard-backspace"
-        color={Colors.white}
+        color={"white"}
         size={30}
         onPress={() => navigation.goBack()}
       />
@@ -134,7 +144,7 @@ export default function RegisterScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     padding: 15,
-    backgroundColor: Colors.mediumGrey
+    backgroundColor: Colors.dark.mediumGrey
   },
   backButton: {
     justifyContent: 'center',

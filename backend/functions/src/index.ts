@@ -58,15 +58,72 @@ export const onMessageAdd = functions.firestore
     });
   });
 
+export const checkMindbodyAndRegister = functions.https.onRequest(
+  async (req, response) => {
+    const data = req.body.data;
+    if (!mindbodyToken) {
+      await getToken();
+    }
+    try {
+      const mindbodyId = await getClientDuplicates(
+        data.email,
+        data.password,
+        data.firstname,
+        data.lastname
+      );
+      response.send({data: mindbodyId});
+    } catch (e) {
+      response.status(400).send({error: e.toString()});
+    }
+  }
+);
+
 export const getMindbodyInfo = functions.https.onRequest(async (req, res) => {
-  console.log("called getMindbodyInfo 3");
-  functions.logger.info("Calling getMindbodyInfo3!");
-  return getToken().then(() => {
-    res.send({data: "mindbodyToken:" + mindbodyToken});
-    functions.logger.info("found token:", mindbodyToken);
-    functions.logger.info("new mindbodyOptions:", mindbodyOptions);
-  });
+  console.log("called getMindbodyInfo 4");
+  if (!mindbodyToken) {
+    await getToken();
+  }
+  /* const clients = await getClients();
+  res.send({data: clients});*/
 });
+
+/* const getClients = (): Promise<unknown> => {
+  return fetchFn(
+    `${BASE_URL}/client/clients?limit=200&searchText=Vishnevy`,
+    mindbodyOptions
+  ).then((responseBody: {AccessToken: string}) => {
+    mindbodyToken = responseBody.AccessToken;
+    mindbodyOptions = {
+      method: "GET",
+      headers: {
+        "Api-Key": API_KEY,
+        authorization: mindbodyToken,
+        SiteId: SITE_ID,
+      },
+    };
+  });
+};*/
+
+const getClientDuplicates = async (
+  email: string,
+  password: string,
+  firstname: string,
+  lastname: string
+): Promise<string> => {
+  console.log("inside getClientDuplicates:");
+  const responseBody = await fetchFn(
+    // eslint-disable-next-line max-len
+    `${BASE_URL}/client/clientduplicates?FirstName=${firstname}&LastName=${lastname}&Email=${email}&`,
+    mindbodyOptions
+  );
+  console.log("clientduplicates response:", responseBody);
+  if (responseBody.ClientDuplicates.length !== 1) {
+    throw new Error(
+      "User with this credentials is not registered on the mindbody."
+    );
+  }
+  return responseBody.ClientDuplicates[0].Id;
+};
 
 const getToken = (): Promise<unknown> => {
   const options: RequestInit = {
@@ -103,7 +160,6 @@ const fetchFn = (
   // eslint-disable-next-line no-async-promise-executor
   return new Promise(async (res, rej) => {
     try {
-      console.log("fetch inside!:", url, options);
       const response = await fetch(url, options);
       if (!response.ok) {
         console.log("ERROR! :", response);

@@ -9,6 +9,9 @@
 ### deploying functions: 
 `firebase deploy --only functions`
 
+### starting functions emulator: 
+`firebase emulators:start --only functions`
+
 <!-- The core Firebase JS SDK is always required and must be listed first -->
 <script src="/__/firebase/8.10.0/firebase-app.js"></script>
 

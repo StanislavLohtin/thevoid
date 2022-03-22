@@ -2,7 +2,7 @@ import React from 'react';
 import { View, StyleSheet, Text, Image } from 'react-native';
 
 import AppButton from '../components/AppButton';
-import Colors from '../utils/colors';
+import {defBg, defPurple} from '../constants/Colors';
 import useStatusBar from '../hooks/useStatusBar';
 
 export default function WelcomeScreen({ navigation }) {
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-end',
     alignItems: 'center',
-    backgroundColor: Colors.mediumGrey
+    backgroundColor: defBg
   },
   logoContainer: {
     position: 'absolute',
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: '600',
     paddingVertical: 20,
-    color: Colors.primary
+    color: defPurple
   },
   buttonContainer: {
     padding: 20,

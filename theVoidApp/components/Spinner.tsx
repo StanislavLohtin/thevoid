@@ -2,12 +2,12 @@ import React from 'react';
 import { ActivityIndicator, StyleSheet } from 'react-native';
 
 import SafeView from './SafeView';
-import Colors from '../utils/colors';
+import {darkerPurple} from "../constants/Colors";
 
 export default function Spinner() {
   return (
     <SafeView style={styles.container}>
-      <ActivityIndicator size="large" color={Colors.secondary} />
+      <ActivityIndicator size="large" color={darkerPurple} />
     </SafeView>
   );
 }

@@ -35,15 +35,15 @@ export default function CreateChatScreen() {
         username: user.username,
       });
     }
-    const success = await ChatService.createChat({
+    /*const success = await ChatService.createChat({
       title: title,
       lastMessageId: "",
-      type: "0",
+      type: 0,
       usersPublic: usersPublicDTOs,
     });
     if (success) {
       navigation.navigate("ChatListScreen");
-    }
+    }*/
   }
 
   function onTouchUser(user: UserPublic) {

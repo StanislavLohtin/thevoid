@@ -5,6 +5,8 @@ import { UserPublic } from "../classes/UserPublic";
 import MessageService from "./MessageService";
 import { Message } from "../classes/Message";
 import { UserPublicDTO } from "../classes/UserPublicDTO";
+import { httpsCallable } from "firebase/functions";
+import {loginWithEmail} from "../components/Firebase/firebase";
 
 class _UserService {
   currentUser: CurrentUser;
@@ -12,26 +14,21 @@ class _UserService {
   currentUserPromiseResolve: (CurrentUser) => void;
   currentUserPromiseReject: (string) => void;
 
-  public createUser(uid: string, email: string, username: string) {
-    /*const now = Date.now().toString();
-    const newUser: UserPrivateDTO = {
-      email: email,
-      username: username,
-      createdAt: now,
-      lastOnline: now,
-      status: "Hello, I am using the Void!",
-      chatIds: [],
-    };
-
-    FirebaseService.set("/users/" + uid, newUser).then(
-      () => {
-        this.initCurrentUser(uid, newUser, false);
-      },
-      (reason) => {
-        console.warn("currentUserPromiseReject");
-        this.currentUserPromiseReject(reason);
-      }
-    );*/
+  public checkMindbodyAndRegister(
+    email: string,
+    password: string,
+    firstname: string,
+    lastname: string
+  ) {
+    const addMessage = httpsCallable(
+      FirebaseService.functions,
+      "checkMindbodyAndRegister"
+    );
+    addMessage({ email, password, firstname, lastname }).then((result: any) => {
+      const data = result.data;
+      console.log("checkMindbodyAndRegister received from server:", data);
+      loginWithEmail(email, password);
+    });
   }
 
   private initCurrentUser(
