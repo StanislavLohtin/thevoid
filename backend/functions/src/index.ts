@@ -58,6 +58,32 @@ export const onMessageAdd = functions.firestore
     });
   });
 
+const createUser = (
+  email: string,
+  password: string,
+  firstname: string,
+  lastname: string
+): Promise<string> => {
+  return admin
+    .auth()
+    .createUser({
+      email: email,
+      emailVerified: false,
+      password: password,
+      displayName: `${firstname} ${lastname}`,
+      disabled: false,
+    })
+    .then((userRecord) => {
+      // See the UserRecord reference doc for the contents of userRecord.
+      console.log("Successfully created new user:", userRecord.uid);
+      return userRecord.uid;
+    })
+    .catch((error) => {
+      console.log("Error creating new user:", error);
+      return error.toString();
+    });
+};
+
 export const checkMindbodyAndRegister = functions.https.onRequest(
   async (req, response) => {
     const data = req.body.data;
@@ -71,6 +97,16 @@ export const checkMindbodyAndRegister = functions.https.onRequest(
         data.firstname,
         data.lastname
       );
+      const uid = await createUser(
+        data.email,
+        data.password,
+        data.firstname,
+        data.lastname
+      );
+      await admin
+        .firestore()
+        .doc(`/users/${uid}`)
+        .update("mindbodyId", mindbodyId);
       response.send({data: mindbodyId});
     } catch (e) {
       response.status(400).send({error: e.toString()});

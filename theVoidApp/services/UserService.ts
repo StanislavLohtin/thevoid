@@ -6,7 +6,8 @@ import MessageService from "./MessageService";
 import { Message } from "../classes/Message";
 import { UserPublicDTO } from "../classes/UserPublicDTO";
 import { httpsCallable } from "firebase/functions";
-import {loginWithEmail} from "../components/Firebase/firebase";
+import { loginWithEmail } from "../components/Firebase/firebase";
+import { Alert } from "react-native";
 
 class _UserService {
   currentUser: CurrentUser;
@@ -24,11 +25,22 @@ class _UserService {
       FirebaseService.functions,
       "checkMindbodyAndRegister"
     );
-    addMessage({ email, password, firstname, lastname }).then((result: any) => {
-      const data = result.data;
-      console.log("checkMindbodyAndRegister received from server:", data);
-      loginWithEmail(email, password);
-    });
+    addMessage({ email, password, firstname, lastname }).then(
+      (result: any) => {
+        const data = result.data;
+        console.log("checkMindbodyAndRegister received from server:", data);
+        loginWithEmail(email, password);
+      },
+      (e: { error: string }) => {
+        Alert.alert("Error", e.error || e.toString(), [
+          {
+            text: "Ok",
+            onPress: () => console.log("Ok Pressed"),
+            style: "cancel",
+          },
+        ]);
+      }
+    );
   }
 
   private initCurrentUser(

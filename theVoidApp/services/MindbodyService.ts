@@ -15,10 +15,7 @@ class _MindbodyService {
     // @ts-ignore
     (window.chrome ? "https://cors-anywhere.herokuapp.com/" : "") +
     "https://api.mindbodyonline.com/public/v6";
-  private API_KEY = "91504ccb30ab411d95533a3535a18d5b";
-  private SITE_ID = "-99";
   private userId = "100015644";
-  private token: string;
   private options: RequestInit;
   private readonly functions;
 
@@ -26,7 +23,7 @@ class _MindbodyService {
     // this.getToken();
 
     this.functions = getFunctions(FirebaseService.app);
-    connectFunctionsEmulator(this.functions, "localhost", 5001);
+    // connectFunctionsEmulator(this.functions, "localhost", 5001);
   }
 
   getMindbodyInfo() {
@@ -34,20 +31,6 @@ class _MindbodyService {
     addMessage({ text: "sending to server!!" }).then((result: any) => {
       const data = result.data;
       console.log("received from server:", data);
-    });
-  }
-
-  getClients(): Promise<object> {
-    return new Promise(async (res, rej) => {
-      try {
-        const responseBody: { Clients: [] } = await FetchUtil.fetch(
-          `${this.BASE_URL}/client/clients?limit=200&searchText=Vishnevy`,
-          this.options
-        );
-        res(responseBody);
-      } catch (e) {
-        rej(e);
-      }
     });
   }
 
@@ -140,35 +123,6 @@ class _MindbodyService {
         rej(e);
       }
     });
-  }
-
-  private async getToken(): Promise<void> {
-    const options: RequestInit = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Api-Key": "91504ccb30ab411d95533a3535a18d5b",
-        SiteId: "-99",
-      },
-      body: JSON.stringify({
-        Username: "Siteowner",
-        Password: "apitest1234",
-      }),
-    };
-    const responseBody: { AccessToken: string } = await FetchUtil.fetch(
-      `${this.BASE_URL}/usertoken/issue`,
-      options
-    );
-    this.token = responseBody.AccessToken;
-    console.log("token:", this.token);
-    this.options = {
-      method: "GET",
-      headers: {
-        "Api-Key": this.API_KEY,
-        authorization: this.token,
-        SiteId: this.SITE_ID,
-      },
-    };
   }
 }
 
