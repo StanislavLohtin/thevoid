@@ -11,14 +11,13 @@ export default function WelcomeScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <View style={styles.logoContainer}>
-        <Image source={require('../assets/images/logo.png')} style={styles.logo} />
+        <Image source={require('../assets/images/voidColorWhite.png')} style={styles.logo} />
         <Text style={styles.subtitle}>The Void</Text>
       </View>
       <View style={styles.buttonContainer}>
         <AppButton title="Login" onPress={() => navigation.navigate('Login')} />
         <AppButton
           title="Register"
-          color="secondary"
           onPress={() => navigation.navigate('Register')}
         />
       </View>

@@ -2,12 +2,10 @@ import { CurrentUser } from "../classes/CurrentUser";
 import { UserPrivateDTO } from "../classes/UserPrivateDTO";
 import FirebaseService from "./FirebaseService";
 import { UserPublic } from "../classes/UserPublic";
-import MessageService from "./MessageService";
 import { Message } from "../classes/Message";
 import { UserPublicDTO } from "../classes/UserPublicDTO";
 import { httpsCallable } from "firebase/functions";
 import { loginWithEmail } from "../components/Firebase/firebase";
-import { Alert } from "react-native";
 
 class _UserService {
   currentUser: CurrentUser;
@@ -21,24 +19,25 @@ class _UserService {
     firstname: string,
     lastname: string
   ) {
-    const addMessage = httpsCallable(
+    const fnCall = httpsCallable(
       FirebaseService.functions,
       "checkMindbodyAndRegister"
     );
-    addMessage({ email, password, firstname, lastname }).then(
+    return fnCall({ email, password, firstname, lastname }).then(
       (result: any) => {
         const data = result.data;
         console.log("checkMindbodyAndRegister received from server:", data);
-        loginWithEmail(email, password);
+        return loginWithEmail(email, password);
       },
-      (e: { error: string }) => {
-        Alert.alert("Error", e.error || e.toString(), [
+      (e: Error) => {
+        throw new Error(e.message);
+        /*Alert.alert("Error", e.error || e.toString(), [
           {
             text: "Ok",
             onPress: () => console.log("Ok Pressed"),
             style: "cancel",
           },
-        ]);
+        ]);*/
       }
     );
   }
@@ -50,23 +49,11 @@ class _UserService {
   ) {
     this.currentUser = new CurrentUser(uid, userPublicDTO, userPrivateDTO);
     this.users.push(this.currentUser);
-    if (this.currentUser.isAdmin) {
-      // this.loadAllUsers().then(() => {
-      this.currentUserPromiseResolve(this.currentUser);
-      // });
-    } else {
-      this.currentUserPromiseResolve(this.currentUser);
-    }
-    /*this.currentUser.updateAvaUrl().then(
-      (value) => {
-        console.log(`updateAvaUrl:${value}`);
-        this.currentUserPromiseResolve(this.currentUser);
-      },
-      (reason) => {
-        console.warn(`reject: ${reason}`);
-        this.currentUserPromiseReject(reason);
-      }
-    );*/
+    this.currentUserPromiseResolve(this.currentUser);
+    /*if (this.currentUser.isAdmin) {
+      this.loadAllUsers().then(() => {
+      });
+    }*/
   }
 
   public getCurrentUser(): Promise<CurrentUser> {

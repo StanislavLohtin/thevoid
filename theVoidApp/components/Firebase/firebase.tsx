@@ -14,9 +14,9 @@ export const loginWithEmail = async (email, password) => {
   UserService.fetchCurrentUser(auth.currentUser.uid);
 };
 
-export const registerWithEmail = async (email, password, firstname, lastname) => {
+export const registerWithEmail = (email, password, firstname, lastname) => {
   console.warn("registerWithEmail");
-  await UserService.checkMindbodyAndRegister(email, password, firstname, lastname);
+  return UserService.checkMindbodyAndRegister(email, password, firstname, lastname);
 };
 
 export const logout = () => auth.signOut();
