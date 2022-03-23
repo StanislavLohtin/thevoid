@@ -9,6 +9,7 @@ import {
   httpsCallable,
 } from "firebase/functions";
 import FirebaseService from "./FirebaseService";
+import UserService from "./UserService";
 
 class _MindbodyService {
   private BASE_URL =
@@ -28,7 +29,7 @@ class _MindbodyService {
 
   getMindbodyInfo() {
     const addMessage = httpsCallable(this.functions, "getMindbodyInfo");
-    addMessage({ text: "sending to server!!" }).then((result: any) => {
+    addMessage({ mindbodyId: UserService.currentUser.mindbodyId }).then((result: any) => {
       const data = result.data;
       console.log("received from server:", data);
     });

@@ -1,5 +1,6 @@
 import {RequestInit} from "node-fetch";
 import {fetchFn} from "./Fetch";
+import {FormulaNotesDTO} from "./FormulaNotesDTO";
 
 const BASE_URL = "https://api.mindbodyonline.com/public/v6";
 const API_KEY = "91504ccb30ab411d95533a3535a18d5b";
@@ -10,22 +11,19 @@ let mindbodyOptions: {
   headers: {"Api-Key": string; authorization: string; SiteId: string};
 };
 
-/* const getClients = (): Promise<unknown> => {
-  return fetchFn(
-    `${BASE_URL}/client/clients?limit=200&searchText=Vishnevy`,
+export const getClientFormulaNotes = async (
+  mindbodyId: string
+): Promise<FormulaNotesDTO[]> => {
+  if (!mindbodyToken) {
+    await getToken();
+  }
+  const responseBody: {FormulaNotes: FormulaNotesDTO[]} = await fetchFn(
+    `${BASE_URL}/client/clientformulanotes?ClientId=${mindbodyId}`,
     mindbodyOptions
-  ).then((responseBody: {AccessToken: string}) => {
-    mindbodyToken = responseBody.AccessToken;
-    mindbodyOptions = {
-      method: "GET",
-      headers: {
-        "Api-Key": API_KEY,
-        authorization: mindbodyToken,
-        SiteId: SITE_ID,
-      },
-    };
-  });
-};*/
+  );
+  console.log("getClientFormulaNotes response:", responseBody);
+  return responseBody.FormulaNotes;
+};
 
 export const getClientDuplicates = async (
   email: string,
@@ -36,13 +34,11 @@ export const getClientDuplicates = async (
   if (!mindbodyToken) {
     await getToken();
   }
-  console.log("inside getClientDuplicates:");
   const responseBody: {ClientDuplicates: [{Id: string}]} = await fetchFn(
     // eslint-disable-next-line max-len
     `${BASE_URL}/client/clientduplicates?FirstName=${firstname}&LastName=${lastname}&Email=${email}&`,
     mindbodyOptions
   );
-  console.log("clientduplicates response:", responseBody);
   if (responseBody.ClientDuplicates.length !== 1) {
     throw new Error(
       "User with this credentials is not registered on the mindbody."

@@ -2,7 +2,7 @@ import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 import {firestore} from "firebase-admin/lib/firestore";
 import Timestamp = firestore.Timestamp;
-import {getClientDuplicates} from "./MindbodyUtil";
+import {getClientDuplicates, getClientFormulaNotes} from "./MindbodyUtil";
 
 admin.initializeApp();
 
@@ -48,37 +48,36 @@ export const checkMindbodyAndRegister = functions.https.onCall(async (data) => {
   }
 });
 
-export const getMindbodyInfo = functions.https.onCall(async () => {
-  console.log("called getMindbodyInfo 4");
-  /* const clients = await getClients();
-  res.send({data: clients});*/
+export const getMindbodyInfo = functions.https.onCall(async (data) => {
+  console.log("called getMindbodyInfo 4!");
+  return getClientFormulaNotes(data.mindbodyId);
 });
 
 const createUser = (
-    email: string,
-    password: string,
-    firstname: string,
-    lastname: string,
-    mindbodyId: string
+  email: string,
+  password: string,
+  firstname: string,
+  lastname: string,
+  mindbodyId: string
 ): Promise<string> => {
-    const displayName = `${firstname} ${lastname}`;
-    return admin
-        .auth()
-        .createUser({
-            email: email,
-            emailVerified: false,
-            password: password,
-            displayName: displayName,
-            disabled: false,
-        })
-        .then((userRecord) => {
-            console.log("Successfully created new auth user:", userRecord.uid);
-            return createDBUser(displayName, userRecord.uid, email, mindbodyId);
-        })
-        .catch((error) => {
-            console.log("Error creating new user:", error);
-            return error.toString();
-        });
+  const displayName = `${firstname} ${lastname}`;
+  return admin
+    .auth()
+    .createUser({
+      email: email,
+      emailVerified: false,
+      password: password,
+      displayName: displayName,
+      disabled: false,
+    })
+    .then((userRecord) => {
+      console.log("Successfully created new auth user:", userRecord.uid);
+      return createDBUser(displayName, userRecord.uid, email, mindbodyId);
+    })
+    .catch((error) => {
+      console.log("Error creating new user:", error);
+      return error.toString();
+    });
 };
 
 const createDBUser = (

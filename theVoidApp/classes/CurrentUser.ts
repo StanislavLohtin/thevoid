@@ -18,6 +18,7 @@ export class CurrentUser extends UserPublic {
   chatIds?: string[];
   chats?: Chat[];
   isAdmin: boolean;
+  mindbodyId: string;
   permissions: Permissions;
 
   constructor(
@@ -31,6 +32,7 @@ export class CurrentUser extends UserPublic {
     this.createdAt = TypeUtil.getDate(userPrivateDTO.createdAt);
     this.chatIds = userPrivateDTO.chats;
     this.chats = [];
+    this.mindbodyId = userPrivateDTO.mindbodyId;
     this.permissions = userPrivateDTO.permissions;
     this.isAdmin = this.permissions >= Permissions.ADMIN;
 

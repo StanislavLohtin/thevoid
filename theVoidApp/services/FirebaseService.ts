@@ -36,7 +36,7 @@ class _FirebaseService {
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
-      console.log("Document data:", docSnap.data());
+      console.warn("Document data:", docSnap.data());
     } else {
       console.log("No such document!");
     }
