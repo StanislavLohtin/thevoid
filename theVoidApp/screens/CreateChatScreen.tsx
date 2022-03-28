@@ -28,22 +28,21 @@ export default function CreateChatScreen() {
     }
     console.log(`trying to create chat with name: ${title}`);
     setSearchText("");
-    let usersPublicDTOs = new Map();
+    let userIds = [];
     for (const user of selectedUsers) {
-      usersPublicDTOs.set(user.id, {
-        avaUrl: user.avaUrl || "",
-        username: user.username,
-      });
+      userIds.push(user.id);
     }
-    /*const success = await ChatService.createChat({
+    const success = await ChatService.createChat({
       title: title,
       lastMessageId: "",
       type: 0,
-      usersPublic: usersPublicDTOs,
+      userIds: userIds,
+      createdAt: null,
+      createdBy: UserService.currentUser.id
     });
     if (success) {
       navigation.navigate("ChatListScreen");
-    }*/
+    }
   }
 
   function onTouchUser(user: UserPublic) {

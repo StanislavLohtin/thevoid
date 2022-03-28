@@ -6,6 +6,7 @@ import {
   query,
   collection,
   getDoc,
+  getDocs,
   addDoc,
   orderBy,
   getFirestore,
@@ -31,8 +32,8 @@ class _FirebaseService {
     this.firestoreDb = getFirestore(this.app);
   }
 
-  public async get(collection: string, ...ids: string[]) {
-    const docRef = doc(this.firestoreDb, collection, ...ids);
+  public async get(collectionName: string, ...ids: string[]) {
+    const docRef = doc(this.firestoreDb, collectionName, ...ids);
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
@@ -41,6 +42,18 @@ class _FirebaseService {
       console.log("No such document!");
     }
     return docSnap.data();
+  }
+
+  public async getCollection(collectionName: string): Promise<QueryDocumentSnapshot[]> {
+    const q = query(collection(this.firestoreDb, collectionName));
+    const querySnapshot = await getDocs(q);
+    console.log(`got ${querySnapshot.size} docs of ${collectionName}`);
+    let result = [];
+    querySnapshot.forEach((doc) => {
+      result.push(doc)
+    });
+
+    return result;
   }
 
   public startOnChangeListener(

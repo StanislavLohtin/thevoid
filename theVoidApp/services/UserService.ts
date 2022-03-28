@@ -50,10 +50,9 @@ class _UserService {
     this.currentUser = new CurrentUser(uid, userPublicDTO, userPrivateDTO);
     this.users.push(this.currentUser);
     this.currentUserPromiseResolve(this.currentUser);
-    /*if (this.currentUser.isAdmin) {
-      this.loadAllUsers().then(() => {
-      });
-    }*/
+    if (this.currentUser.isAdmin) {
+      this.loadAllUsers();
+    }
   }
 
   public getCurrentUser(): Promise<CurrentUser> {
@@ -125,25 +124,15 @@ class _UserService {
     return chat.lastMessage;
   }
 
-  private loadAllUsers(): Promise<boolean> {
-    /*return new Promise<boolean>(async (res, rej) => {
-      const allUsers = await FirebaseService.get("/users/");
-      try {
-        for (const [userId, userData] of Object.entries(allUsers.val())) {
-          const userPublic = userData as UserPublic;
-          const newUser = new UserPublic(
-            userId,
-            userPublic.username,
-            userPublic.avaUrl
-          );
-          this.addUserToListIfNotIn(newUser);
-        }
-        res(true);
-      } catch (e) {
-        rej(false);
+  private async loadAllUsers(): Promise<void> {
+    const allUsers = await FirebaseService.getCollection("users");
+    try {
+      for (const user of allUsers) {
+        const userPublicDTO = user.data() as UserPublicDTO;
+        const newUser = new UserPublic(user.id, userPublicDTO);
+        this.addUserToListIfNotIn(newUser);
       }
-    });*/
-    return null;
+    } catch (e) {}
   }
 }
 

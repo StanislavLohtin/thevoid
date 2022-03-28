@@ -44,7 +44,7 @@ class _ChatService {
     res: (value: unknown) => void,
     rej: (reason?: any) => void
   ): void {
-    FirebaseService.get(`chats/${chatId}`).then(
+    FirebaseService.get("chats/", chatId).then(
       (chatDto) => {
         let chat = new Chat(chatId, chatDto as ChatInfoDTO);
         user.chats.push(chat);
@@ -123,45 +123,22 @@ class _ChatService {
       }*/
 
   async createChat(chatInfoDTO: ChatInfoDTO): Promise<boolean> {
-    return null;
-    /*const currentUserInChat = chatInfoDTO.info.userIds.get(
-      UserService.currentUser.id
-    );
-    if (currentUserInChat) {
-      chatInfoDTO.info.userIds = chatInfoDTO.info.userIds.set(
-        UserService.currentUser.id,
-        {
-          avaUrl: currentUserInChat.avaUrl,
-          username: currentUserInChat.username,
-        }
+    let newChat;
+    try {
+      newChat = await FirebaseService.add(`chats/`, chatInfoDTO);
+    } catch (e) {
+      console.warn("create failed");
+      console.error(e);
+      return false;
+    }
+    if (chatInfoDTO.userIds.includes(UserService.currentUser.id)) {
+      const newChatFromServer = await FirebaseService.get("chats/", newChat.id);
+      UserService.currentUser.chats.push(
+        new Chat(newChat.id, newChatFromServer as ChatInfoDTO)
       );
     }
 
-    const usersPublicObjectInsteadOfMap = {};
-    for (const [userId, user] of chatInfoDTO.usersPublic) {
-      usersPublicObjectInsteadOfMap[userId] = user;
-    }
-
-    const chatInfoDTOUpload: ChatInfoDTOUpload = { ...chatInfoDTO };
-    chatInfoDTOUpload.usersPublic = usersPublicObjectInsteadOfMap;
-
-    const id = await FirebaseService.push(`chats/`, {
-      info: chatInfoDTOUpload,
-    });
-
-    if (!id.key) {
-      console.warn("create failed");
-      return false;
-    }
-    if (currentUserInChat) {
-      UserService.currentUser.chats.push(new Chat(id.key, chatInfoDTO));
-    }
-
-    for (const userId of chatInfoDTO.usersPublic.keys()) {
-      await FirebaseService.set(`users/${userId}/chatIds/${id.key}`, id.key);
-    }
-
-    return true;*/
+    return true;
   }
 
   static sortByDate(chats: Chat[]): Chat[] {

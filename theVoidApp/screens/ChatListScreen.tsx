@@ -15,13 +15,11 @@ import { useNavigation } from "@react-navigation/native";
 import ChatService from "../services/ChatService";
 import { Chat } from "../classes/Chat";
 import IconButton from "../components/IconButton";
-import FirebaseService from "../services/FirebaseService";
-import {StackNavigationProp} from "@react-navigation/stack";
-import {RootStackParamList} from "../types";
-import { httpsCallable } from "firebase/functions";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { RootStackParamList } from "../types";
 
 export default function ChatListScreen() {
-  console.log("entering ChatListScreen")
+  console.log("entering ChatListScreen");
   const [text, onChangeText] = useState("");
   const [chats, setChats] = useState([]);
   const [currentUser, setCurrentUser] = useState(null);
@@ -47,23 +45,7 @@ export default function ChatListScreen() {
   }
 
   async function onCreateChatPress() {
-    /*const BASE_URL =
-      // @ts-ignore
-      // (window.chrome ? "https://cors-anywhere.herokuapp.com/" : "") +
-      "https://us-central1-the-void-f1bcc.cloudfunctions.net/helloWorld";
-    console.log("fetching3");*/
-    // const result = await FetchUtil.fetch(BASE_URL, {method: "GET"});
-
-    const addMessage = httpsCallable(FirebaseService.functions, "helloWorld");
-    // const result = await addMessage({ text: "messageText" });
-    // const sanitizedMessage = result.data.text;
-    addMessage({ text: "sending to server1" })
-        .then((result: any) => {
-          const data = result.data;
-          const sanitizedMessage = data.text;
-          console.log("received from server:");
-          console.log(sanitizedMessage);
-        });
+    navigation.navigate("CreateChatScreen");
   }
 
   return (
